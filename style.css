@@ -899,6 +899,138 @@ footer {
     transform: translateY(0);
 }
 
+/* Organizer Scanner Nav Link */
+.nav-scanner-link {
+    color: var(--accent-magenta) !important;
+    border: 1px dashed rgba(243, 85, 218, 0.4);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(243, 85, 218, 0.05);
+    font-size: 0.88rem !important;
+    transition: var(--transition-fast) !important;
+}
+
+.nav-scanner-link:hover {
+    background: rgba(243, 85, 218, 0.15) !important;
+    border-color: var(--accent-magenta) !important;
+    box-shadow: 0 0 12px rgba(243, 85, 218, 0.4);
+}
+
+/* Success Registration Animated Popup Overlay */
+.success-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 1.5rem;
+}
+
+.success-popup-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.success-popup-card {
+    background: #0f121d;
+    border: 2px solid #00ff80;
+    box-shadow: 0 0 60px rgba(0, 255, 128, 0.25);
+    border-radius: 28px;
+    padding: 3rem 2rem;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    transform: scale(0.85);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.success-popup-overlay.show .success-popup-card {
+    transform: scale(1);
+}
+
+/* Animated Checkmark Circle */
+.checkmark-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+}
+
+.checkmark-svg {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #00ff80;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #00ff80;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: #00ff80;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.popup-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+}
+
+.popup-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.popup-token-badge {
+    background: linear-gradient(135deg, rgba(0, 255, 128, 0.15), rgba(0, 242, 254, 0.15));
+    border: 1.5px solid #00ff80;
+    color: #00ff80;
+    font-family: monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 16px;
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.2);
+}
+
+.popup-info-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
 @media (max-width: 768px) {
     .challenge-grid {
         grid-template-columns: 1fr;

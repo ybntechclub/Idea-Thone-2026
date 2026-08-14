@@ -33,6 +33,8 @@
                 <a href="#requirements">Requirements</a>
                 <a href="#criteria">Evaluation</a>
                 <a href="#contact">Contact</a>
+                <a href="scanner.html" class="nav-scanner-link" title="Organizer Attendance Portal">📷 Organizer
+                    Check-In</a>
                 <a href="#" class="btn-nav open-modal-btn">Register Now</a>
             </div>
         </div>
@@ -508,10 +510,26 @@
                 <button type="submit" class="btn btn-primary w-100" id="submitBtn">Confirm Registration</button>
             </form>
         </div>
-    </div>
+        <!-- Animated Registration Complete Success Popup Overlay -->
+        <div id="successPopup" class="success-popup-overlay">
+            <div class="success-popup-card glass">
+                <div class="checkmark-wrapper">
+                    <svg class="checkmark-svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                </div>
+                <h2 id="successPopupTitle" class="popup-title">Registration Complete! 🎉</h2>
+                <p id="successPopupSubtitle" class="popup-subtitle">Your Official Registration Token:</p>
+                <div id="successPopupToken" class="popup-token-badge">IDTN2026-XXXXXX</div>
+                <p class="popup-info-text">
+                    A confirmation pass with your <strong>QR Code</strong> has been sent to your email!
+                </p>
+            </div>
+        </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-    <script src="script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

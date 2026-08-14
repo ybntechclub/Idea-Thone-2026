@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Attendance Portal | IDEA-THON 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090a0f;
+            --bg-card: rgba(18, 22, 34, 0.9);
+            --accent-cyan: #00f2fe;
+            --accent-purple: #7000ff;
+            --accent-magenta: #f355da;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+            --success: #00ff80;
+            --error: #ff5050;
+            --warning: #ffb400;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Login Security Card */
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-purple);
+            box-shadow: 0 0 40px rgba(112, 0, 255, 0.3);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .auth-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Scanner Portal */
+        .portal-content {
+            display: none;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .scanner-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 0.8rem 0.5rem;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .stat-val.present {
+            color: var(--success);
+        }
+
+        .stat-lbl {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.2rem;
+        }
+
+        #reader {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--accent-purple);
+            background: #000;
+            margin-bottom: 1.5rem;
+        }
+
+        .manual-input-group {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .manual-input-group input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .manual-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn-w100 {
+            width: 100%;
+        }
+
+        /* Result Display Card (Initial State: HIDDEN) */
+        .result-card {
+            display: none;
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin-top: 1.5rem;
+            animation: popup 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+        }
+
+        .result-card.success {
+            background: rgba(0, 255, 128, 0.12);
+            border: 2px solid var(--success);
+            box-shadow: 0 0 30px rgba(0, 255, 128, 0.2);
+        }
+
+        .result-card.already {
+            background: rgba(255, 180, 0, 0.12);
+            border: 2px solid var(--warning);
+            box-shadow: 0 0 30px rgba(255, 180, 0, 0.2);
+        }
+
+        .result-card.notfound {
+            background: rgba(255, 80, 80, 0.12);
+            border: 2px solid var(--error);
+            box-shadow: 0 0 30px rgba(255, 80, 80, 0.2);
+            text-align: center;
+        }
+
+        @keyframes popup {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            padding-bottom: 0.8rem;
+        }
+
+        .status-tag {
+            background: var(--success);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-tag.already {
+            background: var(--warning);
+        }
+
+        .status-tag.notfound {
+            background: var(--error);
+            color: #fff;
+        }
+
+        .token-tag {
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .participant-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.6rem 0.9rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-item span {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .timestamp-box {
+            margin-top: 1rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .nav-back {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-back:hover {
+            color: var(--accent-cyan);
+        }
+
+        @media (max-width: 600px) {
+            .stats-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">IDEA-THON <span>2026</span></div>
+        <div class="subtitle">Organizer Attendance & Check-In Portal</div>
+    </div>
+
+    <!-- Organizer PIN Passcode Screen (Server-Side Verification) -->
+    <div id="authScreen" class="auth-card">
+        <div class="auth-icon">🔒</div>
+        <h2>Organizer Access Required</h2>
+        <p>Enter the Organizer Passcode to unlock the Attendance Scanner portal.</p>
+        <form id="authForm">
+            <input type="password" id="passcodeInput" class="auth-input" placeholder="PASSCODE" required>
+            <button type="submit" class="btn btn-w100" id="unlockBtn">Unlock Portal</button>
+        </form>
+        <div id="authErr" style="color: var(--error); font-size: 0.85rem; margin-top: 0.8rem; display: none;"></div>
+    </div>
+
+    <!-- Main Scanner Portal (Unlocked after PIN entry) -->
+    <div id="portalContent" class="portal-content">
+        <div class="scanner-card">
+            <!-- Full Registration & Attendance Statistics -->
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="stat-val" id="totalRegistered">0</div>
+                    <div class="stat-lbl">Registered</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val present" id="totalPresent">0</div>
+                    <div class="stat-lbl">Checked-In</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="individualCount">0</div>
+                    <div class="stat-lbl">Individuals</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="teamCount">0</div>
+                    <div class="stat-lbl">Teams</div>
+                </div>
+            </div>
+
+            <div id="reader"></div>
+
+            <form id="manualForm" class="manual-input-group">
+                <input type="text" id="tokenInput" placeholder="Scan or Type Token ID (e.g. IDH26-001)" required>
+                <button type="submit" class="btn">Check-In</button>
+            </form>
+
+            <!-- Result Display Card (Initial State: HIDDEN) -->
+            <div id="resultCard" class="result-card">
+                <div class="res-header">
+                    <div class="token-tag" id="resToken">IDH26-001</div>
+                    <div class="status-tag" id="resBadge">Checked-In ✓</div>
+                </div>
+                <div class="participant-name" id="resName">Participant Name</div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Participation</label>
+                        <span id="resType">Individual</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Team Name</label>
+                        <span id="resTeam">N/A</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Department & Sem</label>
+                        <span id="resDept">CSE, 5th Sem</span>
+                    </div>
+                    <div class="info-item">
+                        <label>OS Idea Name</label>
+                        <span id="resOS">QuantumOS</span>
+                    </div>
+                    <div class="info-item" style="grid-column: span 2;">
+                        <label>Contact Details</label>
+                        <span id="resContact">+91 9876543210 | john@example.com</span>
+                    </div>
+                    <div class="info-item" style="grid-column: span 2;" id="membersBox">
+                        <label>Team Members</label>
+                        <span id="resMembers">John Doe</span>
+                    </div>
+                </div>
+
+                <div class="timestamp-box" id="resTime">Checked-In at 07:15 PM</div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="nav-back">← Return to Main Website</a>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
+
+        const authScreen = document.getElementById('authScreen');
+        const authForm = document.getElementById('authForm');
+        const passcodeInput = document.getElementById('passcodeInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const authErr = document.getElementById('authErr');
+        const portalContent = document.getElementById('portalContent');
+
+        const totalRegisteredEl = document.getElementById('totalRegistered');
+        const totalPresentEl = document.getElementById('totalPresent');
+        const individualCountEl = document.getElementById('individualCount');
+        const teamCountEl = document.getElementById('teamCount');
+
+        const resultCard = document.getElementById('resultCard');
+        const resToken = document.getElementById('resToken');
+        const resBadge = document.getElementById('resBadge');
+        const resName = document.getElementById('resName');
+        const resType = document.getElementById('resType');
+        const resTeam = document.getElementById('resTeam');
+        const resDept = document.getElementById('resDept');
+        const resOS = document.getElementById('resOS');
+        const resContact = document.getElementById('resContact');
+        const resMembers = document.getElementById('resMembers');
+        const resTime = document.getElementById('resTime');
+        const manualForm = document.getElementById('manualForm');
+        const tokenInput = document.getElementById('tokenInput');
+
+        // Check if session is already authenticated
+        if (sessionStorage.getItem('organizer_auth') === 'true') {
+            unlockPortal();
+        }
+
+        // Server-Side PIN Verification
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pin = passcodeInput.value.trim();
+
+            if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                authErr.style.display = 'block';
+                authErr.textContent = '⚠️ Please set your scriptURL in scanner.html!';
+                return;
+            }
+
+            unlockBtn.disabled = true;
+            unlockBtn.textContent = 'Verifying...';
+            authErr.style.display = 'none';
+
+            try {
+                const response = await fetch(`${scriptURL}?action=verifyPin&pin=${encodeURIComponent(pin)}`);
+                const data = await response.json();
+
+                if (data.result === 'success') {
+                    sessionStorage.setItem('organizer_auth', 'true');
+                    unlockPortal();
+                } else {
+                    authErr.style.display = 'block';
+                    authErr.textContent = '❌ Incorrect Organizer Passcode! Please try again.';
+                    passcodeInput.value = '';
+                    passcodeInput.focus();
+                }
+            } catch (err) {
+                console.error("PIN Auth Error:", err);
+                authErr.style.display = 'block';
+                authErr.textContent = '⚠️ Connection Error verifying PIN. Check internet connection.';
+            } finally {
+                unlockBtn.disabled = false;
+                unlockBtn.textContent = 'Unlock Portal';
+            }
+        });
+
+        function unlockPortal() {
+            authScreen.style.display = 'none';
+            portalContent.style.display = 'block';
+            fetchStats();
+            initScanner();
+        }
+
+        // Fetch Complete Event Statistics
+        async function fetchStats() {
+            if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') return;
+            try {
+                const res = await fetch(`${scriptURL}?action=getStats`);
+                const data = await res.json();
+                if (data.totalRegistered !== undefined) {
+                    totalRegisteredEl.textContent = data.totalRegistered;
+                    totalPresentEl.textContent = data.totalPresent;
+                    individualCountEl.textContent = data.individualCount || 0;
+                    teamCountEl.textContent = data.teamCount || 0;
+                }
+            } catch (err) {
+                console.error("Fetch Stats Error:", err);
+            }
+        }
+
+        // Attendance Check-In Processing
+        async function processCheckIn(token) {
+            if (!token || token.trim() === '') return;
+
+            token = token.trim().toUpperCase();
+            tokenInput.value = token;
+
+            try {
+                const response = await fetch(`${scriptURL}?action=markAttendance&token=${encodeURIComponent(token)}`);
+                const data = await response.json();
+
+                if (data.result === 'success') {
+                    showResultCard('success', 'Checked-In ✓', data);
+                    playBeepSound();
+                    fetchStats();
+                } else if (data.result === 'already_marked') {
+                    showResultCard('already', 'Already Checked-In ⚡', data);
+                } else {
+                    showNotFoundCard(token, data.message || `Token ${token} not found in Google Sheet.`);
+                }
+            } catch (err) {
+                console.error("Check-In API Error:", err);
+                showNotFoundCard(token, 'Network error. Please check internet connection.');
+            }
+        }
+
+        function showResultCard(type, badgeText, data) {
+            resultCard.style.display = 'block';
+            resultCard.className = `result-card ${type}`;
+
+            resBadge.textContent = badgeText;
+            resBadge.className = `status-tag ${type}`;
+
+            resToken.textContent = data.token || '--';
+            resName.textContent = data.name || 'Participant Name';
+            resType.textContent = (data.participation || 'individual').toUpperCase();
+            resTeam.textContent = data.teamName || 'N/A';
+            resDept.textContent = data.dept || 'N/A';
+            resOS.textContent = data.osName || 'N/A';
+            resContact.textContent = `${data.contact || ''} | ${data.email || ''}`;
+            resMembers.textContent = data.members || data.name;
+            resTime.textContent = `Check-In Timestamp: ${data.checkInTime}`;
+        }
+
+        function showNotFoundCard(token, errorMsg) {
+            resultCard.style.display = 'block';
+            resultCard.className = 'result-card notfound';
+            resultCard.innerHTML = `
+                <div class="res-header">
+                    <div class="token-tag">${token}</div>
+                    <div class="status-tag notfound">Not Found ❌</div>
+                </div>
+                <div class="participant-name" style="color: #ff5050;">Record Not Found</div>
+                <p style="color: #cbd5e1; margin-top: 0.5rem;">${errorMsg}</p>
+            `;
+        }
+
+        // Beep Tone Audio Feedback
+        function playBeepSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = 880;
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.3);
+            } catch (e) { }
+        }
+
+        // Manual Token Input Form Submit
+        manualForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            processCheckIn(tokenInput.value);
+        });
+
+        // Initialize Camera QR Scanner
+        let isProcessing = false;
+        function initScanner() {
+            function onScanSuccess(decodedText) {
+                if (isProcessing) return;
+                isProcessing = true;
+
+                processCheckIn(decodedText);
+
+                setTimeout(() => {
+                    isProcessing = false;
+                }, 2500);
+            }
+
+            const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 240, height: 240 } });
+            html5QrcodeScanner.render(onScanSuccess);
+        }
+    </script>
+</body>
+
+</html>

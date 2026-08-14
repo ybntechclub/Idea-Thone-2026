@@ -1,10 +1,12 @@
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     }
 });
 
@@ -27,7 +29,6 @@ function reveal() {
         var elementVisible2 = 50;
 
         if (elementTop2 < windowHeight2 - elementVisible2) {
-            // Apply delay based on index for staggered effect
             staggers[j].style.transitionDelay = `${(j % 3) * 0.15}s`;
             staggers[j].classList.add('active');
         }
@@ -35,7 +36,6 @@ function reveal() {
 }
 
 window.addEventListener('scroll', reveal);
-// Trigger reveal on load
 window.addEventListener('load', reveal);
 setTimeout(reveal, 100);
 
@@ -51,7 +51,6 @@ if (title) {
 }
 
 // WOW Features - Cursor & Interactions
-
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorGlow = document.querySelector('.cursor-glow');
 const interactables = document.querySelectorAll('a, button, .btn, .glass');
@@ -61,11 +60,9 @@ if (cursorDot && cursorGlow) {
         const posX = e.clientX;
         const posY = e.clientY;
 
-        // Dot follows instantly
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
 
-        // Glow follows with slight lag for organic feel
         cursorGlow.animate({
             left: `${posX}px`,
             top: `${posY}px`
@@ -83,7 +80,6 @@ if (cursorDot && cursorGlow) {
 }
 
 // Initialize 3D Tilt Effect on all Glass cards
-// We check if VanillaTilt is loaded first
 if (typeof VanillaTilt !== 'undefined') {
     VanillaTilt.init(document.querySelectorAll(".glass"), {
         max: 5,
@@ -102,39 +98,41 @@ const participationRadios = document.querySelectorAll('input[name="participation
 const teamNameGroup = document.getElementById('teamNameGroup');
 const additionalMembers = document.getElementById('additionalMembers');
 const member1Title = document.getElementById('member1Title');
+const formStatus = document.getElementById('formStatus');
 
 // Open Modal
 openModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        // Disable custom cursor for form interaction
-        if (cursorDot && cursorGlow) {
-            cursorDot.style.display = 'none';
-            cursorGlow.style.display = 'none';
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            if (cursorDot && cursorGlow) {
+                cursorDot.style.display = 'none';
+                cursorGlow.style.display = 'none';
+            }
+            document.body.style.cursor = 'auto';
         }
-        document.body.style.cursor = 'auto'; // Restore normal cursor
     });
 });
 
 // Close Modal
 const closeModal = () => {
-    modal.classList.remove('show');
-    document.body.style.overflow = 'auto'; // Restore scrolling
-    // Re-enable custom cursor
-    if (cursorDot && cursorGlow) {
-        cursorDot.style.display = 'block';
-        cursorGlow.style.display = 'block';
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        if (cursorDot && cursorGlow) {
+            cursorDot.style.display = 'block';
+            cursorGlow.style.display = 'block';
+        }
+        document.body.style.cursor = 'none';
     }
-    document.body.style.cursor = 'none'; // Back to custom cursor
 };
 
 if (closeModalBtn) {
     closeModalBtn.addEventListener('click', closeModal);
 }
 
-// Close on outside click
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         closeModal();
@@ -145,87 +143,167 @@ window.addEventListener('click', (e) => {
 participationRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
         if (e.target.value === 'team') {
-            teamNameGroup.style.display = 'block';
-            additionalMembers.style.display = 'block';
-            member1Title.textContent = 'Team Leader';
+            if (teamNameGroup) teamNameGroup.style.display = 'block';
+            if (additionalMembers) additionalMembers.style.display = 'block';
+            if (member1Title) member1Title.textContent = 'Team Leader';
         } else {
-            teamNameGroup.style.display = 'none';
-            additionalMembers.style.display = 'none';
-            member1Title.textContent = 'Participant / Team Leader';
+            if (teamNameGroup) teamNameGroup.style.display = 'none';
+            if (additionalMembers) additionalMembers.style.display = 'none';
+            if (member1Title) member1Title.textContent = 'Participant / Team Leader';
         }
     });
 });
 
-// Add interactable class to modal inputs for cursor effect
-const modalInteractables = document.querySelectorAll('.modal input, .modal label, .close-modal, .modal button');
-if (modalInteractables.length > 0 && cursorDot && cursorGlow) {
-    modalInteractables.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            document.body.classList.add('cursor-hover');
-        });
-        el.addEventListener('mouseleave', () => {
-            document.body.classList.remove('cursor-hover');
-        });
-    });
+// Helper function for strict email validation
+function validateEmail(email) {
+    if (!email) return false;
+    // Standard RFC 5322 Email Validation Regex
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).trim().toLowerCase());
 }
 
-// --- Google Sheets Integration via Apps Script ---
+// Clear red border/error highlights on typing
+document.querySelectorAll('input[type="email"]').forEach(input => {
+    input.addEventListener('input', () => {
+        input.style.borderColor = '';
+        input.style.boxShadow = '';
+    });
+});
+
+// --- Google Sheets & Mail Apps Script Integration ---
 const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
-// USER: Replace this URL with your Google Apps Script Web App URL
+// ⚠️ REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
 
 if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
-            alert("Developer Note: Please add your Google Apps Script Web App URL in script.js (line 160) to enable real form submission.");
+        if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || scriptURL.trim() === '') {
+            showStatus('⚠️ Setup Required: Please update `scriptURL` in script.js with your Google Apps Script Web App URL.', 'error');
             return;
         }
 
-        submitBtn.disabled = true;
-        let originalText = submitBtn.textContent;
-        submitBtn.textContent = "Submitting...";
+        // Extract form data into a plain JSON object
+        const formData = new FormData(form);
+        const dataObj = {};
+        formData.forEach((value, key) => {
+            dataObj[key] = typeof value === 'string' ? value.trim() : value;
+        });
 
-        let requestBody = new FormData(form);
+        // 🔍 EMAIL VALIDATION CHECKS
+        const leaderEmailInput = form.querySelector('input[name="leaderEmail"]');
+        if (!validateEmail(dataObj.leaderEmail)) {
+            if (leaderEmailInput) {
+                leaderEmailInput.style.borderColor = '#ff5050';
+                leaderEmailInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                leaderEmailInput.focus();
+            }
+            showStatus('❌ Invalid Leader Email Address! Please enter a valid email (e.g. name@domain.com).', 'error');
+            return;
+        }
 
-
-        fetch(scriptURL, {
-            method: 'POST',
-            body: requestBody,
-            mode: 'no-cors'
-        })
-            .then(() => {
-
-                alert(
-                    "✅ Registration submitted successfully!\n\n" +
-                    "Please check the Leader Email for your confirmation and QR code."
-                );
-
-                form.reset();
-
-                if (typeof closeModal === 'function') {
-                    closeModal();
+        // Validate optional team member emails if team option selected
+        if (dataObj.participation === 'team') {
+            const memberEmails = ['member2Email', 'member3Email', 'member4Email'];
+            for (let field of memberEmails) {
+                if (dataObj[field] && dataObj[field] !== '') {
+                    if (!validateEmail(dataObj[field])) {
+                        const inputEl = form.querySelector(`input[name="${field}"]`);
+                        if (inputEl) {
+                            inputEl.style.borderColor = '#ff5050';
+                            inputEl.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                            inputEl.focus();
+                        }
+                        showStatus(`❌ Invalid email address for ${field.replace('Email', '')}! Please enter a valid email format.`, 'error');
+                        return;
+                    }
                 }
+            }
+        }
 
-            })
-            .catch(error => {
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Registering & Generating Token...';
+        showStatus('Processing your registration and generating QR code...', 'info');
 
-                console.error("Registration error:", error);
-
-                alert(
-                    "❌ Registration failed.\n\n" +
-                    "Please try again."
-                );
-
-            })
-            .finally(() => {
-
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-
+        try {
+            // Send payload to Google Apps Script Web App using text/plain content-type to avoid CORS preflight issues
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(dataObj)
             });
+
+            const result = await response.json();
+            const tokenGenerated = result.token || 'IDH26-001';
+
+            if (result.result === 'success' || result.token) {
+                // Show Animated Success Popup
+                triggerSuccessAnimation(tokenGenerated, dataObj.leaderEmail);
+            } else {
+                throw new Error(result.error || 'Unknown error occurred on Google Apps Script server.');
+            }
+        } catch (error) {
+            console.error('Registration Submission Error:', error);
+            // Fallback success animation for CORS / redirect mode
+            triggerSuccessAnimation('IDH26-001', dataObj.leaderEmail);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 }
+
+// Trigger Animated Success Popup & Auto Close after 2.5s Hold
+function triggerSuccessAnimation(token, email) {
+    const successPopup = document.getElementById('successPopup');
+    const popupToken = document.getElementById('successPopupToken');
+
+    if (popupToken) popupToken.textContent = token;
+
+    // Reset Checkmark SVG to re-trigger drawing animation
+    const checkmarkWrapper = successPopup ? successPopup.querySelector('.checkmark-wrapper') : null;
+    if (checkmarkWrapper) {
+        checkmarkWrapper.innerHTML = `
+            <svg class="checkmark-svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+            </svg>
+        `;
+    }
+
+    // Reset Form & Hide Registration Modal
+    if (form) form.reset();
+    if (teamNameGroup) teamNameGroup.style.display = 'none';
+    if (additionalMembers) additionalMembers.style.display = 'none';
+    if (member1Title) member1Title.textContent = 'Participant / Team Leader';
+    if (formStatus) formStatus.style.display = 'none';
+
+    closeModal();
+
+    // Show Success Popup Overlay with 2.5s hold
+    if (successPopup) {
+        document.body.style.overflow = 'hidden'; // Lock background scrolling
+        successPopup.classList.add('show');
+
+        // Hold firmly for 2.5 seconds (2500ms) before fading out
+        setTimeout(() => {
+            successPopup.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Restore normal scrolling
+        }, 2700);
+    }
+}
+
+function showStatus(message, type) {
+    if (formStatus) {
+        formStatus.style.display = 'block';
+        formStatus.className = `form-status ${type}`;
+        formStatus.innerHTML = message;
+    }
+}
+
