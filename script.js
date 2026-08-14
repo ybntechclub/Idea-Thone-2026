@@ -25,7 +25,7 @@ function reveal() {
         var windowHeight2 = window.innerHeight;
         var elementTop2 = staggers[j].getBoundingClientRect().top;
         var elementVisible2 = 50;
-        
+
         if (elementTop2 < windowHeight2 - elementVisible2) {
             // Apply delay based on index for staggered effect
             staggers[j].style.transitionDelay = `${(j % 3) * 0.15}s`;
@@ -41,7 +41,7 @@ setTimeout(reveal, 100);
 
 // Glitch effect on title on hover
 const title = document.querySelector('.glitch');
-if(title) {
+if (title) {
     title.addEventListener('mouseover', () => {
         title.style.animation = 'glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite';
     });
@@ -60,11 +60,11 @@ if (cursorDot && cursorGlow) {
     window.addEventListener('mousemove', (e) => {
         const posX = e.clientX;
         const posY = e.clientY;
-        
+
         // Dot follows instantly
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
-        
+
         // Glow follows with slight lag for organic feel
         cursorGlow.animate({
             left: `${posX}px`,
@@ -174,12 +174,12 @@ const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
 // USER: Replace this URL with your Google Apps Script Web App URL
-const scriptURL = 'https://script.google.com/macros/s/AKfycbx11v50gaScMWXxyRorETJ2zU4TgEMgDN3ejGgnAh8pHvnasIsLcKJ76f31lb8PurYYSw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
 
 if (form) {
     form.addEventListener('submit', e => {
         e.preventDefault();
-        
+
         if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
             alert("Developer Note: Please add your Google Apps Script Web App URL in script.js (line 160) to enable real form submission.");
             return;
@@ -191,23 +191,41 @@ if (form) {
 
         let requestBody = new FormData(form);
 
-        fetch(scriptURL, { method: 'POST', body: requestBody, mode: 'no-cors' })
-            .then(response => {
-                // When using no-cors, the response is opaque, meaning we can't read the JSON.
-                // We just assume success if it didn't throw a network error.
-                alert('Success! Registration completed.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: requestBody,
+            mode: 'no-cors'
+        })
+            .then(() => {
+
+                alert(
+                    "✅ Registration submitted successfully!\n\n" +
+                    "Please check the Leader Email for your confirmation and QR code."
+                );
+
                 form.reset();
+
                 if (typeof closeModal === 'function') {
                     closeModal();
                 }
+
             })
             .catch(error => {
-                alert('Error submitting the form! Please try again or contact support.');
-                console.error('Error!', error.message);
+
+                console.error("Registration error:", error);
+
+                alert(
+                    "❌ Registration failed.\n\n" +
+                    "Please try again."
+                );
+
+            })
+            .finally(() => {
+
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
+
             });
     });
 }
