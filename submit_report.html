@@ -378,6 +378,18 @@
             animation: pulseGlowLocked 2s infinite;
         }
 
+        .modal-card.not-checked-in {
+            border-color: var(--error);
+            box-shadow: 0 0 50px rgba(255, 80, 80, 0.35);
+        }
+
+        .icon-badge-wrapper.not-checked-in {
+            background: rgba(255, 80, 80, 0.15);
+            border: 2px solid var(--error);
+            box-shadow: 0 0 25px rgba(255, 80, 80, 0.4);
+            animation: pulseGlowError 2s infinite;
+        }
+
         @keyframes pulseGlow {
 
             0%,
@@ -399,6 +411,18 @@
 
             50% {
                 box-shadow: 0 0 40px rgba(255, 180, 0, 0.7);
+            }
+        }
+
+        @keyframes pulseGlowError {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 80, 80, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 80, 80, 0.7);
             }
         }
 
@@ -593,13 +617,22 @@
                         showStatus(`🔒 <strong>Submission Locked!</strong><br>You have already submitted your final presentation report for Token <strong>${token}</strong>. Re-submissions are not allowed.`, 'error');
 
                         // Show Beautiful Locked Modal Popup!
-                        openSuccessPopup(token, data.name, data.link, true);
+                        openSuccessPopup(token, data.name, data.link, 'locked');
+                        return;
+                    } else if (data.attendanceStatus !== 'Checked-In') {
+                        bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In 🛑</strong>`;
+                        participantBanner.style.display = 'block';
+                        uploadSection.style.display = 'none';
+                        showStatus(`🛑 <strong>Check-In Required!</strong><br>You must check in at the event venue desk before submitting your presentation report.`, 'error');
+
+                        // Show Beautiful Check-In Required Popup!
+                        openSuccessPopup(token, data.name, null, 'not_checked_in');
                         return;
                     } else {
-                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">Pending ⏳</strong>`;
+                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">Pending ⏳</strong> (Checked-In ✅)`;
                         participantBanner.style.display = 'block';
                         uploadSection.style.display = 'block';
-                        showStatus('✅ Token verified successfully! Please paste your presentation link or select a file below.', 'success');
+                        showStatus('✅ Token verified & Check-In confirmed! Please select your presentation file below.', 'success');
                     }
                 } else {
                     showStatus(`❌ Invalid Token ID (${token}). Record not found!`, 'error');
@@ -657,11 +690,16 @@
                     showStatus(`🎉 Final Presentation Submitted & Locked!`, 'success');
 
                     // Show Stunning Success Popup Modal!
-                    openSuccessPopup(verifiedToken, participantName, result.fileUrl || driveLink, false);
+                    openSuccessPopup(verifiedToken, participantName, result.fileUrl || driveLink, 'success');
 
                     submissionForm.reset();
                     fileSelectedName.innerHTML = `<strong>Click to select PDF or Presentation File</strong>`;
                     base64File = null;
+                } else if (result.result === 'not_checked_in') {
+                    bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In 🛑</strong>`;
+                    uploadSection.style.display = 'none';
+                    showStatus(`🛑 <strong>Check-In Required!</strong> ${result.message}`, 'error');
+                    openSuccessPopup(verifiedToken, participantName, null, 'not_checked_in');
                 } else {
                     showStatus(`⚠️ <strong>Upload Issue:</strong> ${result.message || 'Error recording submission.'}`, 'error');
                 }
@@ -681,7 +719,7 @@
         }
 
         // 🌟 FUNCTION TO OPEN STUNNING MODAL POPUP
-        function openSuccessPopup(token, name, fileUrl, isLocked) {
+        function openSuccessPopup(token, name, fileUrl, popupMode) {
             const modalOverlay = document.getElementById('modalOverlay');
             const modalCard = document.getElementById('modalCard');
             const modalIcon = document.getElementById('modalIcon');
@@ -694,12 +732,18 @@
 
             modalTokenBadge.innerHTML = `<span style="display: inline-block; background: rgba(0, 242, 254, 0.15); border: 1px solid var(--accent-cyan); color: var(--accent-cyan); font-family: monospace; font-weight: 700; font-size: 1.3rem; padding: 0.4rem 1.4rem; border-radius: 50px;">${token}</span>`;
 
-            if (isLocked) {
+            if (popupMode === 'not_checked_in') {
+                modalCard.className = 'modal-card not-checked-in';
+                modalIcon.className = 'icon-badge-wrapper not-checked-in';
+                modalIconEmoji.textContent = '🛑';
+                modalTitle.textContent = 'Check-In Required at Venue!';
+                modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>! 👋<br><br>You must <strong>Check-In at the event venue scanner desk</strong> before you can submit your final OS presentation report.<br><small style="color:#ff8080; display:block; margin-top:0.6rem;">Please visit the registration desk to scan your QR Pass!</small>`;
+            } else if (popupMode === 'locked' || popupMode === true) {
                 modalCard.className = 'modal-card locked';
                 modalIcon.className = 'icon-badge-wrapper locked';
                 modalIconEmoji.textContent = '🔒';
                 modalTitle.textContent = 'Submission Locked & Recorded!';
-                modalSubTitle.innerHTML = `Participant: <strong>${name || 'Participant'}</strong><br>Your final presentation report for Token <strong>${token}</strong> has been submitted and locked in Google Sheets.`;
+                modalSubTitle.innerHTML = `Participant: <strong>${name || 'Participant'}</strong><br>Your final presentation report for Token <strong>${token}</strong> has already been submitted and locked in Google Sheets.`;
             } else {
                 modalCard.className = 'modal-card';
                 modalIcon.className = 'icon-badge-wrapper success';
