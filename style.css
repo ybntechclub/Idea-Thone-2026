@@ -899,6 +899,23 @@ footer {
     transform: translateY(0);
 }
 
+/* Presentation Submit Nav Link */
+.nav-report-link {
+    color: var(--accent-cyan) !important;
+    border: 1px dashed rgba(0, 242, 254, 0.4);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(0, 242, 254, 0.05);
+    font-size: 0.88rem !important;
+    transition: var(--transition-fast) !important;
+}
+
+.nav-report-link:hover {
+    background: rgba(0, 242, 254, 0.15) !important;
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+}
+
 /* Organizer Scanner Nav Link */
 .nav-scanner-link {
     color: var(--accent-magenta) !important;
@@ -1117,5 +1134,73 @@ footer {
         grid-template-columns: 120px 1fr;
         font-size: 0.9rem;
     }
-}
 
+    /* Footer Mobile Responsiveness */
+    .support-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .support-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1.2rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-glass);
+        border-radius: 50px;
+        width: 100%;
+        max-width: 320px;
+        font-size: 0.92rem;
+        word-break: break-word;
+        transition: var(--transition-fast);
+    }
+
+    .support-links a:hover {
+        border-color: var(--accent-cyan);
+        background: rgba(0, 242, 254, 0.08);
+    }
+
+    /* Modal & Form Mobile Responsiveness */
+    .modal {
+        padding: 0.8rem;
+    }
+
+    .modal-content {
+        padding: 1.5rem 1.2rem;
+        border-radius: 20px;
+        max-height: 92vh;
+    }
+
+    .modal-title {
+        font-size: 1.45rem;
+    }
+
+    .modal-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group input {
+        font-size: 16px;
+        /* Prevents auto-zoom on mobile browsers */
+        padding: 0.75rem 0.9rem;
+    }
+
+    .member-card {
+        padding: 1rem 0.8rem;
+        border-radius: 12px;
+    }
+
+    .member-title {
+        font-size: 0.95rem;
+    }
+
+    .close-modal {
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.8rem;
+    }
+}

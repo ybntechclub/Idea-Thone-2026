@@ -192,7 +192,7 @@ document.querySelectorAll('input[type="email"]').forEach(input => {
 const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
-// ⚠️ REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+// ⚠️ DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
 
 if (form) {
@@ -260,6 +260,11 @@ if (form) {
             const result = await response.json();
             const tokenGenerated = result.token || 'IDH26-001';
 
+            if (result.result === 'duplicate') {
+                showStatus(`⚠️ <strong>Email Already Registered!</strong><br>This email address is already registered under Token ID: <strong style="color: #00f2fe; font-family: monospace;">${result.token}</strong>.<br><small>(Check your email inbox for your registration pass)</small>`, 'error');
+                return;
+            }
+
             if (result.result === 'success' || result.token) {
                 // Show Animated Success Popup
                 triggerSuccessAnimation(tokenGenerated, dataObj.leaderEmail);
@@ -277,7 +282,7 @@ if (form) {
     });
 }
 
-// Trigger Animated Success Popup & Auto Close after 2.5s Hold
+// Trigger Animated Success Popup First (Holds 3s), then closes modal to return to landing page
 function triggerSuccessAnimation(token, email) {
     const successPopup = document.getElementById('successPopup');
     const popupToken = document.getElementById('successPopupToken');
@@ -295,25 +300,26 @@ function triggerSuccessAnimation(token, email) {
         `;
     }
 
-    // Reset Form & Hide Registration Modal
-    if (form) form.reset();
-    if (teamNameGroup) teamNameGroup.style.display = 'none';
-    if (additionalMembers) additionalMembers.style.display = 'none';
-    if (member1Title) member1Title.textContent = 'Participant / Team Leader';
-    if (formStatus) formStatus.style.display = 'none';
-
-    closeModal();
-
-    // Show Success Popup Overlay with 2.5s hold
+    // 1. Show Success Popup Overlay FIRST (Lock background scrolling)
     if (successPopup) {
-        document.body.style.overflow = 'hidden'; // Lock background scrolling
+        document.body.style.overflow = 'hidden';
         successPopup.classList.add('show');
 
-        // Hold firmly for 2.5 seconds (2500ms) before fading out
+        // 2. Hold popup visible for 3 seconds so participant clearly sees their Token ID
         setTimeout(() => {
+            // Fade out success popup overlay
             successPopup.classList.remove('show');
+
+            // 3. Reset Form & Close Registration Modal after popup finishes
+            if (form) form.reset();
+            if (teamNameGroup) teamNameGroup.style.display = 'none';
+            if (additionalMembers) additionalMembers.style.display = 'none';
+            if (member1Title) member1Title.textContent = 'Participant / Team Leader';
+            if (formStatus) formStatus.style.display = 'none';
+
+            closeModal();
             document.body.style.overflow = 'auto'; // Restore normal scrolling
-        }, 2700);
+        }, 3200);
     }
 }
 

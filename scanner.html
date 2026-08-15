@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizer Attendance Portal | IDEA-THON 2026</title>
+    <title>Organizer Attendance & Submission Portal | IDEA-THON 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -43,9 +43,9 @@
 
         .header {
             text-align: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .logo {
@@ -133,24 +133,62 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Mode Selector Toggle */
+        .mode-toggle-bar {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .mode-btn.active.checkin {
+            background: rgba(0, 255, 128, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+            box-shadow: 0 0 12px rgba(0, 255, 128, 0.3);
+        }
+
+        .mode-btn.active.checkout {
+            background: rgba(255, 170, 0, 0.15);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            box-shadow: 0 0 12px rgba(255, 170, 0, 0.3);
+        }
+
+        /* 4-Box Stats Bar */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
+            gap: 0.6rem;
             margin-bottom: 1.5rem;
         }
 
         .stat-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 0.8rem 0.5rem;
+            border-radius: 12px;
+            padding: 0.7rem 0.4rem;
             text-align: center;
         }
 
         .stat-val {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--accent-cyan);
         }
@@ -159,12 +197,68 @@
             color: var(--success);
         }
 
+        .stat-val.checkout {
+            color: var(--warning);
+        }
+
+        .stat-val.submitted {
+            color: var(--accent-magenta);
+        }
+
         .stat-lbl {
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 0.2rem;
+        }
+
+        /* Camera Controls Toolbar */
+        .camera-control-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cam-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .cam-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .cam-btn.stop {
+            border-color: rgba(255, 80, 80, 0.4);
+            color: #ff5050;
+        }
+
+        .cam-btn.stop:hover {
+            background: rgba(255, 80, 80, 0.15);
+        }
+
+        .cam-btn.start {
+            border-color: rgba(0, 255, 128, 0.4);
+            color: #00ff80;
+        }
+
+        .cam-btn.start:hover {
+            background: rgba(0, 255, 128, 0.15);
         }
 
         #reader {
@@ -174,6 +268,7 @@
             border: 2px solid var(--accent-purple);
             background: #000;
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .manual-input-group {
@@ -221,6 +316,22 @@
             width: 100%;
         }
 
+        .btn-secondary-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary-action:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
         /* Result Display Card (Initial State: HIDDEN) */
         .result-card {
             display: none;
@@ -237,10 +348,16 @@
             box-shadow: 0 0 30px rgba(0, 255, 128, 0.2);
         }
 
-        .result-card.already {
-            background: rgba(255, 180, 0, 0.12);
+        .result-card.checkout {
+            background: rgba(255, 170, 0, 0.12);
             border: 2px solid var(--warning);
-            box-shadow: 0 0 30px rgba(255, 180, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.2);
+        }
+
+        .result-card.already {
+            background: rgba(0, 242, 254, 0.12);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
         }
 
         .result-card.notfound {
@@ -282,8 +399,14 @@
             letter-spacing: 0.5px;
         }
 
-        .status-tag.already {
+        .status-tag.checkout {
             background: var(--warning);
+            color: #000;
+        }
+
+        .status-tag.already {
+            background: var(--accent-cyan);
+            color: #000;
         }
 
         .status-tag.notfound {
@@ -359,8 +482,155 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+
+            .scanner-card {
+                padding: 1.2rem 1rem;
+                border-radius: 20px;
+            }
+
             .stats-bar {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .stat-val {
+                font-size: 1.2rem;
+            }
+
+            .mode-toggle-bar {
+                flex-direction: row;
+                gap: 4px;
+            }
+
+            .mode-btn {
+                padding: 0.8rem 0.4rem;
+                font-size: 0.82rem;
+            }
+
+            .camera-control-bar {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .cam-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.7rem;
+            }
+
+            .manual-input-group {
+                flex-direction: column;
+            }
+
+            .manual-input-group input {
+                font-size: 16px;
+                /* Prevents iOS auto-zoom */
+                padding: 0.9rem 1rem;
+            }
+
+            .manual-input-group button {
+                width: 100%;
+                padding: 0.9rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-item[style*="grid-column"] {
+                grid-column: span 1 !important;
+            }
+        }
+
+        /* 🔄 STUNNING 2-SECOND DRIVE SYNC POPUP OVERLAY */
+        .sync-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 10, 15, 0.75);
+            backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 1.5rem;
+            animation: syncFadeIn 0.3s ease-out forwards;
+        }
+
+        .sync-popup-card {
+            background: rgba(18, 22, 34, 0.95);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.35);
+            border-radius: 24px;
+            padding: 2rem 2.5rem;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            animation: syncPopUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .sync-icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(0, 242, 254, 0.15);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.2rem;
+            animation: spinOnce 0.6s ease-in-out;
+        }
+
+        .sync-popup-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sync-popup-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @keyframes syncFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes syncPopUp {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spinOnce {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -371,10 +641,21 @@
 <body>
     <div class="header">
         <div class="logo">IDEA-THON <span>2026</span></div>
-        <div class="subtitle">Organizer Attendance & Check-In Portal</div>
+        <div class="subtitle">Organizer Attendance & Submission Portal</div>
     </div>
 
-    <!-- Organizer PIN Passcode Screen (Server-Side Verification) -->
+    <!-- 🔄 STUNNING 2-SECOND DRIVE SYNC POPUP OVERLAY -->
+    <div id="syncPopup" class="sync-popup-overlay">
+        <div class="sync-popup-card">
+            <div class="sync-icon-circle">
+                <span>🔄</span>
+            </div>
+            <h3 id="syncPopupTitle">Drive Sync Complete!</h3>
+            <p id="syncPopupMsg">Successfully matched & linked presentation files to Google Sheet.</p>
+        </div>
+    </div>
+
+    <!-- Organizer PIN Passcode Screen -->
     <div id="authScreen" class="auth-card">
         <div class="auth-icon">🔒</div>
         <h2>Organizer Access Required</h2>
@@ -389,7 +670,13 @@
     <!-- Main Scanner Portal (Unlocked after PIN entry) -->
     <div id="portalContent" class="portal-content">
         <div class="scanner-card">
-            <!-- Full Registration & Attendance Statistics -->
+            <!-- Mode Switcher: Check-In vs Check-Out -->
+            <div class="mode-toggle-bar">
+                <button type="button" class="mode-btn active checkin" id="modeCheckInBtn">🟢 Check-In Mode</button>
+                <button type="button" class="mode-btn checkout" id="modeCheckOutBtn">🔴 Check-Out Mode</button>
+            </div>
+
+            <!-- Real-Time Statistics -->
             <div class="stats-bar">
                 <div class="stat-box">
                     <div class="stat-val" id="totalRegistered">0</div>
@@ -400,21 +687,33 @@
                     <div class="stat-lbl">Checked-In</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-val" id="individualCount">0</div>
-                    <div class="stat-lbl">Individuals</div>
+                    <div class="stat-val checkout" id="totalCheckedOut">0</div>
+                    <div class="stat-lbl">Checked-Out</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-val" id="teamCount">0</div>
-                    <div class="stat-lbl">Teams</div>
+                    <div class="stat-val submitted" id="totalSubmitted">0</div>
+                    <div class="stat-lbl">Submitted</div>
                 </div>
+            </div>
+
+            <!-- Camera Control Toolbar (Flip, Stop, Start) -->
+            <div class="camera-control-bar">
+                <button type="button" class="cam-btn" id="toggleCamBtn">🔄 Switch Camera (Back/Front)</button>
+                <button type="button" class="cam-btn stop" id="stopCamBtn">⏸️ Stop Camera</button>
+                <button type="button" class="cam-btn start" id="startCamBtn" style="display: none;">▶️ Start
+                    Camera</button>
             </div>
 
             <div id="reader"></div>
 
             <form id="manualForm" class="manual-input-group">
                 <input type="text" id="tokenInput" placeholder="Scan or Type Token ID (e.g. IDH26-001)" required>
-                <button type="submit" class="btn">Check-In</button>
+                <button type="submit" class="btn" id="checkInSubmitBtn">Check-In</button>
             </form>
+
+            <div style="text-align: right; margin-bottom: 0.5rem;">
+                <button type="button" class="btn-secondary-action" id="syncDriveBtn">🔄 Sync Drive Submissions</button>
+            </div>
 
             <!-- Result Display Card (Initial State: HIDDEN) -->
             <div id="resultCard" class="result-card">
@@ -441,21 +740,27 @@
                         <label>OS Idea Name</label>
                         <span id="resOS">QuantumOS</span>
                     </div>
+                    <div class="info-item">
+                        <label>Submission Status</label>
+                        <span id="resSubStatus" style="color: var(--accent-cyan); font-weight: bold;">Pending</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Presentation PDF Link</label>
+                        <span id="resSubLink">Not Uploaded</span>
+                    </div>
                     <div class="info-item" style="grid-column: span 2;">
                         <label>Contact Details</label>
                         <span id="resContact">+91 9876543210 | john@example.com</span>
                     </div>
-                    <div class="info-item" style="grid-column: span 2;" id="membersBox">
-                        <label>Team Members</label>
-                        <span id="resMembers">John Doe</span>
-                    </div>
                 </div>
 
-                <div class="timestamp-box" id="resTime">Checked-In at 07:15 PM</div>
+                <div class="timestamp-box" id="resTime">Timestamp: --</div>
             </div>
         </div>
 
-        <div style="text-align: center;">
+        <div style="text-align: center; display: flex; justify-content: center; gap: 1.5rem;">
+            <a href="submit_report.html" class="nav-back" style="color: var(--accent-magenta);">📄 Open Online
+                Presentation Upload Portal →</a>
             <a href="index.html" class="nav-back">← Return to Main Website</a>
         </div>
     </div>
@@ -464,6 +769,11 @@
         // ⚠️ DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
 
+        let currentMode = 'checkin'; // 'checkin' or 'checkout'
+        let html5QrCode = null;
+        let currentFacingMode = "environment"; // "environment" = Back Camera, "user" = Front Camera
+        let isCameraRunning = false;
+
         const authScreen = document.getElementById('authScreen');
         const authForm = document.getElementById('authForm');
         const passcodeInput = document.getElementById('passcodeInput');
@@ -471,10 +781,17 @@
         const authErr = document.getElementById('authErr');
         const portalContent = document.getElementById('portalContent');
 
+        const modeCheckInBtn = document.getElementById('modeCheckInBtn');
+        const modeCheckOutBtn = document.getElementById('modeCheckOutBtn');
+
+        const toggleCamBtn = document.getElementById('toggleCamBtn');
+        const stopCamBtn = document.getElementById('stopCamBtn');
+        const startCamBtn = document.getElementById('startCamBtn');
+
         const totalRegisteredEl = document.getElementById('totalRegistered');
         const totalPresentEl = document.getElementById('totalPresent');
-        const individualCountEl = document.getElementById('individualCount');
-        const teamCountEl = document.getElementById('teamCount');
+        const totalCheckedOutEl = document.getElementById('totalCheckedOut');
+        const totalSubmittedEl = document.getElementById('totalSubmitted');
 
         const resultCard = document.getElementById('resultCard');
         const resToken = document.getElementById('resToken');
@@ -484,13 +801,33 @@
         const resTeam = document.getElementById('resTeam');
         const resDept = document.getElementById('resDept');
         const resOS = document.getElementById('resOS');
+        const resSubStatus = document.getElementById('resSubStatus');
+        const resSubLink = document.getElementById('resSubLink');
         const resContact = document.getElementById('resContact');
-        const resMembers = document.getElementById('resMembers');
         const resTime = document.getElementById('resTime');
         const manualForm = document.getElementById('manualForm');
         const tokenInput = document.getElementById('tokenInput');
+        const checkInSubmitBtn = document.getElementById('checkInSubmitBtn');
+        const syncDriveBtn = document.getElementById('syncDriveBtn');
 
-        // Check if session is already authenticated
+        // Toggle Check-In vs Check-Out Modes
+        modeCheckInBtn.addEventListener('click', () => {
+            currentMode = 'checkin';
+            modeCheckInBtn.className = 'mode-btn active checkin';
+            modeCheckOutBtn.className = 'mode-btn checkout';
+            checkInSubmitBtn.textContent = 'Check-In';
+            tokenInput.placeholder = 'Scan or Type Token ID for Check-In (e.g. IDH26-001)';
+        });
+
+        modeCheckOutBtn.addEventListener('click', () => {
+            currentMode = 'checkout';
+            modeCheckOutBtn.className = 'mode-btn active checkout';
+            modeCheckInBtn.className = 'mode-btn checkin';
+            checkInSubmitBtn.textContent = 'Check-Out';
+            tokenInput.placeholder = 'Scan or Type Token ID for Check-Out (e.g. IDH26-001)';
+        });
+
+        // Check if session is authenticated
         if (sessionStorage.getItem('organizer_auth') === 'true') {
             unlockPortal();
         }
@@ -502,7 +839,7 @@
 
             if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
                 authErr.style.display = 'block';
-                authErr.textContent = '⚠️ Please set your scriptURL in scanner.html!';
+                authErr.textContent = '⚠️ Please set scriptURL in scanner.html!';
                 return;
             }
 
@@ -519,14 +856,14 @@
                     unlockPortal();
                 } else {
                     authErr.style.display = 'block';
-                    authErr.textContent = '❌ Incorrect Organizer Passcode! Please try again.';
+                    authErr.textContent = '❌ Incorrect Organizer Passcode!';
                     passcodeInput.value = '';
                     passcodeInput.focus();
                 }
             } catch (err) {
                 console.error("PIN Auth Error:", err);
                 authErr.style.display = 'block';
-                authErr.textContent = '⚠️ Connection Error verifying PIN. Check internet connection.';
+                authErr.textContent = '⚠️ Connection Error. Check internet connection.';
             } finally {
                 unlockBtn.disabled = false;
                 unlockBtn.textContent = 'Unlock Portal';
@@ -537,10 +874,10 @@
             authScreen.style.display = 'none';
             portalContent.style.display = 'block';
             fetchStats();
-            initScanner();
+            startScanner(currentFacingMode);
         }
 
-        // Fetch Complete Event Statistics
+        // Fetch Real-Time Stats
         async function fetchStats() {
             if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') return;
             try {
@@ -549,15 +886,15 @@
                 if (data.totalRegistered !== undefined) {
                     totalRegisteredEl.textContent = data.totalRegistered;
                     totalPresentEl.textContent = data.totalPresent;
-                    individualCountEl.textContent = data.individualCount || 0;
-                    teamCountEl.textContent = data.teamCount || 0;
+                    totalCheckedOutEl.textContent = data.totalCheckedOut || 0;
+                    totalSubmittedEl.textContent = data.totalSubmitted || 0;
                 }
             } catch (err) {
                 console.error("Fetch Stats Error:", err);
             }
         }
 
-        // Attendance Check-In Processing
+        // Attendance Processing (Check-In or Check-Out)
         async function processCheckIn(token) {
             if (!token || token.trim() === '') return;
 
@@ -565,11 +902,15 @@
             tokenInput.value = token;
 
             try {
-                const response = await fetch(`${scriptURL}?action=markAttendance&token=${encodeURIComponent(token)}`);
+                const response = await fetch(`${scriptURL}?action=markAttendance&token=${encodeURIComponent(token)}&mode=${currentMode}`);
                 const data = await response.json();
 
                 if (data.result === 'success') {
                     showResultCard('success', 'Checked-In ✓', data);
+                    playBeepSound();
+                    fetchStats();
+                } else if (data.result === 'success_checkout') {
+                    showResultCard('checkout', 'Checked-Out 🔴', data);
                     playBeepSound();
                     fetchStats();
                 } else if (data.result === 'already_marked') {
@@ -578,7 +919,7 @@
                     showNotFoundCard(token, data.message || `Token ${token} not found in Google Sheet.`);
                 }
             } catch (err) {
-                console.error("Check-In API Error:", err);
+                console.error("Attendance API Error:", err);
                 showNotFoundCard(token, 'Network error. Please check internet connection.');
             }
         }
@@ -596,9 +937,35 @@
             resTeam.textContent = data.teamName || 'N/A';
             resDept.textContent = data.dept || 'N/A';
             resOS.textContent = data.osName || 'N/A';
+
+            resSubStatus.textContent = data.subStatus || 'Pending';
+            if (data.subStatus === 'SUBMITTED') {
+                resSubStatus.style.color = '#00ff80';
+            } else {
+                resSubStatus.style.color = '#ffb400';
+            }
+
+            let fileUrl = '';
+            if (data.link) {
+                const rawLink = String(data.link);
+                if (rawLink.includes('HYPERLINK(')) {
+                    const match = rawLink.match(/"(https?:\/\/[^"]+)"/);
+                    if (match) fileUrl = match[1];
+                } else if (rawLink.startsWith('http')) {
+                    fileUrl = rawLink;
+                }
+            }
+
+            if (fileUrl) {
+                resSubLink.innerHTML = `<a href="${fileUrl}" target="_blank" style="color: #00f2fe; font-weight: bold; text-decoration: underline;">📄 View Presentation PDF</a>`;
+            } else if (data.subStatus === 'SUBMITTED') {
+                resSubLink.textContent = 'SUBMITTED (File Linked in Sheet)';
+            } else {
+                resSubLink.textContent = 'Not Uploaded Yet';
+            }
+
             resContact.textContent = `${data.contact || ''} | ${data.email || ''}`;
-            resMembers.textContent = data.members || data.name;
-            resTime.textContent = `Check-In Timestamp: ${data.checkInTime}`;
+            resTime.textContent = data.checkOutTime ? `Check-Out Timestamp: ${data.checkOutTime}` : `Check-In Timestamp: ${data.checkInTime}`;
         }
 
         function showNotFoundCard(token, errorMsg) {
@@ -614,14 +981,53 @@
             `;
         }
 
-        // Beep Tone Audio Feedback
+        // 🔄 2-SECOND DRIVE SYNC POPUP OVERLAY FUNCTION
+        function showSyncPopup(title, message, duration = 2000) {
+            const popup = document.getElementById('syncPopup');
+            document.getElementById('syncPopupTitle').textContent = title;
+            document.getElementById('syncPopupMsg').innerHTML = message;
+
+            popup.style.display = 'flex';
+
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, duration);
+        }
+
+        // Drive Sync Button Handler
+        syncDriveBtn.addEventListener('click', async () => {
+            syncDriveBtn.disabled = true;
+            syncDriveBtn.textContent = 'Scanning Drive...';
+            try {
+                const res = await fetch(`${scriptURL}?action=syncDriveFolder`);
+                const data = await res.json();
+
+                showSyncPopup(
+                    '✅ Drive Sync Complete!',
+                    `Successfully matched & linked <strong style="color:#00f2fe; font-size:1.1rem;">${data.matchedFiles || 0}</strong> presentation files to Google Sheet!`,
+                    2000
+                );
+                fetchStats();
+            } catch (err) {
+                showSyncPopup(
+                    '⚠️ Sync Error',
+                    `Drive Sync Error: ${err.message}`,
+                    2500
+                );
+            } finally {
+                syncDriveBtn.disabled = false;
+                syncDriveBtn.textContent = '🔄 Sync Drive Submissions';
+            }
+        });
+
+        // Audio Beep
         function playBeepSound() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
-                osc.frequency.value = 880;
+                osc.frequency.value = currentMode === 'checkin' ? 880 : 440;
                 osc.connect(gain);
                 gain.connect(ctx.destination);
                 osc.start();
@@ -629,29 +1035,79 @@
             } catch (e) { }
         }
 
-        // Manual Token Input Form Submit
         manualForm.addEventListener('submit', (e) => {
             e.preventDefault();
             processCheckIn(tokenInput.value);
         });
 
-        // Initialize Camera QR Scanner
+        // --- CAMERA SCANNER CONTROLS (Front/Back Flip, Stop, Start) ---
         let isProcessing = false;
-        function initScanner() {
-            function onScanSuccess(decodedText) {
-                if (isProcessing) return;
-                isProcessing = true;
 
-                processCheckIn(decodedText);
+        function onScanSuccess(decodedText) {
+            if (isProcessing) return;
+            isProcessing = true;
+            processCheckIn(decodedText);
+            setTimeout(() => { isProcessing = false; }, 2500);
+        }
 
-                setTimeout(() => {
-                    isProcessing = false;
-                }, 2500);
+        async function startScanner(facingMode) {
+            if (html5QrCode && isCameraRunning) {
+                try { await html5QrCode.stop(); } catch (e) { }
             }
 
-            const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 240, height: 240 } });
-            html5QrcodeScanner.render(onScanSuccess);
+            html5QrCode = new Html5Qrcode("reader");
+            const config = { fps: 10, qrbox: { width: 240, height: 240 } };
+
+            try {
+                await html5QrCode.start(
+                    { facingMode: facingMode },
+                    config,
+                    onScanSuccess
+                );
+                isCameraRunning = true;
+                stopCamBtn.style.display = 'inline-flex';
+                startCamBtn.style.display = 'none';
+            } catch (err) {
+                console.warn("Facing mode failed, falling back to camera devices:", err);
+                try {
+                    const devices = await Html5Qrcode.getCameras();
+                    if (devices && devices.length > 0) {
+                        const selectedCam = (facingMode === 'user' && devices.length > 1) ? devices[1].id : devices[0].id;
+                        await html5QrCode.start(selectedCam, config, onScanSuccess);
+                        isCameraRunning = true;
+                        stopCamBtn.style.display = 'inline-flex';
+                        startCamBtn.style.display = 'none';
+                    }
+                } catch (e2) {
+                    console.error("Camera init failed:", e2);
+                }
+            }
         }
+
+        async function stopScanner() {
+            if (html5QrCode && isCameraRunning) {
+                try {
+                    await html5QrCode.stop();
+                    isCameraRunning = false;
+                    stopCamBtn.style.display = 'none';
+                    startCamBtn.style.display = 'inline-flex';
+                } catch (e) { }
+            }
+        }
+
+        toggleCamBtn.addEventListener('click', async () => {
+            currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+            toggleCamBtn.textContent = (currentFacingMode === "environment") ? "🔄 Camera: BACK (Click to Switch)" : "🔄 Camera: FRONT (Click to Switch)";
+            await startScanner(currentFacingMode);
+        });
+
+        stopCamBtn.addEventListener('click', () => {
+            stopScanner();
+        });
+
+        startCamBtn.addEventListener('click', () => {
+            startScanner(currentFacingMode);
+        });
     </script>
 </body>
 

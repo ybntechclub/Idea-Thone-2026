@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Final Presentation | IDEA-THON 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090a0f;
+            --bg-card: rgba(18, 22, 34, 0.9);
+            --accent-cyan: #00f2fe;
+            --accent-purple: #7000ff;
+            --accent-magenta: #f355da;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+            --success: #00ff80;
+            --error: #ff5050;
+            --warning: #ffb400;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .upload-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .step-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .verify-box {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .verify-box input,
+        .form-group input[type="url"] {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+
+        }
+
+        .verify-box input {
+            text-transform: uppercase;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .verify-box input:focus,
+        .form-group input[type="url"]:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-w100 {
+            width: 100%;
+        }
+
+        /* Participant Info Banner */
+        .participant-banner {
+            display: none;
+            background: rgba(0, 255, 128, 0.08);
+            border: 1px solid var(--success);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .banner-title {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .banner-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .banner-status {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        /* File Dropzone */
+        .file-upload-box {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-upload-box:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        .file-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .divider::before {
+            margin-right: .5em;
+        }
+
+        .divider::after {
+            margin-left: .5em;
+        }
+
+        .status-msg {
+            display: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .status-msg.success {
+            background: rgba(0, 255, 128, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .status-msg.error {
+            background: rgba(255, 80, 80, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .nav-back {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            display: inline-block;
+        }
+
+        .nav-back:hover {
+            color: var(--accent-cyan);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+
+            .upload-card {
+                padding: 1.5rem 1rem;
+                border-radius: 20px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.88rem;
+            }
+
+            .verify-box {
+                flex-direction: column;
+            }
+
+            .verify-box input,
+            .form-group input[type="url"] {
+                font-size: 16px;
+                /* Prevents iOS auto-zoom */
+                padding: 0.9rem 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 0.9rem 1rem;
+                font-size: 1rem;
+            }
+
+            .modal-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 20px;
+            }
+
+            .icon-badge-wrapper {
+                width: 65px;
+                height: 65px;
+                font-size: 2rem;
+            }
+        }
+
+        /* 🌟 STUNNING FULLSCREEN MODAL OVERLAY */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 10, 15, 0.85);
+            backdrop-filter: blur(16px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 1.5rem;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .modal-card {
+            background: rgba(18, 22, 34, 0.95);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 50px rgba(0, 242, 254, 0.3);
+            border-radius: 28px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            animation: popUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .modal-card.locked {
+            border-color: var(--warning);
+            box-shadow: 0 0 50px rgba(255, 180, 0, 0.3);
+        }
+
+        .icon-badge-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .icon-badge-wrapper.success {
+            background: rgba(0, 255, 128, 0.15);
+            border: 2px solid var(--success);
+            box-shadow: 0 0 25px rgba(0, 255, 128, 0.4);
+            animation: pulseGlow 2s infinite;
+        }
+
+        .icon-badge-wrapper.locked {
+            background: rgba(255, 180, 0, 0.15);
+            border: 2px solid var(--warning);
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
+            animation: pulseGlowLocked 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(0, 255, 128, 0.7);
+            }
+        }
+
+        @keyframes pulseGlowLocked {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 180, 0, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 180, 0, 0.7);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">IDEA-THON <span>2026</span></div>
+        <div class="subtitle">Online Final OS Idea Presentation Submission Portal</div>
+    </div>
+
+    <div class="upload-card">
+        <!-- Step 1: Verify Token -->
+        <div class="step-title">
+            <span>1️⃣</span> Verify Your Registration Token
+        </div>
+
+        <form id="verifyForm" class="form-group">
+            <label>Registration Token ID *</label>
+            <div class="verify-box">
+                <input type="text" id="tokenInput" placeholder="e.g. IDH26-001" required>
+                <button type="submit" class="btn" id="verifyBtn">Verify</button>
+            </div>
+        </form>
+
+        <!-- Verified Participant Info Banner -->
+        <div id="participantBanner" class="participant-banner">
+            <div class="banner-title" id="bannerName">John Doe</div>
+            <div class="banner-meta" id="bannerMeta">Team: Tech Titans | OS: QuantumOS</div>
+            <div class="banner-status" id="bannerStatus">Submission Status: Pending</div>
+        </div>
+
+        <!-- Step 2: Upload Presentation File Directly -->
+        <div id="uploadSection" style="display: none;">
+            <div class="step-title">
+                <span>2️⃣</span> Upload Final Presentation PDF File
+            </div>
+
+            <form id="submissionForm">
+                <!-- PRIMARY ACTION: Direct File Upload Box -->
+                <div class="file-upload-box" onclick="document.getElementById('fileInput').click()">
+                    <div class="file-icon">📄</div>
+                    <div id="fileSelectedName"><strong>Click to Select PDF or Presentation File</strong></div>
+                    <div class="file-hint">Supported formats: .pdf, .ppt, .pptx, .docx (Select directly from your
+                        device)</div>
+                    <input type="file" id="fileInput" accept=".pdf,.ppt,.pptx,.docx">
+                </div>
+
+                <div class="divider">OR PASTE GOOGLE DRIVE / CANVA PRESENTATION LINK</div>
+
+                <div class="form-group">
+                    <label>🔗 Shareable Presentation Link (Google Drive / Canva / Slides URL)</label>
+                    <input type="url" id="linkInput" placeholder="https://drive.google.com/file/d/... or Canva Link">
+                </div>
+
+                <button type="submit" class="btn btn-w100" id="submitReportBtn" style="margin-top: 1.2rem;">🚀 Upload &
+                    Submit Presentation</button>
+            </form>
+        </div>
+
+        <div id="statusMsg" class="status-msg"></div>
+    </div>
+
+    <a href="index.html" class="nav-back">← Return to IDEA-THON 2026 Landing Page</a>
+
+    <!-- 🌟 STUNNING SUBMISSION SUCCESS / LOCKED POPUP OVERLAY -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="modalCard" class="modal-card">
+            <div id="modalIcon" class="icon-badge-wrapper success">
+                <span id="modalIconEmoji">🎉</span>
+            </div>
+
+            <h2 id="modalTitle"
+                style="font-family: 'Space Grotesk', sans-serif; color: #fff; font-size: 1.5rem; margin-bottom: 0.5rem;">
+                Submission Successful!
+            </h2>
+
+            <div id="modalTokenBadge">
+                IDH26-001
+            </div>
+
+            <p id="modalSubTitle"
+                style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; margin-top: 1rem;">
+                Your Final OS Presentation Report has been recorded & saved!
+            </p>
+
+            <div id="modalLinkContainer" style="margin-bottom: 1.5rem; display: none;">
+                <a id="modalFileBtn" href="#" target="_blank" class="btn"
+                    style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600;">
+                    📄 View Submitted Presentation Link
+                </a>
+            </div>
+
+            <button type="button" id="modalCloseBtn" class="btn btn-w100"
+                style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;">
+                Close & Return
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxweIwbGYUPCn-BFLWR3Pr9LesyeygvDfH-hm8xu_ytWmodEMoFLmFZ-m762rH6sUOt/exec';
+
+        const verifyForm = document.getElementById('verifyForm');
+        const tokenInput = document.getElementById('tokenInput');
+        const verifyBtn = document.getElementById('verifyBtn');
+
+        const participantBanner = document.getElementById('participantBanner');
+        const bannerName = document.getElementById('bannerName');
+        const bannerMeta = document.getElementById('bannerMeta');
+        const bannerStatus = document.getElementById('bannerStatus');
+
+        const uploadSection = document.getElementById('uploadSection');
+        const submissionForm = document.getElementById('submissionForm');
+        const fileInput = document.getElementById('fileInput');
+        const fileSelectedName = document.getElementById('fileSelectedName');
+        const linkInput = document.getElementById('linkInput');
+        const submitReportBtn = document.getElementById('submitReportBtn');
+        const statusMsg = document.getElementById('statusMsg');
+
+        let verifiedToken = null;
+        let participantName = '';
+        let base64File = null;
+        let selectedFileName = '';
+
+        // Handle File Selection
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                selectedFileName = file.name;
+                fileSelectedName.innerHTML = `<strong>Selected:</strong> ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    base64File = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Step 1: Verify Token
+        verifyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const token = tokenInput.value.trim().toUpperCase();
+
+            if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                showStatus('⚠️ Setup Required: Please set scriptURL in submit_report.html!', 'error');
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'Verifying...';
+            statusMsg.style.display = 'none';
+
+            try {
+                const res = await fetch(`${scriptURL}?action=getParticipant&token=${encodeURIComponent(token)}`);
+                const data = await res.json();
+
+                if (data.result === 'success') {
+                    verifiedToken = token;
+                    participantName = data.name;
+                    bannerName.textContent = data.name;
+                    bannerMeta.textContent = `Type: ${data.participation.toUpperCase()} | Team: ${data.teamName} | OS Idea: ${data.osName}`;
+
+                    if (data.subStatus === 'SUBMITTED') {
+                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED 🔒</strong>`;
+                        participantBanner.style.display = 'block';
+                        uploadSection.style.display = 'none';
+                        showStatus(`🔒 <strong>Submission Locked!</strong><br>You have already submitted your final presentation report for Token <strong>${token}</strong>. Re-submissions are not allowed.`, 'error');
+
+                        // Show Beautiful Locked Modal Popup!
+                        openSuccessPopup(token, data.name, data.link, true);
+                        return;
+                    } else {
+                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">Pending ⏳</strong>`;
+                        participantBanner.style.display = 'block';
+                        uploadSection.style.display = 'block';
+                        showStatus('✅ Token verified successfully! Please paste your presentation link or select a file below.', 'success');
+                    }
+                } else {
+                    showStatus(`❌ Invalid Token ID (${token}). Record not found!`, 'error');
+                    participantBanner.style.display = 'none';
+                    uploadSection.style.display = 'none';
+                }
+            } catch (err) {
+                console.error("Verification Error:", err);
+                showStatus('⚠️ Connection error verifying token. Check your internet connection.', 'error');
+            } finally {
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = 'Verify';
+            }
+        });
+
+        // Step 2: Submit Report Link / File to Google Sheet
+        submissionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!verifiedToken) {
+                showStatus('❌ Please verify your Token ID first!', 'error');
+                return;
+            }
+
+            const driveLink = linkInput.value.trim();
+            if (!base64File && !driveLink) {
+                showStatus('⚠️ Please paste a presentation link OR select a file!', 'error');
+                return;
+            }
+
+            submitReportBtn.disabled = true;
+            submitReportBtn.textContent = 'Submitting Report...';
+            showStatus('⌛ Recording submission in Google Sheet...', 'success');
+
+            const payload = {
+                action: 'submitReport',
+                token: verifiedToken,
+                fileData: base64File,
+                fileName: selectedFileName,
+                driveLink: driveLink
+            };
+
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.result === 'success' || result.result === 'already_submitted') {
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED 🔒</strong>`;
+                    uploadSection.style.display = 'none';
+                    showStatus(`🎉 Final Presentation Submitted & Locked!`, 'success');
+
+                    // Show Stunning Success Popup Modal!
+                    openSuccessPopup(verifiedToken, participantName, result.fileUrl || driveLink, false);
+
+                    submissionForm.reset();
+                    fileSelectedName.innerHTML = `<strong>Click to select PDF or Presentation File</strong>`;
+                    base64File = null;
+                } else {
+                    showStatus(`⚠️ <strong>Upload Issue:</strong> ${result.message || 'Error recording submission.'}`, 'error');
+                }
+            } catch (err) {
+                console.error("Submission Upload Error:", err);
+                showStatus(`⚠️ <strong>Upload Connection Error:</strong> ${err.message}`, 'error');
+            } finally {
+                submitReportBtn.disabled = false;
+                submitReportBtn.textContent = '🚀 Submit Final Presentation Report';
+            }
+        });
+
+        function showStatus(msg, type) {
+            statusMsg.style.display = 'block';
+            statusMsg.className = `status-msg ${type}`;
+            statusMsg.innerHTML = msg;
+        }
+
+        // 🌟 FUNCTION TO OPEN STUNNING MODAL POPUP
+        function openSuccessPopup(token, name, fileUrl, isLocked) {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalCard = document.getElementById('modalCard');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalIconEmoji = document.getElementById('modalIconEmoji');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalTokenBadge = document.getElementById('modalTokenBadge');
+            const modalSubTitle = document.getElementById('modalSubTitle');
+            const modalLinkContainer = document.getElementById('modalLinkContainer');
+            const modalFileBtn = document.getElementById('modalFileBtn');
+
+            modalTokenBadge.innerHTML = `<span style="display: inline-block; background: rgba(0, 242, 254, 0.15); border: 1px solid var(--accent-cyan); color: var(--accent-cyan); font-family: monospace; font-weight: 700; font-size: 1.3rem; padding: 0.4rem 1.4rem; border-radius: 50px;">${token}</span>`;
+
+            if (isLocked) {
+                modalCard.className = 'modal-card locked';
+                modalIcon.className = 'icon-badge-wrapper locked';
+                modalIconEmoji.textContent = '🔒';
+                modalTitle.textContent = 'Submission Locked & Recorded!';
+                modalSubTitle.innerHTML = `Participant: <strong>${name || 'Participant'}</strong><br>Your final presentation report for Token <strong>${token}</strong> has been submitted and locked in Google Sheets.`;
+            } else {
+                modalCard.className = 'modal-card';
+                modalIcon.className = 'icon-badge-wrapper success';
+                modalIconEmoji.textContent = '🎉';
+                modalTitle.textContent = 'Presentation Submitted!';
+                modalSubTitle.innerHTML = `Congratulations <strong>${name || 'Participant'}</strong>! 👋<br>Your final presentation report has been successfully recorded and linked!`;
+            }
+
+            if (fileUrl && fileUrl.startsWith('http')) {
+                modalFileBtn.href = fileUrl;
+                modalLinkContainer.style.display = 'block';
+            } else {
+                modalLinkContainer.style.display = 'none';
+            }
+
+            modalOverlay.style.display = 'flex';
+        }
+
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            document.getElementById('modalOverlay').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
