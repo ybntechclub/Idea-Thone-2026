@@ -16,8 +16,23 @@
 </head>
 
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-crest-wrapper">
+                <img src="assets/ybn_logo.png" alt="YBN University" class="preloader-univ-logo">
+            </div>
+            <div class="preloader-logo">IDEA-THON <span>2026</span></div>
+            <div class="preloader-subtext">YBN UNIVERSITY • DEPT. OF ADVANCED COMPUTING</div>
+            <div class="preloader-bar-wrapper">
+                <div class="preloader-bar-fill"></div>
+            </div>
+            <div class="preloader-counter">0%</div>
+            <div class="preloader-status-text">INITIALIZING EXPERIENCE...</div>
+        </div>
+    </div>
+
+    <!-- Ambient Cursor Glow Effect -->
     <div class="cursor-glow"></div>
 
     <!-- Background Elements -->
@@ -28,27 +43,36 @@
     <!-- 🌐 RESPONSIVE NAVBAR -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="logo">IDEA-THON <span>2026</span></div>
+            <!-- 1. LEFT: Brand Group with Glowing YBN Logo & Animated Title -->
+            <a href="#" class="nav-brand">
+                <div class="nav-logo-glow-wrapper">
+                    <img src="assets/ybn_logo.png" alt="YBN University" class="navbar-ybn-logo">
+                </div>
+                <span class="logo">IDEA-THON <span>2026</span></span>
+            </a>
 
-            <div class="nav-links" id="navLinks">
-                <a href="#notice" class="nav-notice-link" title="Live Event Notice Board"><span
-                        class="badge-dot"></span> Notice</a>
-                <a href="#challenge" title="Discover the OS Challenge">Challenge</a>
-                <a href="#requirements" title="Submission Requirements">Requirements</a>
-                <a href="#criteria" title="Evaluation Criteria">Evaluation</a>
-                <a href="#leadership" title="Event Leaderboard & Teams">Leaderboard</a>
-                <a href="submit_report.html" class="nav-report-link" title="Upload Final OS Idea Presentation Deck">📄
-                    Submit</a>
-                <a href="scanner.html" class="nav-scanner-link" title="Organizer Attendance Check-In Portal">📷
-                    Check-In</a>
-                <a href="#" class="btn-nav open-modal-btn">Register</a>
+            <!-- 2 & 3. DESKTOP & MOBILE MENU WRAPPER -->
+            <div class="nav-menu" id="navLinks">
+                <!-- Center Navigation Links -->
+                <div class="nav-center">
+                    <a href="#challenge" class="nav-link" title="Discover the OS Challenge">Challenge</a>
+                    <a href="#requirements" class="nav-link" title="Submission Requirements">Requirements</a>
+                    <a href="#criteria" class="nav-link" title="Evaluation Criteria">Evaluation</a>
+                    <a href="#leadership" class="nav-link" title="Event Leaderboard & Teams">Leaderboard</a>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="nav-right">
+                    <a href="submit_report.html" class="nav-action-link submit-link" title="Upload Presentation Deck">Submit Deck</a>
+                    <a href="scanner.html" class="nav-action-link checkin-link" title="Organizer Attendance Portal">Check-In</a>
+                    <a href="#" class="btn-nav open-modal-btn">Register</a>
+                </div>
             </div>
 
+            <!-- Mobile Actions & Hamburger -->
             <div class="mobile-nav-actions">
-                <a href="submit_report.html" class="nav-report-link mobile-scanner-btn" title="Submit Presentation">📄
-                    Submit</a>
-                <a href="scanner.html" class="nav-scanner-link mobile-scanner-btn"
-                    title="Organizer Attendance Portal">📷 Check-In</a>
+                <a href="submit_report.html" class="nav-action-link submit-link mobile-scanner-btn" title="Submit Presentation">Submit</a>
+                <a href="scanner.html" class="nav-action-link checkin-link mobile-scanner-btn" title="Check-In Portal">Check-In</a>
                 <button class="hamburger-btn" id="menuToggle" aria-label="Toggle Menu">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -58,42 +82,114 @@
         </div>
     </nav>
 
+    <!-- 🚀 HERO SECTION (ORGANIZED & EXECUTIVE GRADE) -->
     <header class="hero">
-        <div class="hero-content reveal">
-            <div class="organizers"><span class="badge-dot"></span> Department of Advanced Computing <span
-                    class="badge-sep">&times;</span> YBN Tech Club</div>
-            <h1 class="glitch" data-text="IDEA-THON 2026">IDEA-THON 2026</h1>
-            <h2 class="theme-text">Reimagining the Operating System for the Next Generation</h2>
-            <div class="hero-event-date-badge">
-                🗓️ Event Date: <strong>31 August 2026</strong> | 📍 Venue: <strong>Block A, 2nd Floor</strong>
+        <div class="hero-container container">
+            <!-- Top Organizer Eyebrow Pill -->
+            <div class="hero-eyebrow">
+                <span class="live-dot"></span>
+                <span class="hero-org-text">Department of Advanced Computing <span class="org-sep">&times;</span> YBN Tech Club</span>
             </div>
-            <p class="hero-desc">Have you ever wondered why we still use operating systems designed around concepts
-                created decades ago? What if you could forget Android, iOS, Windows, macOS, and Linux and design an OS
-                completely from scratch?</p>
-            <div class="hero-actions">
-                <a href="#challenge" class="btn btn-primary">Discover the Challenge</a>
-                <a href="#" class="btn btn-secondary open-modal-btn">Register Now</a>
+
+            <!-- Grand Hero Heading -->
+            <h1 class="hero-main-title">
+                IDEA-THON <span class="hero-gradient-text">2026</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Reimagining the Operating System for the Next Generation
+            </p>
+
+            <!-- Event Key Facts Bento Strip (Date, Venue, Format) -->
+            <div class="hero-meta-grid">
+                <div class="meta-pill glass">
+                    <span class="meta-label">EVENT DATE</span>
+                    <span class="meta-value">31 August 2026</span>
+                </div>
+                <div class="meta-pill glass highlight">
+                    <span class="meta-label">VENUE</span>
+                    <span class="meta-value">Block A, Lab 1 & 2, 2nd Floor</span>
+                </div>
+                <div class="meta-pill glass">
+                    <span class="meta-label">FORMAT</span>
+                    <span class="meta-value">Concept Deck • No Code</span>
+                </div>
+            </div>
+
+            <!-- Crisp Problem Statement Teaser -->
+            <p class="hero-lead-text">
+                What if you could forget Android, iOS, Windows, macOS, and Linux to design an operating system completely from scratch? An open challenge for visionaries, designers, and future architects.
+            </p>
+
+            <!-- Primary CTAs -->
+            <div class="hero-action-buttons">
+                <a href="#challenge" class="btn btn-primary">
+                    <span>Discover Challenge</span>
+                    <span class="arrow-icon">&rarr;</span>
+                </a>
+                <a href="#" class="btn btn-secondary open-modal-btn">Register Team / Idea</a>
+                <a href="submit_report.html" class="btn-text-link">Submit Deck &rarr;</a>
+            </div>
+
+            <!-- 🌟 REDESIGNED 4-PILLAR STAT BENTO GRID -->
+            <div class="hero-stats-bento-grid">
+                <div class="stat-bento-card glass">
+                    <div class="stat-bento-top">
+                        <span class="stat-bento-num num-cyan">01</span>
+                        <span class="stat-bento-tag">CONCEPT</span>
+                    </div>
+                    <h3 class="stat-bento-title">Pure Vision</h3>
+                    <p class="stat-bento-desc">Architecture & UX • No coding needed</p>
+                </div>
+                <div class="stat-bento-card glass">
+                    <div class="stat-bento-top">
+                        <span class="stat-bento-num num-purple">02</span>
+                        <span class="stat-bento-tag">FORMAT</span>
+                    </div>
+                    <h3 class="stat-bento-title">Team or Solo</h3>
+                    <p class="stat-bento-desc">Individual or up to 4 Members</p>
+                </div>
+                <div class="stat-bento-card glass">
+                    <div class="stat-bento-top">
+                        <span class="stat-bento-num num-green">03</span>
+                        <span class="stat-bento-tag">SCORING</span>
+                    </div>
+                    <h3 class="stat-bento-title">Live Scorecard</h3>
+                    <p class="stat-bento-desc">Real-time multi-round score tracking</p>
+                </div>
+                <div class="stat-bento-card glass">
+                    <div class="stat-bento-top">
+                        <span class="stat-bento-num num-magenta">04</span>
+                        <span class="stat-bento-tag">FINALE</span>
+                    </div>
+                    <h3 class="stat-bento-title">Grand Final</h3>
+                    <p class="stat-bento-desc">31 August 2026 • Block A, Lab 1 & 2</p>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- 📢 LIVE NOTICE BOARD PANEL & EVENT TIMELINE -->
     <section id="notice" class="notice-section container reveal">
-        <div class="notice-banner glass">
+        <!-- Live Announcement Banner (Hidden For Now) -->
+        <div class="notice-banner glass" style="display: none;">
             <div class="notice-header">
                 <div class="notice-badge"><span class="badge-dot"></span> LIVE ANNOUNCEMENT</div>
-                <span class="notice-date" id="liveNoticeHeaderMeta">EVENT DATE: 31 AUGUST 2026 | VENUE: BLOCK A, 2ND
-                    FLOOR</span>
+                <span class="notice-date" id="liveNoticeHeaderMeta">EVENT DATE: 31 AUGUST 2026 | VENUE: BLOCK A, LAB 1 & 2, 2ND FLOOR</span>
             </div>
             <div class="notice-body" style="flex-direction: column; gap: 1.2rem;">
                 <div style="display: flex; gap: 1.2rem; align-items: flex-start; width: 100%;">
-                    <div class="notice-icon">📢</div>
+                    <div class="notice-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
                     <div class="notice-text">
-                        <h3 id="liveNoticeTitle">OS Challenge Problem Statement (UNLOCKED & LIVE FOR DEMO!)</h3>
+                        <h3 id="liveNoticeTitle">OS Challenge Problem Statement</h3>
                         <p id="liveNoticeMessage">The official prompt for <strong>IDEA-THON 2026</strong> (Scheduled for
-                            <strong>31 August 2026</strong> at <strong>Block A, 2nd Floor</strong>) is now
-                            <strong>UNLOCKED & LIVE</strong>! Re-imagine computing from scratch. Focus on vision,
-                            innovation, and your <strong>"Wow" feature</strong>!</p>
+                            <strong>31 August 2026</strong> at <strong>Block A, Lab 1 & 2, 2nd Floor</strong>) will unlock on
+                            <strong>29 August 2026, 3:00 PM</strong>!</p>
                     </div>
                 </div>
 
@@ -103,7 +199,7 @@
                         style="background: rgba(0, 242, 254, 0.05); border-left: 4px solid var(--accent-cyan); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem;">
                         <h4
                             style="font-family: var(--font-heading); color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.5rem;">
-                            💡 The Official OS Prompt Question:</h4>
+                            The Official OS Prompt Question:</h4>
                         <p class="prompt-quote"
                             style="font-size: 1.05rem; color: #fff; font-style: italic; font-weight: 500;">
                             "If you could forget Android, iOS, Windows, and macOS — what Operating System would you
@@ -113,65 +209,104 @@
 
                     <div class="deliverables-grid">
                         <div class="deliv-item">
-                            <span class="deliv-icon">🧠</span>
+                            <span class="deliv-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                                </svg>
+                            </span>
                             <div><strong>01. Vision & Name</strong><br><small
                                     style="color: var(--text-muted);">Memorable OS Name & Core Goal</small></div>
                         </div>
                         <div class="deliv-item">
-                            <span class="deliv-icon">📱</span>
+                            <span class="deliv-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </span>
                             <div><strong>02. Mobile & Laptop UI</strong><br><small
                                     style="color: var(--text-muted);">Cross-Device Adaptation</small></div>
                         </div>
                         <div class="deliv-item highlight">
-                            <span class="deliv-icon">⚡</span>
+                            <span class="deliv-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                </svg>
+                            </span>
                             <div><strong>03. "Wow" Feature</strong><br><small
                                     style="color: var(--text-muted);">Game-Changing Innovation</small></div>
                         </div>
                     </div>
 
                     <div class="no-code-notice" style="margin-top: 1rem;">
-                        ❌ <strong>No Coding Required!</strong> Submit 1-2 pages concept deck or Drive link.
+                        <strong>No Coding Required!</strong> Submit 1-2 pages concept deck or Drive link.
                     </div>
                 </div>
 
                 <div
                     style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; justify-content: flex-end; width: 100%;">
-                    <button type="button" class="btn btn-primary" id="revealProblemBtn">🔍 Open Full Notice
-                        Popup</button>
+                    <button type="button" class="btn btn-primary" id="revealProblemBtn">Open Full Notice</button>
                     <a href="submit_report.html" class="btn btn-secondary"
-                        style="border-radius: 50px; display: inline-flex; align-items: center; gap: 0.5rem;">📄 Submit
-                        Presentation →</a>
+                        style="border-radius: 50px; display: inline-flex; align-items: center; gap: 0.5rem;">Submit
+                        Presentation &rarr;</a>
                 </div>
             </div>
         </div>
 
         <!-- 🗓️ OFFICIAL EVENT TIMELINE GRID -->
-        <div class="timeline-container glass" style="margin-top: 1.5rem; padding: 1.8rem; border-radius: 20px;">
-            <h3
-                style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 1.2rem; text-align: center;">
-                🗓️ Official Key Event Dates & Cutoffs
+        <div class="timeline-container glass">
+            <h3 class="timeline-title">
+                <svg class="timeline-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="3" ry="3"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Official Key Event Dates & Cutoffs</span>
             </h3>
             <div class="timeline-grid">
                 <div class="timeline-item glass highlight">
                     <div class="time-step">STAGE 01</div>
-                    <div class="time-icon">📢</div>
-                    <h4>Problem Statement Release</h4>
-                    <p class="time-date">LIVE & UNLOCKED NOW 🟢</p>
-                    <span class="time-badge live">UNLOCKED ✅</span>
+                    <div class="time-icon-wrapper stage-1-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                        </svg>
+                    </div>
+                    <h4>Last Date to Register</h4>
+                    <p class="time-date">26 August 2026 (Midnight)</p>
+                    <span class="time-badge active">
+                        <span class="badge-live-pulse"></span> CLOSING SOON
+                    </span>
                 </div>
                 <div class="timeline-item glass">
                     <div class="time-step">STAGE 02</div>
-                    <div class="time-icon">📝</div>
-                    <h4>Last Date to Register</h4>
-                    <p class="time-date">26 August 2026 (Midnight)</p>
-                    <span class="time-badge active">CLOSING SOON ⏳</span>
+                    <div class="time-icon-wrapper stage-2-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h4>Problem Statement Release</h4>
+                    <p class="time-date">29 August 2026, 3:00 PM</p>
+                    <span class="time-badge locked">LOCKED</span>
                 </div>
-                <div class="timeline-item glass highlight">
+                <div class="timeline-item glass">
                     <div class="time-step">STAGE 03</div>
-                    <div class="time-icon">🚀</div>
+                    <div class="time-icon-wrapper stage-3-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
                     <h4>Presentation Upload Cutoff</h4>
                     <p class="time-date">31 August 2026 (11:59 PM)</p>
-                    <span class="time-badge target">FINAL DEADLINE 🎯</span>
+                    <span class="time-badge target">FINAL DEADLINE</span>
                 </div>
             </div>
         </div>
@@ -190,12 +325,19 @@
                     <br>
                     <h3>You DO NOT need to:</h3>
                     <ul class="no-need-list">
-                        <li>❌ Write code</li>
-                        <li>❌ Build an operating system</li>
-                        <li>❌ Develop an application</li>
-                        <li>❌ Create a working prototype</li>
+                        <li><span class="no-need-icon">&times;</span> Write code</li>
+                        <li><span class="no-need-icon">&times;</span> Build an operating system</li>
+                        <li><span class="no-need-icon">&times;</span> Develop an application</li>
+                        <li><span class="no-need-icon">&times;</span> Create a working prototype</li>
                     </ul>
-                    <p class="highlight-text">💡 You only need to think, imagine, and explain your idea.</p>
+                    <p class="highlight-text">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:5px; color:var(--accent-cyan);">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        You only need to think, imagine, and explain your idea.
+                    </p>
                 </div>
                 <div class="challenge-visual card glass">
                     <div class="visual-content">
@@ -321,73 +463,85 @@
             <!-- 2-Tab Navigation Selector -->
             <div class="tab-toggle-container">
                 <button type="button" class="tab-btn active" id="tabLeaderboardBtn">
-                    🏆 Leaderboard
+                    Leaderboard
                 </button>
                 <button type="button" class="tab-btn" id="tabParticipantsBtn">
-                    👥 Registered Participants
+                    <span class="tab-label-full">Registered Participants</span>
+                    <span class="tab-label-short">Participants</span>
                 </button>
             </div>
 
             <!-- Tab Content 1: Leaderboard -->
             <div id="tabLeaderboardContent" class="tab-content active">
                 <div class="leaderboard-card glass">
+                    <!-- Mobile Scroll Hint -->
+                    <div class="table-scroll-hint-bar">
+                        <svg class="scroll-arrow-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                        <span>Swipe table to view round scores</span>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="leaderboard-table">
                             <thead>
                                 <tr>
-                                    <th>Rank</th>
-                                    <th>Team / Participant</th>
-                                    <th>Branch</th>
-                                    <th>OS Concept</th>
-                                    <th>R1 (20)</th>
-                                    <th>R2 (20)</th>
-                                    <th>R3 (20)</th>
-                                    <th>Total Score</th>
-                                    <th>Status</th>
+                                    <th class="col-rank">RANK</th>
+                                    <th class="col-participant">TEAM / PARTICIPANT</th>
+                                    <th class="col-branch">BRANCH / SEM</th>
+                                    <th class="col-score">R1 (20)</th>
+                                    <th class="col-score">R2 (20)</th>
+                                    <th class="col-score">R3 (20)</th>
+                                    <th class="col-total">TOTAL SCORE</th>
+                                    <th class="col-status">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody id="leaderboardBody">
                                 <tr>
-                                    <td><span class="rank-badge gold">🥇 1</span></td>
-                                    <td><strong>Tech Titans</strong> <br><small style="color:var(--text-muted);">Leader:
-                                            John Doe</small></td>
-                                    <td><span style="color:#00f2fe; font-weight:600;">CSE, 5th Sem</span></td>
-                                    <td><span class="os-name-badge">QuantumOS</span></td>
-                                    <td><strong style="color:#00f2fe;">18/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">19/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">18/20</strong></td>
-                                    <td><span
-                                            style="background:rgba(0,255,128,0.15); color:#00ff80; border:1px solid #00ff80; padding:0.3rem 0.7rem; border-radius:50px; font-weight:800; white-space:nowrap;">55/60
-                                            PTS</span></td>
-                                    <td><span class="status-pill submitted">SUBMITTED ✅</span></td>
+                                    <td class="col-rank"><span class="rank-badge gold">01</span></td>
+                                    <td class="col-participant">
+                                        <div class="participant-name-wrap">
+                                            <strong class="p-name">Tech Titans</strong>
+                                            <span class="p-leader">Leader: John Doe</span>
+                                        </div>
+                                    </td>
+                                    <td class="col-branch"><span class="branch-badge">CSE, 5th Sem</span></td>
+                                    <td class="col-score"><span class="round-score scored">18/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">19/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">18/20</span></td>
+                                    <td class="col-total"><span class="total-score-pill active-score">55/60 PTS</span></td>
+                                    <td class="col-status"><span class="status-pill submitted">SUBMITTED</span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="rank-badge silver">🥈 2</span></td>
-                                    <td><strong>Priya Sharma</strong> <br><small
-                                            style="color:var(--text-muted);">Individual</small></td>
-                                    <td><span style="color:#00f2fe; font-weight:600;">ECE, 3rd Sem</span></td>
-                                    <td><span class="os-name-badge">NeuroFlow OS</span></td>
-                                    <td><strong style="color:#00f2fe;">17/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">18/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">19/20</strong></td>
-                                    <td><span
-                                            style="background:rgba(0,242,254,0.15); color:#00f2fe; border:1px solid #00f2fe; padding:0.3rem 0.7rem; border-radius:50px; font-weight:800; white-space:nowrap;">54/60
-                                            PTS</span></td>
-                                    <td><span class="status-pill submitted">SUBMITTED ✅</span></td>
+                                    <td class="col-rank"><span class="rank-badge silver">02</span></td>
+                                    <td class="col-participant">
+                                        <div class="participant-name-wrap">
+                                            <strong class="p-name">Priya Sharma</strong>
+                                            <span class="p-leader">Solo Architect</span>
+                                        </div>
+                                    </td>
+                                    <td class="col-branch"><span class="branch-badge">ECE, 3rd Sem</span></td>
+                                    <td class="col-score"><span class="round-score scored">17/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">18/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">19/20</span></td>
+                                    <td class="col-total"><span class="total-score-pill active-score">54/60 PTS</span></td>
+                                    <td class="col-status"><span class="status-pill submitted">SUBMITTED</span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="rank-badge bronze">🥉 3</span></td>
-                                    <td><strong>Cyber Mavericks</strong> <br><small
-                                            style="color:var(--text-muted);">Leader: Rahul Kumar</small></td>
-                                    <td><span style="color:#00f2fe; font-weight:600;">IT, 7th Sem</span></td>
-                                    <td><span class="os-name-badge">AetherOS</span></td>
-                                    <td><strong style="color:#00f2fe;">16/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">17/20</strong></td>
-                                    <td><strong style="color:#00f2fe;">18/20</strong></td>
-                                    <td><span
-                                            style="background:rgba(243,85,218,0.15); color:var(--accent-magenta); border:1px solid var(--accent-magenta); padding:0.3rem 0.7rem; border-radius:50px; font-weight:800; white-space:nowrap;">51/60
-                                            PTS</span></td>
-                                    <td><span class="status-pill pending">Pending ⏳</span></td>
+                                    <td class="col-rank"><span class="rank-badge bronze">03</span></td>
+                                    <td class="col-participant">
+                                        <div class="participant-name-wrap">
+                                            <strong class="p-name">Cyber Mavericks</strong>
+                                            <span class="p-leader">Leader: Rahul Kumar</span>
+                                        </div>
+                                    </td>
+                                    <td class="col-branch"><span class="branch-badge">IT, 7th Sem</span></td>
+                                    <td class="col-score"><span class="round-score scored">16/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">17/20</span></td>
+                                    <td class="col-score"><span class="round-score scored">18/20</span></td>
+                                    <td class="col-total"><span class="total-score-pill active-score">51/60 PTS</span></td>
+                                    <td class="col-status"><span class="status-pill pending">PENDING</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -400,23 +554,19 @@
                 <div class="participants-header glass">
                     <div class="participants-search-box">
                         <input type="text" id="participantSearchInput"
-                            placeholder="Search team name, branch, or OS idea...">
-                        <span class="search-icon">🔍</span>
+                            placeholder="Search team name, participant, or branch...">
                     </div>
-                    <button type="button" class="btn btn-secondary" id="refreshParticipantsBtn">🔄 Refresh
-                        Directory</button>
+                    <button type="button" class="btn btn-secondary" id="refreshParticipantsBtn">Refresh Directory</button>
                 </div>
 
                 <div id="participantsContainer" class="participants-grid">
                     <div class="participant-card glass">
                         <div class="part-header">
                             <span class="part-type team">TEAM</span>
-                            <span style="color:var(--accent-cyan); font-weight:600; font-size:0.85rem;">CSE 5th
-                                Sem</span>
+                            <span style="color:var(--accent-cyan); font-weight:600; font-size:0.85rem;">CSE 5th Sem</span>
                         </div>
                         <h4 class="part-name">Tech Titans</h4>
                         <div class="part-meta">Leader: John Doe</div>
-                        <div class="part-os">💡 OS Concept: <strong>QuantumOS</strong></div>
                     </div>
                     <div class="participant-card glass">
                         <div class="part-header">
@@ -425,7 +575,6 @@
                         </div>
                         <h4 class="part-name">Priya Sharma</h4>
                         <div class="part-meta">Dept: ECE 3rd Sem</div>
-                        <div class="part-os">💡 OS Concept: <strong>NeuroFlow OS</strong></div>
                     </div>
                 </div>
             </div>
@@ -447,7 +596,10 @@
                     </div>
                     <h4>Pawan Kumar Thakur</h4>
                     <span class="role-badge leader">Head of Event</span>
-                    <a href="tel:+917859042307" class="contact-link"><span class="icon">📞</span> +91 78590 42307</a>
+                    <a href="tel:+917859042307" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 78590 42307</span>
+                    </a>
                 </div>
 
                 <!-- Sachin Vishwakarma -->
@@ -460,7 +612,26 @@
                     </div>
                     <h4>Sachin Vishwakarma</h4>
                     <span class="role-badge leader">Co-Head</span>
-                    <a href="tel:+917209823085" class="contact-link"><span class="icon">📞</span> +91 72098 23085</a>
+                    <a href="tel:+917209823085" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 72098 23085</span>
+                    </a>
+                </div>
+
+                <!-- Sachin Kumar (3rd Position) -->
+                <div class="team-card glass">
+                    <div class="avatar-wrapper">
+                        <img src="assets/sachin_k.jpg"
+                            onError="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Sachin+Kumar&background=0f121d&color=7000ff&bold=true&size=250';"
+                            alt="Sachin Kumar" class="avatar-img">
+                        <span class="status-indicator"></span>
+                    </div>
+                    <h4>Sachin Kumar</h4>
+                    <span class="role-badge tech">Technical Head</span>
+                    <a href="tel:+917488727699" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 74887 27699</span>
+                    </a>
                 </div>
 
                 <!-- Abhishek Kumar -->
@@ -473,7 +644,10 @@
                     </div>
                     <h4>Abhishek Kumar</h4>
                     <span class="role-badge media">Media Head</span>
-                    <a href="tel:+919661894923" class="contact-link"><span class="icon">📞</span> +91 96618 94923</a>
+                    <a href="tel:+919661894923" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 96618 94923</span>
+                    </a>
                 </div>
 
                 <!-- Satyam Kumar -->
@@ -486,20 +660,10 @@
                     </div>
                     <h4>Satyam Kumar</h4>
                     <span class="role-badge registration">Registration Head</span>
-                    <a href="tel:+919905366808" class="contact-link"><span class="icon">📞</span> +91 99053 66808</a>
-                </div>
-
-                <!-- Sachin Kumar -->
-                <div class="team-card glass">
-                    <div class="avatar-wrapper">
-                        <img src="assets/sachin_k.jpg"
-                            onError="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Sachin+Kumar&background=0f121d&color=7000ff&bold=true&size=250';"
-                            alt="Sachin Kumar" class="avatar-img">
-                        <span class="status-indicator"></span>
-                    </div>
-                    <h4>Sachin Kumar</h4>
-                    <span class="role-badge tech">Technical Head</span>
-                    <a href="tel:+917488727699" class="contact-link"><span class="icon">📞</span> +91 74887 27699</a>
+                    <a href="tel:+919905366808" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 99053 66808</span>
+                    </a>
                 </div>
 
                 <!-- Chinmoy Mondal -->
@@ -512,7 +676,10 @@
                     </div>
                     <h4>Chinmoy Mondal</h4>
                     <span class="role-badge ops">Operations Head</span>
-                    <a href="tel:+918271068389" class="contact-link"><span class="icon">📞</span> +91 82710 68389</a>
+                    <a href="tel:+918271068389" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 82710 68389</span>
+                    </a>
                 </div>
 
                 <!-- Richa Raj -->
@@ -525,7 +692,10 @@
                     </div>
                     <h4>Richa Raj</h4>
                     <span class="role-badge coord">Event Coordinator</span>
-                    <a href="tel:+919905366808" class="contact-link"><span class="icon">📞</span> Contact Us</a>
+                    <a href="tel:+919905366808" class="contact-link">
+                        <svg class="contact-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>Contact Us</span>
+                    </a>
                 </div>
             </div>
 
@@ -590,157 +760,288 @@
 
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a href="#" class="btn btn-primary pulse open-modal-btn">Register Your Idea</a>
-                    <a href="submit_report.html" class="btn btn-secondary">📄 Upload Final OS Presentation</a>
+                    <a href="submit_report.html" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        Upload Final OS Presentation
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">IDEA-THON 2026</div>
-            <div class="footer-tagline">Imagine. Question. Reinvent.</div>
-            <div class="footer-org">Organized by<br><strong>Department of Advanced
-                    Computing &times; YBN Tech Club </strong></div>
+        <div class="footer-content container">
+            <div class="footer-bottom-grid">
+                <div class="footer-col brand-col">
+                    <div class="footer-logo">IDEA-THON <span>2026</span></div>
+                    <div class="footer-tagline">Reimagining Operating Systems for the Next Generation.</div>
+                    <div class="footer-org">Organized by <strong>Department of Advanced Computing &times; YBN Tech Club</strong></div>
+                </div>
 
-            <div class="footer-support">
-                <p>Need Support or Help? Contact the Registration Head:</p>
-                <div class="support-links">
-                    <a href="mailto:ybntechclub01@gmail.com">✉️ ybntechclub01@gmail.com</a>
-                    <a href="tel:+919905366808">📞 +91 99053 66808</a>
+                <div class="footer-col support-col">
+                    <h4>Connect & Support</h4>
+                    <div class="support-links">
+                        <a href="https://www.instagram.com/insidecse_ybn?utm_source=qr&igsh=bXM5bnB1aTk0OWxz&igsi=bXM5bnB1aTk0OWxz" target="_blank" rel="noopener noreferrer" class="footer-insta-link">
+                            <svg class="insta-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            <span>Follow <strong>@insidecse_ybn</strong> on Instagram &rarr;</span>
+                        </a>
+                        <a href="mailto:ybntechclub01@gmail.com">
+                            <svg class="footer-contact-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <span>ybntechclub01@gmail.com</span>
+                        </a>
+                        <a href="tel:+919905366808">
+                            <svg class="footer-contact-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>+91 99053 66808</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="copyright">&copy; 2026 Department of Advanced Computing. All rights reserved.</div>
+            <div class="copyright">&copy; 2026 Department of Advanced Computing &times; YBN Tech Club. All rights reserved.</div>
         </div>
     </footer>
 
     <!-- Registration Modal -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 class="modal-title">Registration Form</h2>
-            <p class="modal-subtitle">Register your team or individual idea for IDEA-THON 2026</p>
+    <div id="registerModal" class="modal" data-lenis-prevent>
+        <div class="modal-content glass" data-lenis-prevent>
+            <button type="button" class="close-modal" aria-label="Close Registration Modal">&times;</button>
+            
+            <div class="modal-header-block">
+                <div class="modal-badge">
+                    <span class="live-dot"></span> REGISTRATION PORTAL • IDEA-THON 2026
+                </div>
+                <h2 class="modal-title">Register Your <span class="hero-gradient-text">Concept & Idea</span></h2>
+                <p class="modal-subtitle">Fill in the details below to secure your entry and generate your official participant pass.</p>
+            </div>
 
             <form id="registrationForm">
-                <div class="form-group participation-type">
-                    <label>Participate as:</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
+                <!-- 1. Participation Mode Selection -->
+                <div class="form-section-card participation-section">
+                    <label class="section-card-title">1. Choose Participation Mode</label>
+                    <div class="segmented-control">
+                        <label class="segment-option">
                             <input type="radio" name="participation" value="individual" checked>
-                            <span>Individual</span>
+                            <span class="segment-pill">
+                                <span class="pill-icon">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <span class="pill-text">
+                                    <strong>Individual</strong>
+                                    <small>Solo Innovator</small>
+                                </span>
+                            </span>
                         </label>
-                        <label class="radio-label">
+                        <label class="segment-option">
                             <input type="radio" name="participation" value="team">
-                            <span>Team (Max 4)</span>
+                            <span class="segment-pill">
+                                <span class="pill-icon">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </span>
+                                <span class="pill-text">
+                                    <strong>Team Entry</strong>
+                                    <small>2 – 4 Members</small>
+                                </span>
+                            </span>
                         </label>
                     </div>
                 </div>
 
-                <div class="form-group" id="teamNameGroup" style="display: none;">
-                    <label for="teamName">Team Name</label>
-                    <input type="text" id="teamName" name="teamName" placeholder="Enter an awesome team name">
+                <!-- Team Name (Visible if Team selected) -->
+                <div class="form-section-card" id="teamNameGroup" style="display: none;">
+                    <label class="section-card-title" for="teamName">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        Team Name <span class="req-star">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <input type="text" id="teamName" name="teamName" placeholder="e.g. Quantum Innovators, Nexus OS">
+                    </div>
                 </div>
 
+                <!-- 2. Primary Contact / Leader Details -->
                 <div class="members-container">
-                    <div class="member-card">
-                        <h3 class="member-title" id="member1Title">Participant / Team Leader</h3>
+                    <div class="form-section-card member-card leader-card">
+                        <div class="card-header-flex">
+                            <h3 class="member-title" id="member1Title">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                Primary Contact Details
+                            </h3>
+                            <span class="card-tag leader-tag">PRIMARY CONTACT</span>
+                        </div>
+                        
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Full Name *</label>
-                                <input type="text" name="leaderName" required placeholder="John Doe">
+                                <label>Full Name <span class="req-star">*</span></label>
+                                <input type="text" name="leaderName" required placeholder="e.g. John Doe">
                             </div>
                             <div class="form-group">
-                                <label>Contact Number *</label>
-                                <input type="tel" name="leaderContact" required placeholder="+91 9876543210">
+                                <label>Contact Number <span class="req-star">*</span></label>
+                                <input type="tel" name="leaderContact" required placeholder="+91 98765 43210">
                             </div>
                             <div class="form-group">
-                                <label>Email Address *</label>
-                                <input type="email" name="leaderEmail" required placeholder="john@example.com">
+                                <label>Email Address <span class="req-star">*</span></label>
+                                <input type="email" name="leaderEmail" required placeholder="name@example.com">
                             </div>
                             <div class="form-group">
-                                <label>Department & Semester *</label>
-                                <input type="text" name="leaderDept" required placeholder="CSE, 5th Sem">
+                                <label>Department & Semester <span class="req-star">*</span></label>
+                                <input type="text" name="leaderDept" required placeholder="e.g. CSE, 5th Sem">
                             </div>
                         </div>
                     </div>
 
+                    <!-- Additional Members for Team Entry -->
                     <div id="additionalMembers" style="display: none;">
-                        <div class="member-card">
-                            <h3 class="member-title" style="color: var(--accent-cyan);">Team Member 2 (Mandatory for
-                                Team) *</h3>
+                        <!-- Member 2 -->
+                        <div class="form-section-card member-card member2-card">
+                            <div class="card-header-flex">
+                                <h3 class="member-title" style="color: var(--accent-cyan);">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    Team Member 2
+                                </h3>
+                                <span class="card-tag mandatory-tag">MANDATORY FOR TEAM *</span>
+                            </div>
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label>Full Name *</label>
+                                    <label>Full Name <span class="req-star">*</span></label>
                                     <input type="text" name="member2Name" placeholder="Member 2 Full Name">
                                 </div>
                                 <div class="form-group">
-                                    <label>Contact Number *</label>
-                                    <input type="tel" name="member2Contact" placeholder="Member 2 Contact Number">
+                                    <label>Contact Number <span class="req-star">*</span></label>
+                                    <input type="tel" name="member2Contact" placeholder="+91 98765 43210">
                                 </div>
                                 <div class="form-group">
-                                    <label>Email Address *</label>
-                                    <input type="email" name="member2Email" placeholder="Member 2 Email Address">
+                                    <label>Email Address <span class="req-star">*</span></label>
+                                    <input type="email" name="member2Email" placeholder="member2@example.com">
                                 </div>
                                 <div class="form-group">
-                                    <label>Department & Semester *</label>
-                                    <input type="text" name="member2Dept" placeholder="Member 2 Dept & Semester">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="member-card">
-                            <h3 class="member-title">Team Member 3 (Optional)</h3>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input type="text" name="member3Name" placeholder="Full Name">
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact Number</label>
-                                    <input type="tel" name="member3Contact" placeholder="Contact Number">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input type="email" name="member3Email" placeholder="Email Address">
-                                </div>
-                                <div class="form-group">
-                                    <label>Department & Semester</label>
-                                    <input type="text" name="member3Dept" placeholder="Dept & Semester">
+                                    <label>Department & Semester <span class="req-star">*</span></label>
+                                    <input type="text" name="member2Dept" placeholder="e.g. CSE, 5th Sem">
                                 </div>
                             </div>
                         </div>
-                        <div class="member-card">
-                            <h3 class="member-title">Team Member 4 (Optional)</h3>
+
+                        <!-- Member 3 -->
+                        <div class="form-section-card member-card">
+                            <div class="card-header-flex">
+                                <h3 class="member-title">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    Team Member 3
+                                </h3>
+                                <span class="card-tag optional-tag">OPTIONAL</span>
+                            </div>
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" name="member4Name" placeholder="Full Name">
+                                    <input type="text" name="member3Name" placeholder="Member 3 Full Name">
                                 </div>
                                 <div class="form-group">
                                     <label>Contact Number</label>
-                                    <input type="tel" name="member4Contact" placeholder="Contact Number">
+                                    <input type="tel" name="member3Contact" placeholder="+91 98765 43210">
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" name="member4Email" placeholder="Email Address">
+                                    <input type="email" name="member3Email" placeholder="member3@example.com">
                                 </div>
                                 <div class="form-group">
                                     <label>Department & Semester</label>
-                                    <input type="text" name="member4Dept" placeholder="Dept & Semester">
+                                    <input type="text" name="member3Dept" placeholder="e.g. IT, 3rd Sem">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 4 -->
+                        <div class="form-section-card member-card">
+                            <div class="card-header-flex">
+                                <h3 class="member-title">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    Team Member 4
+                                </h3>
+                                <span class="card-tag optional-tag">OPTIONAL</span>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" name="member4Name" placeholder="Member 4 Full Name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Contact Number</label>
+                                    <input type="tel" name="member4Contact" placeholder="+91 98765 43210">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" name="member4Email" placeholder="member4@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Department & Semester</label>
+                                    <input type="text" name="member4Dept" placeholder="e.g. AIML, 5th Sem">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label>Idea OS Name (Optional for now)</label>
-                    <input type="text" name="osName" placeholder="What are you calling your OS?">
+                <!-- 3. Proposed OS Concept (Optional) -->
+                <div class="form-section-card os-concept-card">
+                    <div class="card-header-flex">
+                        <label class="section-card-title" style="margin-bottom: 0;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Proposed OS Concept
+                        </label>
+                        <span class="card-tag optional-tag">CAN BE FINALIZED LATER</span>
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem; margin-bottom: 0;">
+                        <label>OS Working Title / Concept Name</label>
+                        <input type="text" name="osName" placeholder="e.g. AetherOS, Continuum, ZeroKernel">
+                    </div>
                 </div>
 
+                <!-- Status Message Display -->
                 <div id="formStatus" class="form-status" style="display: none;"></div>
 
-                <button type="submit" class="btn btn-primary w-100" id="submitBtn">Confirm Registration</button>
+                <!-- Submit CTA -->
+                <div class="form-submit-wrapper">
+                    <button type="submit" class="btn btn-primary submit-registration-btn" id="submitBtn">
+                        <span>Submit Registration</span>
+                        <span class="arrow-icon">&rarr;</span>
+                    </button>
+                    <p class="form-security-note">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="security-svg-icon">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Official confirmation pass with your <strong>Unique Token ID & QR Code</strong> will be sent to the registered email.
+                    </p>
+                </div>
             </form>
         </div>
     </div>
@@ -754,7 +1055,7 @@
                     <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                 </svg>
             </div>
-            <h2 id="successPopupTitle" class="popup-title">Registration Complete! 🎉</h2>
+            <h2 id="successPopupTitle" class="popup-title">Registration Successful</h2>
             <p id="successPopupSubtitle" class="popup-subtitle">Your Official Registration Token:</p>
             <div id="successPopupToken" class="popup-token-badge">IDTN2026-XXXXXX</div>
             <p class="popup-info-text">
@@ -764,20 +1065,20 @@
     </div>
 
     <!-- 🚨 EVENT START & NOTICE POPUP MODAL -->
-    <div id="autoEventModal" class="modal auto-event-modal" style="display: none;">
-        <div class="modal-content auto-modal-card glass">
+    <div id="autoEventModal" class="modal auto-event-modal" style="display: none;" data-lenis-prevent>
+        <div class="modal-content auto-modal-card glass" data-lenis-prevent>
             <span class="close-modal" id="closeAutoModalBtn">&times;</span>
             <div class="auto-modal-header">
                 <div class="live-event-badge">
                     <span class="badge-dot"></span> OFFICIAL EVENT NOTICE
                 </div>
                 <div class="event-date-pill" id="modalNoticeMeta">
-                    🗓️ EVENT DATE: <strong>31 AUGUST 2026</strong> | 📍 VENUE: <strong>BLOCK A, 2ND FLOOR</strong>
+                    EVENT DATE: <strong>31 AUGUST 2026</strong> | VENUE: <strong>BLOCK A, LAB 1 & 2, 2ND FLOOR</strong>
                 </div>
             </div>
 
             <h2 class="auto-modal-title">
-                🚀 IDEA-THON 2026 IS GOING LIVE!
+                IDEA-THON 2026 • OFFICIAL NOTICE
             </h2>
             <p class="auto-modal-subtitle">
                 Reimagining the Operating System for the Next Generation
@@ -785,7 +1086,7 @@
 
             <div class="auto-modal-body">
                 <div class="prompt-box">
-                    <h3>💡 The Official OS Prompt:</h3>
+                    <h3>The Official OS Prompt:</h3>
                     <p class="prompt-quote">
                         "If you could forget Android, iOS, Windows, and macOS — what Operating System would you design
                         from complete zero today?"
@@ -794,37 +1095,55 @@
 
                 <div class="deliverables-grid">
                     <div class="deliv-item">
-                        <span class="deliv-icon">🧠</span>
+                        <span class="deliv-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                            </svg>
+                        </span>
                         <div><strong>01. Vision & Name</strong><br><small>Memorable OS Name & Core Goal</small></div>
                     </div>
                     <div class="deliv-item">
-                        <span class="deliv-icon">📱</span>
+                        <span class="deliv-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </span>
                         <div><strong>02. Mobile & Laptop UI</strong><br><small>Cross-Device Adaptation</small></div>
                     </div>
                     <div class="deliv-item highlight">
-                        <span class="deliv-icon">⚡</span>
+                        <span class="deliv-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </span>
                         <div><strong>03. "Wow" Feature</strong><br><small>Game-Changing Innovation</small></div>
                     </div>
                 </div>
 
                 <div class="no-code-notice">
-                    ❌ <strong>No Coding Required!</strong> Submit 1-2 pages concept deck or Drive link.
+                    <strong>No Coding Required!</strong> Submit 1-2 pages concept deck or Drive link.
                 </div>
             </div>
 
             <div class="auto-modal-footer" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem;">
                 <a href="submit_report.html" class="btn btn-primary pulse"
                     style="flex: 1; text-align: center; text-decoration: none; padding: 0.8rem 1.2rem; border-radius: 50px; font-weight: 700; white-space: nowrap;">
-                    📄 Submit Presentation Portal →
+                    Submit Presentation Portal &rarr;
                 </a>
                 <button type="button" class="btn btn-secondary" id="exploreEventBtn"
                     style="flex: 1; border-radius: 50px; padding: 0.8rem 1.2rem; font-weight: 600; white-space: nowrap;">
-                    🚀 View Leaderboard & Rules →
+                    View Leaderboard & Rules &rarr;
                 </button>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
 </body>

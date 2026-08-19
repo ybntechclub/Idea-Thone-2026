@@ -78,12 +78,26 @@
 
         .step-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            color: var(--accent-cyan);
+            font-size: 1.15rem;
+            color: #fff;
             margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.65rem;
+        }
+
+        .step-num-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.4), rgba(0, 242, 254, 0.4));
+            border: 1px solid var(--accent-cyan);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
         }
 
         .form-group {
@@ -507,7 +521,7 @@
     <div class="upload-card">
         <!-- Step 1: Verify Token -->
         <div class="step-title">
-            <span>1️⃣</span> Verify Your Registration Token
+            <span class="step-num-badge">01</span> Verify Your Registration Token
         </div>
 
         <form id="verifyForm" class="form-group">
@@ -527,11 +541,15 @@
 
         <!-- Step 2: Upload Presentation File Directly -->
         <div id="uploadSection" style="display: none;">
-            <!-- ⚠️ ONE-TIME SUBMISSION CRITICAL WARNING PANEL -->
+            <!-- ONE-TIME SUBMISSION CRITICAL WARNING PANEL -->
             <div class="one-time-warning-box">
                 <div class="warning-header">
-                    <span class="warning-icon">⚠️</span>
-                    <strong>CRITICAL WARNING: ONE-TIME SUBMISSION ONLY!</strong>
+                    <svg class="warning-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--warning); display: inline-block; vertical-align: middle; margin-right: 6px;">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <strong>CRITICAL NOTICE: ONE-TIME SUBMISSION ONLY</strong>
                 </div>
                 <p>You can submit your OS presentation report <strong>ONLY ONCE</strong>. Once submitted, your
                     presentation is permanently locked and <strong>cannot be edited, replaced, or re-submitted</strong>.
@@ -539,13 +557,20 @@
             </div>
 
             <div class="step-title">
-                <span>2️⃣</span> Upload Final Presentation PDF File
+                <span class="step-num-badge">02</span> Upload Final Presentation PDF File
             </div>
 
             <form id="submissionForm">
                 <!-- PRIMARY ACTION: Direct File Upload Box -->
                 <div class="file-upload-box" onclick="document.getElementById('fileInput').click()">
-                    <div class="file-icon">📄</div>
+                    <div class="file-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <polyline points="9 15 12 12 15 15"></polyline>
+                        </svg>
+                    </div>
                     <div id="fileSelectedName"><strong>Click to Select PDF or Presentation File</strong></div>
                     <div class="file-hint">Supported formats: .pdf, .ppt, .pptx, .docx (Select directly from your
                         device)</div>
@@ -555,32 +580,41 @@
                 <div class="divider">OR PASTE GOOGLE DRIVE / CANVA PRESENTATION LINK</div>
 
                 <div class="form-group">
-                    <label>🔗 Shareable Presentation Link (Google Drive / Canva / Slides URL)</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:4px;">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        Shareable Presentation Link (Google Drive / Canva / Slides URL)
+                    </label>
                     <input type="url" id="linkInput" placeholder="https://drive.google.com/file/d/... or Canva Link">
                 </div>
 
-                <!-- 🔒 MANDATORY ONE-TIME SUBMISSION CONFIRMATION CHECKBOX -->
+                <!-- MANDATORY ONE-TIME SUBMISSION CONFIRMATION CHECKBOX -->
                 <label class="confirm-checkbox-label">
                     <input type="checkbox" id="confirmCheckbox" required>
                     <span>I understand and confirm that this is my <strong>FINAL ONE-TIME SUBMISSION</strong> and cannot
                         be modified or re-submitted later.</span>
                 </label>
 
-                <button type="submit" class="btn btn-w100" id="submitReportBtn" style="margin-top: 1.2rem;">🚀 Upload &
-                    Lock Final Presentation</button>
+                <button type="submit" class="btn btn-w100" id="submitReportBtn" style="margin-top: 1.2rem;">
+                    Upload & Lock Final Presentation
+                </button>
             </form>
         </div>
 
         <div id="statusMsg" class="status-msg"></div>
     </div>
 
-    <a href="index.html" class="nav-back">← Return to IDEA-THON 2026 Landing Page</a>
+    <a href="index.html" class="nav-back">&larr; Return to IDEA-THON 2026 Landing Page</a>
 
-    <!-- 🌟 STUNNING SUBMISSION SUCCESS / LOCKED POPUP OVERLAY -->
+    <!-- SUBMISSION SUCCESS / LOCKED POPUP OVERLAY -->
     <div id="modalOverlay" class="modal-overlay">
         <div id="modalCard" class="modal-card">
             <div id="modalIcon" class="icon-badge-wrapper success">
-                <span id="modalIconEmoji">🎉</span>
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
             </div>
 
             <h2 id="modalTitle"
@@ -600,7 +634,7 @@
             <div id="modalLinkContainer" style="margin-bottom: 1.5rem; display: none;">
                 <a id="modalFileBtn" href="#" target="_blank" class="btn"
                     style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600;">
-                    📄 View Submitted Presentation Link
+                    View Submitted Presentation Link &rarr;
                 </a>
             </div>
 
@@ -677,37 +711,33 @@
                     bannerMeta.textContent = `Type: ${data.participation.toUpperCase()} | Team: ${data.teamName} | OS Idea: ${data.osName}`;
 
                     if (data.subStatus === 'SUBMITTED') {
-                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED 🔒</strong>`;
+                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED</strong>`;
                         participantBanner.style.display = 'block';
                         uploadSection.style.display = 'none';
-                        showStatus(`🔒 <strong>Submission Locked!</strong><br>You have already submitted your final presentation report for Token <strong>${token}</strong>. Re-submissions are not allowed.`, 'error');
+                        showStatus(`<strong>Submission Locked!</strong><br>You have already submitted your final presentation report for Token <strong>${token}</strong>. Re-submissions are not allowed.`, 'error');
 
-                        // Show Beautiful Locked Modal Popup!
                         openSuccessPopup(token, data.name, data.link, 'locked');
                         return;
                     } else if (data.attendanceStatus !== 'Checked-In') {
-                        bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In 🛑</strong>`;
+                        bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In</strong>`;
                         participantBanner.style.display = 'block';
                         uploadSection.style.display = 'none';
-                        showStatus(`🛑 <strong>Check-In Required!</strong><br>You must check in at the event venue desk before submitting your presentation report.`, 'error');
+                        showStatus(`<strong>Check-In Required!</strong><br>You must check in at the event venue desk before submitting your presentation report.`, 'error');
 
-                        // Show Beautiful Check-In Required Popup!
                         openSuccessPopup(token, data.name, null, 'not_checked_in');
                         return;
                     } else {
-                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">Pending ⏳</strong> (Checked-In ✅)`;
+                        bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">Pending</strong> (Checked-In)`;
                         participantBanner.style.display = 'block';
                         uploadSection.style.display = 'block';
-                        showStatus('✅ Token verified & Check-In confirmed! Please select your presentation file below.', 'success');
+                        showStatus('Token verified & Check-In confirmed! Please select your presentation file below.', 'success');
                     }
                 } else {
-                    showStatus(`❌ Invalid Token ID (${token}). Record not found!`, 'error');
-                    participantBanner.style.display = 'none';
-                    uploadSection.style.display = 'none';
+                    showStatus(`<strong>Verification Failed:</strong> ${data.message || 'Token not recognized.'}`, 'error');
                 }
             } catch (err) {
-                console.error("Verification Error:", err);
-                showStatus('⚠️ Connection error verifying token. Check your internet connection.', 'error');
+                console.error("Token verification error:", err);
+                showStatus(`<strong>Connection Error:</strong> ${err.message || 'Could not verify token with database.'}`, 'error');
             } finally {
                 verifyBtn.disabled = false;
                 verifyBtn.textContent = 'Verify';
@@ -719,29 +749,29 @@
             e.preventDefault();
 
             if (!verifiedToken) {
-                showStatus('❌ Please verify your Token ID first!', 'error');
+                showStatus("Please verify your registration token first.", "error");
                 return;
             }
 
             const driveLink = linkInput.value.trim();
             if (!base64File && !driveLink) {
-                showStatus('⚠️ Please paste a presentation link OR select a file!', 'error');
+                showStatus("Please select a presentation file (PDF/PPT) OR enter a valid Drive/Canva link.", "error");
                 return;
             }
 
             submitReportBtn.disabled = true;
-            submitReportBtn.textContent = 'Submitting Report...';
-            showStatus('⌛ Recording submission in Google Sheet...', 'success');
-
-            const payload = {
-                action: 'submitReport',
-                token: verifiedToken,
-                fileData: base64File,
-                fileName: selectedFileName,
-                driveLink: driveLink
-            };
+            submitReportBtn.textContent = "Uploading & Securing...";
+            showStatus("Securing presentation to database...", "success");
 
             try {
+                const payload = {
+                    action: 'submitReport',
+                    token: verifiedToken,
+                    fileData: base64File,
+                    fileName: selectedFileName,
+                    driveLink: driveLink
+                };
+
                 const response = await fetch(scriptURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -751,40 +781,39 @@
                 const result = await response.json();
 
                 if (result.result === 'success' || result.result === 'already_submitted') {
-                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED 🔒</strong>`;
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#00ff80;">SUBMITTED & LOCKED</strong>`;
                     uploadSection.style.display = 'none';
-                    showStatus(`🎉 Final Presentation Submitted & Locked!`, 'success');
+                    showStatus(`Final Presentation Submitted & Locked!`, 'success');
 
-                    // Show Stunning Success Popup Modal!
                     openSuccessPopup(verifiedToken, participantName, result.fileUrl || driveLink, 'success');
 
                     submissionForm.reset();
                     fileSelectedName.innerHTML = `<strong>Click to select PDF or Presentation File</strong>`;
                     base64File = null;
                 } else if (result.result === 'not_checked_in') {
-                    bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In 🛑</strong>`;
+                    bannerStatus.innerHTML = `Attendance Status: <strong style="color:#ff5050;">Not Checked-In</strong>`;
                     uploadSection.style.display = 'none';
-                    showStatus(`🛑 <strong>Check-In Required!</strong> ${result.message}`, 'error');
+                    showStatus(`<strong>Check-In Required!</strong> ${result.message}`, 'error');
                     openSuccessPopup(verifiedToken, participantName, null, 'not_checked_in');
                 } else if (result.result === 'submission_not_started') {
-                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">NOT STARTED YET ⏳</strong>`;
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">NOT STARTED YET</strong>`;
                     uploadSection.style.display = 'none';
-                    showStatus(`⏳ <strong>Submissions Not Open Yet!</strong> ${result.message}`, 'error');
+                    showStatus(`<strong>Submissions Not Open Yet!</strong> ${result.message}`, 'error');
                     openSuccessPopup(verifiedToken, participantName, null, 'submission_not_started');
                 } else if (result.result === 'deadline_passed') {
-                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ff5050;">DEADLINE PASSED ⏰</strong>`;
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ff5050;">DEADLINE PASSED</strong>`;
                     uploadSection.style.display = 'none';
-                    showStatus(`⏰ <strong>Deadline Passed!</strong> ${result.message}`, 'error');
+                    showStatus(`<strong>Deadline Passed!</strong> ${result.message}`, 'error');
                     openSuccessPopup(verifiedToken, participantName, null, 'deadline_passed');
                 } else {
-                    showStatus(`⚠️ <strong>Upload Issue:</strong> ${result.message || 'Error recording submission.'}`, 'error');
+                    showStatus(`<strong>Upload Issue:</strong> ${result.message || 'Error recording submission.'}`, 'error');
                 }
             } catch (err) {
                 console.error("Submission Upload Error:", err);
-                showStatus(`⚠️ <strong>Upload Connection Error:</strong> ${err.message}`, 'error');
+                showStatus(`<strong>Upload Connection Error:</strong> ${err.message}`, 'error');
             } finally {
                 submitReportBtn.disabled = false;
-                submitReportBtn.textContent = '🚀 Submit & Lock Final Presentation';
+                submitReportBtn.textContent = 'Upload & Lock Final Presentation';
             }
         });
 
@@ -794,12 +823,11 @@
             statusMsg.innerHTML = msg;
         }
 
-        // 🌟 FUNCTION TO OPEN STUNNING MODAL POPUP
+        // FUNCTION TO OPEN STUNNING MODAL POPUP
         function openSuccessPopup(token, name, fileUrl, popupMode) {
             const modalOverlay = document.getElementById('modalOverlay');
             const modalCard = document.getElementById('modalCard');
             const modalIcon = document.getElementById('modalIcon');
-            const modalIconEmoji = document.getElementById('modalIconEmoji');
             const modalTitle = document.getElementById('modalTitle');
             const modalTokenBadge = document.getElementById('modalTokenBadge');
             const modalSubTitle = document.getElementById('modalSubTitle');
@@ -811,33 +839,28 @@
             if (popupMode === 'not_checked_in') {
                 modalCard.className = 'modal-card not-checked-in';
                 modalIcon.className = 'icon-badge-wrapper not-checked-in';
-                modalIconEmoji.textContent = '🛑';
                 modalTitle.textContent = 'Check-In Required at Venue!';
-                modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>! 👋<br><br>You must <strong>Check-In at the event venue scanner desk</strong> before you can submit your final OS presentation report.<br><small style="color:#ff8080; display:block; margin-top:0.6rem;">Please visit the registration desk to scan your QR Pass!</small>`;
+                modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>!<br><br>You must <strong>Check-In at the event venue scanner desk</strong> before you can submit your final OS presentation report.<br><small style="color:#ff8080; display:block; margin-top:0.6rem;">Please visit the registration desk to scan your QR Pass!</small>`;
             } else if (popupMode === 'submission_not_started') {
                 modalCard.className = 'modal-card locked';
                 modalIcon.className = 'icon-badge-wrapper locked';
-                modalIconEmoji.textContent = '⏳';
                 modalTitle.textContent = 'Submissions Not Open Yet!';
                 modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>!<br><br>The presentation submission window opens on <strong>29 August 2026 at 3:00 PM</strong> and closes on <strong>31 August 2026 at 11:59 PM</strong>. Please check back when open!`;
             } else if (popupMode === 'deadline_passed') {
                 modalCard.className = 'modal-card not-checked-in';
                 modalIcon.className = 'icon-badge-wrapper not-checked-in';
-                modalIconEmoji.textContent = '⏰';
                 modalTitle.textContent = 'Submission Window Closed!';
                 modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>!<br><br>The presentation submission window (<strong>31 August 2026, 11:59 PM</strong>) has closed. Further uploads are now locked.`;
             } else if (popupMode === 'locked' || popupMode === true) {
                 modalCard.className = 'modal-card locked';
                 modalIcon.className = 'icon-badge-wrapper locked';
-                modalIconEmoji.textContent = '🔒';
                 modalTitle.textContent = 'Submission Locked & Recorded!';
                 modalSubTitle.innerHTML = `Participant: <strong>${name || 'Participant'}</strong><br>Your final presentation report for Token <strong>${token}</strong> has already been submitted and locked in Google Sheets.`;
             } else {
                 modalCard.className = 'modal-card';
                 modalIcon.className = 'icon-badge-wrapper success';
-                modalIconEmoji.textContent = '🎉';
                 modalTitle.textContent = 'Presentation Submitted!';
-                modalSubTitle.innerHTML = `Congratulations <strong>${name || 'Participant'}</strong>! 👋<br>Your final presentation report has been successfully recorded and linked!`;
+                modalSubTitle.innerHTML = `Congratulations <strong>${name || 'Participant'}</strong>!<br>Your final presentation report has been successfully recorded and linked!`;
             }
 
             if (fileUrl && fileUrl.startsWith('http')) {

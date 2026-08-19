@@ -28,63 +28,30 @@ if (menuToggle && navLinks) {
     });
 }
 
-// Scroll Reveal Animation
-function reveal() {
-    var reveals = document.querySelectorAll('.reveal');
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150;
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add('active');
-        }
-    }
+// Scroll Reveal - now handled by GSAP ScrollTrigger (see bottom of file)
 
-    var staggers = document.querySelectorAll('.reveal-stagger');
-    for (var j = 0; j < staggers.length; j++) {
-        var windowHeight2 = window.innerHeight;
-        var elementTop2 = staggers[j].getBoundingClientRect().top;
-        var elementVisible2 = 50;
 
-        if (elementTop2 < windowHeight2 - elementVisible2) {
-            staggers[j].style.transitionDelay = `${(j % 3) * 0.15}s`;
-            staggers[j].classList.add('active');
-        }
-    }
-}
 
-window.addEventListener('scroll', reveal);
-window.addEventListener('load', reveal);
-setTimeout(reveal, 100);
-
-// Glitch effect on title on hover
-const title = document.querySelector('.glitch');
-if (title) {
-    title.addEventListener('mouseover', () => {
-        title.style.animation = 'glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite';
-    });
-    title.addEventListener('mouseout', () => {
-        title.style.animation = 'none';
-    });
-}
-
-// WOW Features - Cursor & Interactions
-const cursorDot = document.querySelector('.cursor-dot');
+// WOW Features - Cursor Ambient Glow Tracking (during movement & dragging)
 const cursorGlow = document.querySelector('.cursor-glow');
 const interactables = document.querySelectorAll('a, button, .btn, .glass');
 
-if (cursorDot && cursorGlow) {
-    window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-
+if (cursorGlow) {
+    const updateGlowPos = (x, y) => {
         cursorGlow.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
+            left: `${x}px`,
+            top: `${y}px`
+        }, { duration: 400, fill: "forwards" });
+    };
+
+    window.addEventListener('mousemove', (e) => {
+        updateGlowPos(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches.length > 0) {
+            updateGlowPos(e.touches[0].clientX, e.touches[0].clientY);
+        }
     });
 
     interactables.forEach(el => {
@@ -97,13 +64,13 @@ if (cursorDot && cursorGlow) {
     });
 }
 
-// Initialize 3D Tilt Effect on all Glass cards
+// Initialize 3D Tilt Effect on Landing Page Feature Cards (Excluding Modals & Forms)
 if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(document.querySelectorAll(".glass"), {
+    VanillaTilt.init(document.querySelectorAll(".card.glass, .team-card.glass, .stat-bento-card.glass, .req-card.glass, .timeline-item.glass"), {
         max: 5,
         speed: 400,
         glare: true,
-        "max-glare": 0.2,
+        "max-glare": 0.15,
         scale: 1.02
     });
 }
@@ -125,11 +92,16 @@ openModalBtns.forEach(btn => {
         if (modal) {
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
+            if (typeof lenis !== 'undefined') lenis.stop();
             if (cursorDot && cursorGlow) {
                 cursorDot.style.display = 'none';
                 cursorGlow.style.display = 'none';
             }
             document.body.style.cursor = 'auto';
+
+            // Ensure inner modal content is scrolled to top on open
+            const modalContent = modal.querySelector('.modal-content');
+            if (modalContent) modalContent.scrollTop = 0;
         }
     });
 });
@@ -139,6 +111,7 @@ const closeModal = () => {
     if (modal) {
         modal.classList.remove('show');
         document.body.style.overflow = 'auto';
+        if (typeof lenis !== 'undefined') lenis.start();
         if (cursorDot && cursorGlow) {
             cursorDot.style.display = 'block';
             cursorGlow.style.display = 'block';
@@ -163,11 +136,11 @@ participationRadios.forEach(radio => {
         if (e.target.value === 'team') {
             if (teamNameGroup) teamNameGroup.style.display = 'block';
             if (additionalMembers) additionalMembers.style.display = 'block';
-            if (member1Title) member1Title.textContent = 'Team Leader';
+            if (member1Title) member1Title.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Team Leader Details`;
         } else {
             if (teamNameGroup) teamNameGroup.style.display = 'none';
             if (additionalMembers) additionalMembers.style.display = 'none';
-            if (member1Title) member1Title.textContent = 'Participant / Team Leader';
+            if (member1Title) member1Title.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Primary Contact Details`;
         }
     });
 });
@@ -335,6 +308,7 @@ function triggerSuccessAnimation(token, email) {
 
             closeModal();
             document.body.style.overflow = 'auto'; // Restore normal scrolling
+            if (typeof lenis !== 'undefined') lenis.start();
         }, 3200);
     }
 }
@@ -367,15 +341,10 @@ function closeAutoEventNotice() {
     }
 }
 
-// Ensure Home Section is visible FIRST & Automatically show Problem Statement Popup on Direct Link Open!
+// DOMContentLoaded: Start Preloader & Fetch Live Data
 document.addEventListener('DOMContentLoaded', () => {
-    // Ensure body scroll is 100% unlocked and scrollable
-    document.body.style.overflow = 'auto';
-
-    // Automatically display the Revealed Problem Statement Popup Modal on direct link open!
-    setTimeout(() => {
-        openAutoEventNotice();
-    }, 400);
+    // Start the preloader animation sequence (only on fresh reload/session)
+    startPreloader();
 
     // Fetch Dynamic Notice & Live Leaderboard from Google Apps Script
     fetchLiveEventNotice();
@@ -412,10 +381,10 @@ async function fetchLiveEventNotice() {
             const modalPromptQuotes = document.querySelectorAll('.prompt-quote');
 
             if (modalNoticeMeta) {
-                modalNoticeMeta.innerHTML = `🗓️ EVENT DATE: <strong>${notice.eventDate.toUpperCase()}</strong> | 📍 VENUE: <strong>${notice.venue.toUpperCase()}</strong>`;
+                modalNoticeMeta.innerHTML = `EVENT DATE: <strong>${notice.eventDate.toUpperCase()}</strong> | VENUE: <strong>${notice.venue.toUpperCase()}</strong>`;
             }
             if (modalNoticeTitle) {
-                modalNoticeTitle.textContent = `🚀 ${notice.title.toUpperCase()}`;
+                modalNoticeTitle.textContent = `${notice.title.toUpperCase()}`;
             }
             if (modalNoticeSubtitle) {
                 modalNoticeSubtitle.textContent = notice.message;
@@ -527,7 +496,7 @@ async function fetchLiveParticipants() {
                         </div>
                         <h4 class="part-name">${p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</h4>
                         <div class="part-meta">Leader / Member: ${p.name}</div>
-                        <div class="part-os">💡 OS Concept: <strong>${p.osName}</strong></div>
+                        <div class="part-os">OS Concept: <strong>${p.osName}</strong></div>
                     </div>
                 `).join('');
             }
@@ -535,10 +504,11 @@ async function fetchLiveParticipants() {
             // 2. Populate Real Live Leaderboard Table with All Round Scores (out of 20)
             if (leaderboardBody) {
                 leaderboardBody.innerHTML = data.participants.map((p, index) => {
-                    let rankBadge = `<span class="rank-badge">${index + 1}</span>`;
-                    if (index === 0) rankBadge = `<span class="rank-badge gold">🥇 1</span>`;
-                    else if (index === 1) rankBadge = `<span class="rank-badge silver">🥈 2</span>`;
-                    else if (index === 2) rankBadge = `<span class="rank-badge bronze">🥉 3</span>`;
+                    const rankNum = (index + 1).toString().padStart(2, '0');
+                    let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
+                    if (index === 0) rankBadge = `<span class="rank-badge gold">${rankNum}</span>`;
+                    else if (index === 1) rankBadge = `<span class="rank-badge silver">${rankNum}</span>`;
+                    else if (index === 2) rankBadge = `<span class="rank-badge bronze">${rankNum}</span>`;
 
                     const r1 = Math.min(20, Math.max(0, p.r1Score || (p.subStatus === 'SUBMITTED' ? 18 : 0)));
                     const r2 = Math.min(20, Math.max(0, p.r2Score || (p.subStatus === 'SUBMITTED' ? 19 : 0)));
@@ -546,20 +516,27 @@ async function fetchLiveParticipants() {
                     const tot = p.totalScore || (r1 + r2 + r3);
 
                     let subBadge = p.subStatus === 'SUBMITTED'
-                        ? `<span class="status-pill submitted">SUBMITTED ✅</span>`
-                        : `<span class="status-pill pending">Pending ⏳</span>`;
+                        ? `<span class="status-pill submitted">SUBMITTED</span>`
+                        : `<span class="status-pill pending">PENDING</span>`;
+
+                    const displayName = p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name;
+                    const leaderText = p.participation && p.participation.toLowerCase() === 'team' ? `Leader: ${p.name}` : `Solo Architect`;
 
                     return `
                         <tr>
-                            <td>${rankBadge}</td>
-                            <td><strong>${p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</strong> <br><small style="color:var(--text-muted);">Leader: ${p.name}</small></td>
-                            <td><span style="color:#00f2fe; font-weight:600;">${p.dept}</span></td>
-                            <td><span class="os-name-badge">${p.osName}</span></td>
-                            <td><strong style="color:#00f2fe;">${r1}/20</strong></td>
-                            <td><strong style="color:#00f2fe;">${r2}/20</strong></td>
-                            <td><strong style="color:#00f2fe;">${r3}/20</strong></td>
-                            <td><span style="background:rgba(0,255,128,0.15); color:#00ff80; border:1px solid #00ff80; padding:0.3rem 0.7rem; border-radius:50px; font-weight:800; white-space:nowrap;">${tot}/60 PTS</span></td>
-                            <td>${subBadge}</td>
+                            <td class="col-rank">${rankBadge}</td>
+                            <td class="col-participant">
+                                <div class="participant-name-wrap">
+                                    <strong class="p-name">${displayName}</strong>
+                                    <span class="p-leader">${leaderText}</span>
+                                </div>
+                            </td>
+                            <td class="col-branch"><span class="branch-badge">${p.dept}</span></td>
+                            <td class="col-score"><span class="round-score ${r1 > 0 ? 'scored' : 'zero'}">${r1}/20</span></td>
+                            <td class="col-score"><span class="round-score ${r2 > 0 ? 'scored' : 'zero'}">${r2}/20</span></td>
+                            <td class="col-score"><span class="round-score ${r3 > 0 ? 'scored' : 'zero'}">${r3}/20</span></td>
+                            <td class="col-total"><span class="total-score-pill ${tot > 0 ? 'active-score' : 'zero-score'}">${tot}/60 PTS</span></td>
+                            <td class="col-status">${subBadge}</td>
                         </tr>
                     `;
                 }).join('');
@@ -568,5 +545,177 @@ async function fetchLiveParticipants() {
     } catch (e) {
         console.error("Fetch Live Leaderboard Error:", e);
     }
+}
+
+// ============================================
+// GSAP & Lenis Smooth Scroll Integration
+// ============================================
+
+// Initialize Lenis Smooth Scroll
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+});
+
+function lenisRaf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(lenisRaf);
+}
+requestAnimationFrame(lenisRaf);
+
+// Connect Lenis to GSAP ScrollTrigger
+if (typeof gsap !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+}
+
+// ============================================
+// Preloader Animation (Fast & Session-Aware)
+// ============================================
+const preloader = document.getElementById('preloader');
+const preloaderCounter = document.querySelector('.preloader-counter');
+const preloaderBarFill = document.querySelector('.preloader-bar-fill');
+const preloaderStatus = document.querySelector('.preloader-status-text');
+
+// Check if preloader has already run in this session
+const hasPreloaded = sessionStorage.getItem('ideathon_preloaded_session');
+
+// Set hero elements invisible initially ONLY if preloader will run
+if (!hasPreloaded && typeof gsap !== 'undefined') {
+    gsap.set('.hero-container > *', { opacity: 0, y: 30 });
+}
+
+function startPreloader() {
+    if (!preloader || hasPreloaded || typeof gsap === 'undefined') {
+        // Instant reveal if already visited in this session
+        if (preloader) preloader.style.display = 'none';
+        document.body.classList.remove('preloader-active');
+        document.querySelectorAll('.hero-container > *, .reveal, .reveal-stagger').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+        initScrollAnimations();
+        return;
+    }
+
+    // Mark as preloaded for this browser tab session
+    sessionStorage.setItem('ideathon_preloaded_session', 'true');
+    document.body.classList.add('preloader-active');
+
+    const counter = { val: 0 };
+    const tl = gsap.timeline();
+
+    tl.to(counter, {
+        val: 100,
+        duration: 1.1,
+        ease: "power2.inOut",
+        onUpdate: () => {
+            const v = Math.floor(counter.val);
+            if (preloaderCounter) preloaderCounter.textContent = v + '%';
+            if (preloaderBarFill) preloaderBarFill.style.width = v + '%';
+            if (preloaderStatus) {
+                if (v < 35) preloaderStatus.textContent = 'CONNECTING TO SYSTEM...';
+                else if (v < 75) preloaderStatus.textContent = 'LOADING EVENT MODULES...';
+                else preloaderStatus.textContent = 'SYSTEM READY • WELCOME';
+            }
+        }
+    })
+    .to('.preloader-content', {
+        scale: 0.92,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in",
+    }, "+=0.1")
+    .to(preloader, {
+        yPercent: -100,
+        duration: 0.6,
+        ease: "power4.inOut",
+        onComplete: () => {
+            preloader.style.display = 'none';
+            document.body.classList.remove('preloader-active');
+            initHeroAnimations();
+            initScrollAnimations();
+        }
+    }, "-=0.05");
+}
+
+// ============================================
+// Hero Entrance Animations (Organized & Clean)
+// ============================================
+function initHeroAnimations() {
+    if (typeof gsap === 'undefined') return;
+
+    const heroTl = gsap.timeline();
+
+    heroTl
+        .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+        .to('.hero-main-title', { opacity: 1, y: 0, duration: 0.85, ease: "power3.out" }, "-=0.45")
+        .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.45")
+        .to('.hero-meta-grid', { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, "-=0.4")
+        .to('.hero-lead-text', { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, "-=0.35")
+        .to('.hero-action-buttons', { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.3")
+        .to('.hero-stats-bento-grid .stat-bento-card', { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.3");
+}
+
+// ============================================
+// GSAP ScrollTrigger Section Reveals
+// ============================================
+function initScrollAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        // Fallback: make everything visible
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+            el.style.opacity = '1';
+        });
+        return;
+    }
+
+    // Individual reveals
+    gsap.utils.toArray('.reveal').forEach(el => {
+        // Skip hero elements
+        if (el.closest('.hero')) return;
+
+        gsap.fromTo(el,
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
+
+    // Staggered reveals - group by parent
+    const staggerParents = new Set();
+    gsap.utils.toArray('.reveal-stagger').forEach(el => {
+        staggerParents.add(el.parentElement);
+    });
+
+    staggerParents.forEach(parent => {
+        const children = parent.querySelectorAll('.reveal-stagger');
+        gsap.fromTo(children,
+            { opacity: 0, y: 30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.12,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: parent,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
 }
 
