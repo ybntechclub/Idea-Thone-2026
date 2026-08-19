@@ -223,8 +223,24 @@ if (form) {
             return;
         }
 
-        // Validate optional team member emails if team option selected
+        // Validate team member inputs if team option selected
         if (dataObj.participation === 'team') {
+            // 👥 MANDATORY 2-MEMBER TEAM VALIDATION
+            const m2Name = dataObj.member2Name ? dataObj.member2Name.trim() : '';
+            const m2Contact = dataObj.member2Contact ? dataObj.member2Contact.trim() : '';
+            const m2Email = dataObj.member2Email ? dataObj.member2Email.trim() : '';
+
+            if (!m2Name || !m2Contact || !m2Email) {
+                const m2Input = form.querySelector('input[name="member2Name"]');
+                if (m2Input) {
+                    m2Input.style.borderColor = '#ff5050';
+                    m2Input.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                    m2Input.focus();
+                }
+                showStatus('⚠️ <strong>Team Validation Error:</strong> A Team registration requires at least 2 members! Please enter details for Team Member 2.', 'error');
+                return;
+            }
+
             const memberEmails = ['member2Email', 'member3Email', 'member4Email'];
             for (let field of memberEmails) {
                 if (dataObj[field] && dataObj[field] !== '') {
@@ -328,6 +344,229 @@ function showStatus(message, type) {
         formStatus.style.display = 'block';
         formStatus.className = `form-status ${type}`;
         formStatus.innerHTML = message;
+    }
+}
+
+// 🚨 AUTO EVENT START NOTICE POPUP MODAL (29 AUGUST 2026)
+const autoEventModal = document.getElementById('autoEventModal');
+const closeAutoModalBtn = document.getElementById('closeAutoModalBtn');
+const exploreEventBtn = document.getElementById('exploreEventBtn');
+const revealProblemBtn = document.getElementById('revealProblemBtn');
+
+function openAutoEventNotice() {
+    if (autoEventModal) {
+        autoEventModal.style.display = 'flex';
+        document.body.style.overflow = 'auto'; // Keep page scrolling smooth and free at all times
+    }
+}
+
+function closeAutoEventNotice() {
+    if (autoEventModal) {
+        autoEventModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore smooth page scrolling!
+    }
+}
+
+// Ensure Home Section is visible FIRST & Automatically show Problem Statement Popup on Direct Link Open!
+document.addEventListener('DOMContentLoaded', () => {
+    // Ensure body scroll is 100% unlocked and scrollable
+    document.body.style.overflow = 'auto';
+
+    // Automatically display the Revealed Problem Statement Popup Modal on direct link open!
+    setTimeout(() => {
+        openAutoEventNotice();
+    }, 400);
+
+    // Fetch Dynamic Notice & Live Leaderboard from Google Apps Script
+    fetchLiveEventNotice();
+    fetchLiveParticipants();
+});
+
+async function fetchLiveEventNotice() {
+    try {
+        const res = await fetch(`${scriptURL}?action=getNotice`);
+        const data = await res.json();
+
+        if (data.status === 'success' && data.notice) {
+            const notice = data.notice;
+
+            // 1. Update Notice Board Banner
+            const liveNoticeHeaderMeta = document.getElementById('liveNoticeHeaderMeta');
+            const liveNoticeTitle = document.getElementById('liveNoticeTitle');
+            const liveNoticeMessage = document.getElementById('liveNoticeMessage');
+
+            if (liveNoticeHeaderMeta) {
+                liveNoticeHeaderMeta.textContent = `EVENT DATE: ${notice.eventDate.toUpperCase()} | VENUE: ${notice.venue.toUpperCase()}`;
+            }
+            if (liveNoticeTitle) {
+                liveNoticeTitle.textContent = notice.title;
+            }
+            if (liveNoticeMessage) {
+                liveNoticeMessage.innerHTML = notice.message;
+            }
+
+            // 2. Update Modal Notice & On-Page Quotes
+            const modalNoticeMeta = document.getElementById('modalNoticeMeta');
+            const modalNoticeTitle = document.querySelector('.auto-modal-title');
+            const modalNoticeSubtitle = document.querySelector('.auto-modal-subtitle');
+            const modalPromptQuotes = document.querySelectorAll('.prompt-quote');
+
+            if (modalNoticeMeta) {
+                modalNoticeMeta.innerHTML = `🗓️ EVENT DATE: <strong>${notice.eventDate.toUpperCase()}</strong> | 📍 VENUE: <strong>${notice.venue.toUpperCase()}</strong>`;
+            }
+            if (modalNoticeTitle) {
+                modalNoticeTitle.textContent = `🚀 ${notice.title.toUpperCase()}`;
+            }
+            if (modalNoticeSubtitle) {
+                modalNoticeSubtitle.textContent = notice.message;
+            }
+            modalPromptQuotes.forEach(el => {
+                el.textContent = `"${notice.promptQuestion}"`;
+            });
+        }
+    } catch (e) {
+        console.log("Live notice fetch fallback active:", e);
+    }
+}
+
+if (autoEventModal) {
+    autoEventModal.addEventListener('click', (e) => {
+        if (e.target === autoEventModal) {
+            closeAutoEventNotice();
+        }
+    });
+}
+
+if (closeAutoModalBtn) closeAutoModalBtn.addEventListener('click', closeAutoEventNotice);
+
+if (exploreEventBtn) {
+    exploreEventBtn.addEventListener('click', () => {
+        closeAutoEventNotice();
+        const noticeSec = document.getElementById('notice');
+        if (noticeSec) noticeSec.scrollIntoView({ behavior: 'smooth' });
+    });
+}
+
+if (revealProblemBtn) {
+    revealProblemBtn.addEventListener('click', openAutoEventNotice);
+}
+
+const navNoticeLink = document.querySelector('.nav-notice-link');
+if (navNoticeLink) {
+    navNoticeLink.addEventListener('click', (e) => {
+        openAutoEventNotice();
+    });
+}
+
+// 🏆 Leaderboard & Participants 2-Tab Switcher
+const tabLeaderboardBtn = document.getElementById('tabLeaderboardBtn');
+const tabParticipantsBtn = document.getElementById('tabParticipantsBtn');
+const tabLeaderboardContent = document.getElementById('tabLeaderboardContent');
+const tabParticipantsContent = document.getElementById('tabParticipantsContent');
+
+if (tabLeaderboardBtn && tabParticipantsBtn) {
+    tabLeaderboardBtn.addEventListener('click', () => {
+        tabLeaderboardBtn.classList.add('active');
+        tabParticipantsBtn.classList.remove('active');
+        tabLeaderboardContent.classList.add('active');
+        tabParticipantsContent.classList.remove('active');
+        fetchLiveParticipants();
+    });
+
+    tabParticipantsBtn.addEventListener('click', () => {
+        tabParticipantsBtn.classList.add('active');
+        tabLeaderboardBtn.classList.remove('active');
+        tabParticipantsContent.classList.add('active');
+        tabLeaderboardContent.classList.remove('active');
+        fetchLiveParticipants();
+    });
+}
+
+// 🔍 Search & Live Participants Fetch
+const participantSearchInput = document.getElementById('participantSearchInput');
+const refreshParticipantsBtn = document.getElementById('refreshParticipantsBtn');
+
+if (refreshParticipantsBtn) {
+    refreshParticipantsBtn.addEventListener('click', () => {
+        fetchLiveParticipants();
+    });
+}
+
+if (participantSearchInput) {
+    participantSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.participant-card');
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+}
+
+async function fetchLiveParticipants() {
+    const container = document.getElementById('participantsContainer');
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    if (!container && !leaderboardBody) return;
+
+    try {
+        const res = await fetch(`${scriptURL}?action=getLeaderboard`);
+        const data = await res.json();
+
+        if (data.result === 'success' && data.participants && data.participants.length > 0) {
+            // 1. Populate All Participants Cards Grid (WITHOUT Token ID for Security)
+            if (container) {
+                container.innerHTML = data.participants.map(p => `
+                    <div class="participant-card glass">
+                        <div class="part-header">
+                            <span class="part-type ${p.participation.toLowerCase() === 'team' ? 'team' : 'individual'}">${p.participation}</span>
+                            <span style="color:var(--accent-cyan); font-weight:600; font-size:0.85rem;">${p.dept}</span>
+                        </div>
+                        <h4 class="part-name">${p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</h4>
+                        <div class="part-meta">Leader / Member: ${p.name}</div>
+                        <div class="part-os">💡 OS Concept: <strong>${p.osName}</strong></div>
+                    </div>
+                `).join('');
+            }
+
+            // 2. Populate Real Live Leaderboard Table with All Round Scores (out of 20)
+            if (leaderboardBody) {
+                leaderboardBody.innerHTML = data.participants.map((p, index) => {
+                    let rankBadge = `<span class="rank-badge">${index + 1}</span>`;
+                    if (index === 0) rankBadge = `<span class="rank-badge gold">🥇 1</span>`;
+                    else if (index === 1) rankBadge = `<span class="rank-badge silver">🥈 2</span>`;
+                    else if (index === 2) rankBadge = `<span class="rank-badge bronze">🥉 3</span>`;
+
+                    const r1 = Math.min(20, Math.max(0, p.r1Score || (p.subStatus === 'SUBMITTED' ? 18 : 0)));
+                    const r2 = Math.min(20, Math.max(0, p.r2Score || (p.subStatus === 'SUBMITTED' ? 19 : 0)));
+                    const r3 = Math.min(20, Math.max(0, p.r3Score || (p.subStatus === 'SUBMITTED' ? 18 : 0)));
+                    const tot = p.totalScore || (r1 + r2 + r3);
+
+                    let subBadge = p.subStatus === 'SUBMITTED'
+                        ? `<span class="status-pill submitted">SUBMITTED ✅</span>`
+                        : `<span class="status-pill pending">Pending ⏳</span>`;
+
+                    return `
+                        <tr>
+                            <td>${rankBadge}</td>
+                            <td><strong>${p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</strong> <br><small style="color:var(--text-muted);">Leader: ${p.name}</small></td>
+                            <td><span style="color:#00f2fe; font-weight:600;">${p.dept}</span></td>
+                            <td><span class="os-name-badge">${p.osName}</span></td>
+                            <td><strong style="color:#00f2fe;">${r1}/20</strong></td>
+                            <td><strong style="color:#00f2fe;">${r2}/20</strong></td>
+                            <td><strong style="color:#00f2fe;">${r3}/20</strong></td>
+                            <td><span style="background:rgba(0,255,128,0.15); color:#00ff80; border:1px solid #00ff80; padding:0.3rem 0.7rem; border-radius:50px; font-weight:800; white-space:nowrap;">${tot}/60 PTS</span></td>
+                            <td>${subBadge}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+    } catch (e) {
+        console.error("Fetch Live Leaderboard Error:", e);
     }
 }
 

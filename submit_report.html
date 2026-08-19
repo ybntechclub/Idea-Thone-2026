@@ -390,6 +390,54 @@
             animation: pulseGlowError 2s infinite;
         }
 
+        /* ⚠️ One-Time Warning Box */
+        .one-time-warning-box {
+            background: rgba(255, 80, 80, 0.12);
+            border: 1.5px solid var(--error);
+            box-shadow: 0 0 25px rgba(255, 80, 80, 0.25);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .one-time-warning-box .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #ff5050;
+            font-size: 1.02rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .one-time-warning-box p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .confirm-checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.2rem;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .confirm-checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-cyan);
+            margin-top: 2px;
+        }
+
         @keyframes pulseGlow {
 
             0%,
@@ -479,6 +527,17 @@
 
         <!-- Step 2: Upload Presentation File Directly -->
         <div id="uploadSection" style="display: none;">
+            <!-- ⚠️ ONE-TIME SUBMISSION CRITICAL WARNING PANEL -->
+            <div class="one-time-warning-box">
+                <div class="warning-header">
+                    <span class="warning-icon">⚠️</span>
+                    <strong>CRITICAL WARNING: ONE-TIME SUBMISSION ONLY!</strong>
+                </div>
+                <p>You can submit your OS presentation report <strong>ONLY ONCE</strong>. Once submitted, your
+                    presentation is permanently locked and <strong>cannot be edited, replaced, or re-submitted</strong>.
+                    Please double-check your file or link before clicking Submit!</p>
+            </div>
+
             <div class="step-title">
                 <span>2️⃣</span> Upload Final Presentation PDF File
             </div>
@@ -500,8 +559,15 @@
                     <input type="url" id="linkInput" placeholder="https://drive.google.com/file/d/... or Canva Link">
                 </div>
 
+                <!-- 🔒 MANDATORY ONE-TIME SUBMISSION CONFIRMATION CHECKBOX -->
+                <label class="confirm-checkbox-label">
+                    <input type="checkbox" id="confirmCheckbox" required>
+                    <span>I understand and confirm that this is my <strong>FINAL ONE-TIME SUBMISSION</strong> and cannot
+                        be modified or re-submitted later.</span>
+                </label>
+
                 <button type="submit" class="btn btn-w100" id="submitReportBtn" style="margin-top: 1.2rem;">🚀 Upload &
-                    Submit Presentation</button>
+                    Lock Final Presentation</button>
             </form>
         </div>
 
@@ -700,6 +766,16 @@
                     uploadSection.style.display = 'none';
                     showStatus(`🛑 <strong>Check-In Required!</strong> ${result.message}`, 'error');
                     openSuccessPopup(verifiedToken, participantName, null, 'not_checked_in');
+                } else if (result.result === 'submission_not_started') {
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ffb400;">NOT STARTED YET ⏳</strong>`;
+                    uploadSection.style.display = 'none';
+                    showStatus(`⏳ <strong>Submissions Not Open Yet!</strong> ${result.message}`, 'error');
+                    openSuccessPopup(verifiedToken, participantName, null, 'submission_not_started');
+                } else if (result.result === 'deadline_passed') {
+                    bannerStatus.innerHTML = `Submission Status: <strong style="color:#ff5050;">DEADLINE PASSED ⏰</strong>`;
+                    uploadSection.style.display = 'none';
+                    showStatus(`⏰ <strong>Deadline Passed!</strong> ${result.message}`, 'error');
+                    openSuccessPopup(verifiedToken, participantName, null, 'deadline_passed');
                 } else {
                     showStatus(`⚠️ <strong>Upload Issue:</strong> ${result.message || 'Error recording submission.'}`, 'error');
                 }
@@ -708,7 +784,7 @@
                 showStatus(`⚠️ <strong>Upload Connection Error:</strong> ${err.message}`, 'error');
             } finally {
                 submitReportBtn.disabled = false;
-                submitReportBtn.textContent = '🚀 Submit Final Presentation Report';
+                submitReportBtn.textContent = '🚀 Submit & Lock Final Presentation';
             }
         });
 
@@ -738,6 +814,18 @@
                 modalIconEmoji.textContent = '🛑';
                 modalTitle.textContent = 'Check-In Required at Venue!';
                 modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>! 👋<br><br>You must <strong>Check-In at the event venue scanner desk</strong> before you can submit your final OS presentation report.<br><small style="color:#ff8080; display:block; margin-top:0.6rem;">Please visit the registration desk to scan your QR Pass!</small>`;
+            } else if (popupMode === 'submission_not_started') {
+                modalCard.className = 'modal-card locked';
+                modalIcon.className = 'icon-badge-wrapper locked';
+                modalIconEmoji.textContent = '⏳';
+                modalTitle.textContent = 'Submissions Not Open Yet!';
+                modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>!<br><br>The presentation submission window opens on <strong>29 August 2026 at 3:00 PM</strong> and closes on <strong>31 August 2026 at 11:59 PM</strong>. Please check back when open!`;
+            } else if (popupMode === 'deadline_passed') {
+                modalCard.className = 'modal-card not-checked-in';
+                modalIcon.className = 'icon-badge-wrapper not-checked-in';
+                modalIconEmoji.textContent = '⏰';
+                modalTitle.textContent = 'Submission Window Closed!';
+                modalSubTitle.innerHTML = `Hello <strong>${name || 'Participant'}</strong>!<br><br>The presentation submission window (<strong>31 August 2026, 11:59 PM</strong>) has closed. Further uploads are now locked.`;
             } else if (popupMode === 'locked' || popupMode === true) {
                 modalCard.className = 'modal-card locked';
                 modalIcon.className = 'icon-badge-wrapper locked';
