@@ -85,7 +85,7 @@ const additionalMembers = document.getElementById('additionalMembers');
 const member1Title = document.getElementById('member1Title');
 const formStatus = document.getElementById('formStatus');
 
-// Open Modal
+// Open Modal (Registration Open & Active)
 openModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -153,8 +153,15 @@ function validateEmail(email) {
     return re.test(String(email).trim().toLowerCase());
 }
 
+// 📱 STRICT 10-DIGIT MOBILE NUMBER VALIDATION HELPER
+function validatePhone(phone) {
+    if (!phone) return false;
+    const digits = String(phone).replace(/\D/g, ''); // Extract digits only
+    return digits.length === 10;
+}
+
 // Clear red border/error highlights on typing
-document.querySelectorAll('input[type="email"]').forEach(input => {
+document.querySelectorAll('input[type="email"], input[type="tel"]').forEach(input => {
     input.addEventListener('input', () => {
         input.style.borderColor = '';
         input.style.boxShadow = '';
@@ -184,6 +191,18 @@ if (form) {
             dataObj[key] = typeof value === 'string' ? value.trim() : value;
         });
 
+        // 📱 STRICT 10-DIGIT LEADER MOBILE NUMBER CHECK
+        const leaderContactInput = form.querySelector('input[name="leaderContact"]');
+        if (!validatePhone(dataObj.leaderContact)) {
+            if (leaderContactInput) {
+                leaderContactInput.style.borderColor = '#ff5050';
+                leaderContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                leaderContactInput.focus();
+            }
+            showStatus('❌ Invalid Mobile Number! Contact number must be exactly 10 numeric digits (e.g. 9876543210).', 'error');
+            return;
+        }
+
         // 🔍 EMAIL VALIDATION CHECKS
         const leaderEmailInput = form.querySelector('input[name="leaderEmail"]');
         if (!validateEmail(dataObj.leaderEmail)) {
@@ -211,6 +230,17 @@ if (form) {
                     m2Input.focus();
                 }
                 showStatus('⚠️ <strong>Team Validation Error:</strong> A Team registration requires at least 2 members! Please enter details for Team Member 2.', 'error');
+                return;
+            }
+
+            const m2ContactInput = form.querySelector('input[name="member2Contact"]');
+            if (!validatePhone(dataObj.member2Contact)) {
+                if (m2ContactInput) {
+                    m2ContactInput.style.borderColor = '#ff5050';
+                    m2ContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                    m2ContactInput.focus();
+                }
+                showStatus('❌ Invalid Team Member 2 Mobile Number! Must be exactly 10 numeric digits (e.g. 9876543210).', 'error');
                 return;
             }
 
@@ -258,7 +288,8 @@ if (form) {
                 // Show Animated Success Popup
                 triggerSuccessAnimation(tokenGenerated, dataObj.leaderEmail);
             } else {
-                throw new Error(result.error || 'Unknown error occurred on Google Apps Script server.');
+                showStatus(`❌ <strong>Registration Error:</strong> ${result.error || 'Registration is currently not open or failed.'}`, 'error');
+                return;
             }
         } catch (error) {
             console.error('Registration Submission Error:', error);
