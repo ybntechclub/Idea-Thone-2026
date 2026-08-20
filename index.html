@@ -102,8 +102,10 @@
 
             <!-- Event Key Facts Bento Strip (Date, Venue, Format) -->
             <div class="hero-meta-grid">
-                <div class="meta-pill glass">
-                    <span class="meta-label">EVENT DATE</span>
+                <div class="meta-pill glass highlight-date" title="Event Date: 31 August 2026">
+                    <span class="meta-label">
+                        <span class="pulse-clock-dot"></span> EVENT DATE • <span class="cd-inline-tag"><span id="cdDays">00</span>d <span id="cdHours">00</span>h left</span>
+                    </span>
                     <span class="meta-value">31 August 2026</span>
                 </div>
                 <div class="meta-pill glass highlight">
@@ -118,17 +120,40 @@
 
             <!-- Crisp Problem Statement Teaser -->
             <p class="hero-lead-text">
-                What if you could forget Android, iOS, Windows, macOS, and Linux to design an operating system completely from scratch? An open challenge for visionaries, designers, and future architects.
+                What if you could forget Android and iOS to design a Mobile Operating System completely from scratch? An open challenge for visionaries, designers, and future architects.
             </p>
 
-            <!-- Primary CTAs -->
+            <!-- Primary CTAs (Elevated Triad Design) -->
             <div class="hero-action-buttons">
-                <a href="#challenge" class="btn btn-primary">
+                <a href="#challenge" class="btn btn-hero-primary">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
                     <span>Discover Challenge</span>
                     <span class="arrow-icon">&rarr;</span>
                 </a>
-                <a href="#" class="btn btn-secondary open-modal-btn">Register Team / Idea</a>
-                <a href="submit_report.html" class="btn-text-link">Submit Deck &rarr;</a>
+                
+                <a href="#" class="btn btn-hero-secondary open-modal-btn">
+                    <span class="live-dot-mini"></span>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                    <span>Register Team / Idea</span>
+                </a>
+                
+                <a href="submit_report.html" class="btn btn-hero-portal">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Submit Deck</span>
+                    <span class="arrow-icon">&rarr;</span>
+                </a>
             </div>
 
             <!-- 🌟 REDESIGNED 4-PILLAR STAT BENTO GRID -->
@@ -202,8 +227,7 @@
                             The Official OS Prompt Question:</h4>
                         <p class="prompt-quote"
                             style="font-size: 1.05rem; color: #fff; font-style: italic; font-weight: 500;">
-                            "If you could forget Android, iOS, Windows, and macOS — what Operating System would you
-                            design from complete zero today?"
+                            "If you could forget Android and iOS — what Mobile Operating System would you design from complete zero today?"
                         </p>
                     </div>
 
@@ -266,6 +290,7 @@
                 </svg>
                 <span>Official Key Event Dates & Cutoffs</span>
             </h3>
+
             <div class="timeline-grid">
                 <div class="timeline-item glass highlight">
                     <div class="time-step">STAGE 01</div>
@@ -341,24 +366,34 @@
                 </div>
                 <div class="challenge-visual card glass">
                     <div class="visual-content">
-                        <h3>Think Beyond...</h3>
-                        <div class="tags-cloud">
-                            <span class="tag">AI</span>
-                            <span class="tag">Privacy</span>
-                            <span class="tag">Education</span>
-                            <span class="tag">Gaming</span>
-                            <span class="tag">Productivity</span>
-                            <span class="tag">Accessibility</span>
-                            <span class="tag">Security</span>
-                            <span class="tag">Communication</span>
-                            <span class="tag">Personalization</span>
-                            <span class="tag">Creativity</span>
-                            <span class="tag">Sustainability</span>
-                            <span class="tag">Offline Computing</span>
-                            <span class="tag">Device Integration</span>
+                        <div class="tags-header-flex">
+                            <h3>Think Beyond...</h3>
+                            <span class="tags-interactive-hint">Click a theme for prompt sparks 💡</span>
                         </div>
-                        <p class="goal-text">"If we were building an operating system from zero today, what would we
-                            build?"</p>
+                        <div class="tags-cloud" id="interactiveTagsCloud">
+                            <button type="button" class="tag active" data-category="AI" data-prompt="What if the OS has zero app icons, and instead uses proactive local AI agents that generate tailored micro-interfaces on demand?">AI & Agents</button>
+                            <button type="button" class="tag" data-category="Privacy" data-prompt="What if zero telemetry is hardcoded into the kernel, with on-device hardware killswitches and cryptographic sandboxing?">Privacy First</button>
+                            <button type="button" class="tag" data-category="Accessibility" data-prompt="What if the entire mobile OS is controlled via neural intent, spatial gaze tracking, and dynamic micro-haptics?">Accessibility</button>
+                            <button type="button" class="tag" data-category="Gaming" data-prompt="What if the OS allocates 99% of SoC compute directly to frame pipelines with zero background OS overhead?">Gaming Core</button>
+                            <button type="button" class="tag" data-category="Productivity" data-prompt="What if multitasking operates on an infinite spatial canvas that flows seamlessly from your phone to any nearby screen?">Infinite Workspace</button>
+                            <button type="button" class="tag" data-category="Security" data-prompt="What if all app permissions expire after 60 seconds and require continuous ambient biometric authentication?">Zero-Trust Security</button>
+                            <button type="button" class="tag" data-category="Sustainability" data-prompt="What if the OS uses extreme e-ink micro-modes that extend 10% battery life to over 48 hours of full productivity?">Eco Computing</button>
+                            <button type="button" class="tag" data-category="Offline Computing" data-prompt="What if 100% of LLM intelligence, voice recognition, and image synthesis run offline without any cloud connectivity?">100% Offline</button>
+                            <button type="button" class="tag" data-category="Personalization" data-prompt="What if the OS dynamically morphs its layout, color spectrum, and gesture shortcuts based on your daily biological rhythm?">Adaptive Morphing</button>
+                        </div>
+
+                        <!-- Dynamic Inspiration Spark Card -->
+                        <div class="concept-inspiration-card glass" id="conceptInspirationCard">
+                            <div class="spark-top-bar">
+                                <span class="spark-badge" id="sparkCategoryBadge">AI & AGENTS</span>
+                                <span class="spark-label">IDEA INSPIRATION SPARK</span>
+                            </div>
+                            <p class="spark-prompt-text" id="sparkPromptText">
+                                "What if the OS has zero app icons, and instead uses proactive local AI agents that generate tailored micro-interfaces on demand?"
+                            </p>
+                        </div>
+
+                        <p class="goal-text">"If we were building a mobile operating system from zero today, what would we build?"</p>
                     </div>
                 </div>
             </div>
@@ -387,7 +422,7 @@
                 <div class="req-card glass reveal-stagger">
                     <div class="req-number">04</div>
                     <h3>Your Innovation</h3>
-                    <p>What makes your OS fundamentally different from existing solutions like Android or Windows?</p>
+                    <p>What makes your OS fundamentally different from existing solutions like Android or iOS?</p>
                 </div>
                 <div class="req-card glass reveal-stagger">
                     <div class="req-number">05</div>
@@ -747,8 +782,7 @@
         <div class="container">
             <div class="final-card glass">
                 <h2>One Last Question</h2>
-                <p class="final-quote">"If my OS existed tomorrow, why would someone choose it instead of Android, iOS,
-                    Windows, or macOS?"</p>
+                <p class="final-quote">"If my mobile OS existed tomorrow, why would someone choose it instead of Android or iOS?"</p>
                 <p>If you have a convincing answer—We want to hear your idea.</p>
 
                 <div class="submission-format">
@@ -860,15 +894,19 @@
 
                 <!-- Team Name (Visible if Team selected) -->
                 <div class="form-section-card" id="teamNameGroup" style="display: none;">
-                    <label class="section-card-title" for="teamName">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-title-svg">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                        </svg>
-                        Team Name <span class="req-star">*</span>
-                    </label>
-                    <div class="input-with-icon">
-                        <input type="text" id="teamName" name="teamName" placeholder="e.g. Quantum Innovators, Nexus OS">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="teamName">
+                            <span>Team Name <span class="req-star">*</span></span>
+                        </label>
+                        <div class="form-control-wrapper">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <input type="text" id="teamName" name="teamName" class="has-icon" placeholder="Enter your team name">
+                        </div>
                     </div>
                 </div>
 
@@ -889,19 +927,42 @@
                         <div class="form-grid">
                             <div class="form-group">
                                 <label>Full Name <span class="req-star">*</span></label>
-                                <input type="text" name="leaderName" required placeholder="e.g. John Doe">
+                                <div class="form-control-wrapper">
+                                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" name="leaderName" class="has-icon" required placeholder="Enter full name">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Contact Number <span class="req-star">*</span></label>
-                                <input type="tel" name="leaderContact" required placeholder="+91 98765 43210">
+                                <div class="form-control-wrapper">
+                                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                    <input type="tel" name="leaderContact" class="has-icon" required placeholder="Enter 10-digit mobile number">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Email Address <span class="req-star">*</span></label>
-                                <input type="email" name="leaderEmail" required placeholder="name@example.com">
+                                <div class="form-control-wrapper">
+                                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    <input type="email" name="leaderEmail" class="has-icon" required placeholder="Enter email address">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Department & Semester <span class="req-star">*</span></label>
-                                <input type="text" name="leaderDept" required placeholder="e.g. CSE, 5th Sem">
+                                <div class="form-control-wrapper">
+                                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    </svg>
+                                    <input type="text" name="leaderDept" class="has-icon" required placeholder="e.g. CSE, 5th Sem">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -923,19 +984,42 @@
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label>Full Name <span class="req-star">*</span></label>
-                                    <input type="text" name="member2Name" placeholder="Member 2 Full Name">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <input type="text" name="member2Name" class="has-icon" placeholder="Enter full name">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Contact Number <span class="req-star">*</span></label>
-                                    <input type="tel" name="member2Contact" placeholder="+91 98765 43210">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                        <input type="tel" name="member2Contact" class="has-icon" placeholder="Enter contact number">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address <span class="req-star">*</span></label>
-                                    <input type="email" name="member2Email" placeholder="member2@example.com">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                        <input type="email" name="member2Email" class="has-icon" placeholder="Enter email address">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Department & Semester <span class="req-star">*</span></label>
-                                    <input type="text" name="member2Dept" placeholder="e.g. CSE, 5th Sem">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                        </svg>
+                                        <input type="text" name="member2Dept" class="has-icon" placeholder="e.g. CSE, 5th Sem">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -955,19 +1039,42 @@
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" name="member3Name" placeholder="Member 3 Full Name">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <input type="text" name="member3Name" class="has-icon" placeholder="Enter full name">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Contact Number</label>
-                                    <input type="tel" name="member3Contact" placeholder="+91 98765 43210">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                        <input type="tel" name="member3Contact" class="has-icon" placeholder="Enter contact number">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" name="member3Email" placeholder="member3@example.com">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                        <input type="email" name="member3Email" class="has-icon" placeholder="Enter email address">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Department & Semester</label>
-                                    <input type="text" name="member3Dept" placeholder="e.g. IT, 3rd Sem">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                        </svg>
+                                        <input type="text" name="member3Dept" class="has-icon" placeholder="e.g. IT, 3rd Sem">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -987,19 +1094,42 @@
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" name="member4Name" placeholder="Member 4 Full Name">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <input type="text" name="member4Name" class="has-icon" placeholder="Enter full name">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Contact Number</label>
-                                    <input type="tel" name="member4Contact" placeholder="+91 98765 43210">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                        <input type="tel" name="member4Contact" class="has-icon" placeholder="Enter contact number">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" name="member4Email" placeholder="member4@example.com">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                        <input type="email" name="member4Email" class="has-icon" placeholder="Enter email address">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Department & Semester</label>
-                                    <input type="text" name="member4Dept" placeholder="e.g. AIML, 5th Sem">
+                                    <div class="form-control-wrapper">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                        </svg>
+                                        <input type="text" name="member4Dept" class="has-icon" placeholder="e.g. AIML, 5th Sem">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1021,7 +1151,21 @@
                     </div>
                     <div class="form-group" style="margin-top: 1rem; margin-bottom: 0;">
                         <label>OS Working Title / Concept Name</label>
-                        <input type="text" name="osName" placeholder="e.g. AetherOS, Continuum, ZeroKernel">
+                        <div class="form-control-wrapper">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-field-icon">
+                                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                                <line x1="9" y1="1" x2="9" y2="4"></line>
+                                <line x1="15" y1="1" x2="15" y2="4"></line>
+                                <line x1="9" y1="20" x2="9" y2="23"></line>
+                                <line x1="15" y1="20" x2="15" y2="23"></line>
+                                <line x1="20" y1="9" x2="23" y2="9"></line>
+                                <line x1="20" y1="14" x2="23" y2="14"></line>
+                                <line x1="1" y1="9" x2="4" y2="9"></line>
+                                <line x1="1" y1="14" x2="4" y2="14"></line>
+                            </svg>
+                            <input type="text" name="osName" class="has-icon" placeholder="Enter OS concept or project title (Optional)">
+                        </div>
                     </div>
                 </div>
 
@@ -1048,7 +1192,8 @@
 
     <!-- 🌟 ANIMATED REGISTRATION COMPLETE POPUP OVERLAY -->
     <div id="successPopup" class="success-popup-overlay">
-        <div class="success-popup-card glass">
+        <div class="success-popup-card glass" style="position: relative;">
+            <span class="close-modal close-success-modal" id="closeSuccessPopupBtn" title="Close" style="top: 1rem; right: 1rem; position: absolute; z-index: 10;">&times;</span>
             <div class="checkmark-wrapper">
                 <svg class="checkmark-svg" viewBox="0 0 52 52">
                     <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
@@ -1057,10 +1202,26 @@
             </div>
             <h2 id="successPopupTitle" class="popup-title">Registration Successful</h2>
             <p id="successPopupSubtitle" class="popup-subtitle">Your Official Registration Token:</p>
-            <div id="successPopupToken" class="popup-token-badge">IDTN2026-XXXXXX</div>
+            <div class="popup-token-box-wrapper">
+                <div id="successPopupToken" class="popup-token-badge">IDTN2026-XXXXXX</div>
+                <button type="button" class="btn-copy-token" id="copyTokenBtn" title="Copy Token ID" aria-label="Copy Token ID">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-svg-icon" id="copyBtnIcon">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="copyBtnLabel">Copy</span>
+                    <span class="copy-tooltip" id="copyTooltip">Copied to Clipboard! ✓</span>
+                </button>
+            </div>
             <p class="popup-info-text">
                 A confirmation pass with your <strong>QR Code</strong> has been sent to your email!
             </p>
+            <div style="margin-top: 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
+                <button type="button" class="btn btn-primary btn-done-success" id="doneSuccessPopupBtn" style="padding: 0.75rem 2.2rem; border-radius: 50px; font-size: 0.95rem; font-weight: 700; width: auto;">
+                    Done & Continue &rarr;
+                </button>
+                <span class="popup-timer-hint" style="font-size: 0.76rem; color: var(--text-muted);">Auto-closing in <span id="popupCountdownSecs" style="color: var(--accent-cyan); font-weight: 700;">15</span>s</span>
+            </div>
         </div>
     </div>
 
@@ -1088,8 +1249,7 @@
                 <div class="prompt-box">
                     <h3>The Official OS Prompt:</h3>
                     <p class="prompt-quote">
-                        "If you could forget Android, iOS, Windows, and macOS — what Operating System would you design
-                        from complete zero today?"
+                        "If you could forget Android and iOS — what Mobile Operating System would you design from complete zero today?"
                     </p>
                 </div>
 

@@ -271,10 +271,41 @@ if (form) {
     });
 }
 
-// Trigger Animated Success Popup First (Holds 3s), then closes modal to return to landing page
+let successPopupTimeout = null;
+let successPopupInterval = null;
+
+function closeRegistrationSuccessPopup() {
+    const successPopup = document.getElementById('successPopup');
+    if (!successPopup || !successPopup.classList.contains('show')) return;
+
+    if (successPopupTimeout) {
+        clearTimeout(successPopupTimeout);
+        successPopupTimeout = null;
+    }
+    if (successPopupInterval) {
+        clearInterval(successPopupInterval);
+        successPopupInterval = null;
+    }
+
+    successPopup.classList.remove('show');
+
+    // Reset Form & Close Registration Modal after popup finishes
+    if (form) form.reset();
+    if (teamNameGroup) teamNameGroup.style.display = 'none';
+    if (additionalMembers) additionalMembers.style.display = 'none';
+    if (member1Title) member1Title.textContent = 'Participant / Team Leader';
+    if (formStatus) formStatus.style.display = 'none';
+
+    closeModal();
+    document.body.style.overflow = 'auto'; // Restore normal scrolling
+    if (typeof lenis !== 'undefined') lenis.start();
+}
+
+// Trigger Animated Success Popup with 15s Timer & Manual Done Button
 function triggerSuccessAnimation(token, email) {
     const successPopup = document.getElementById('successPopup');
     const popupToken = document.getElementById('successPopupToken');
+    const countdownSecsEl = document.getElementById('popupCountdownSecs');
 
     if (popupToken) popupToken.textContent = token;
 
@@ -294,22 +325,24 @@ function triggerSuccessAnimation(token, email) {
         document.body.style.overflow = 'hidden';
         successPopup.classList.add('show');
 
-        // 2. Hold popup visible for 3 seconds so participant clearly sees their Token ID
-        setTimeout(() => {
-            // Fade out success popup overlay
-            successPopup.classList.remove('show');
+        // 2. Start 15s visual countdown so participant has ample time to copy token
+        let remainingSecs = 15;
+        if (countdownSecsEl) countdownSecsEl.textContent = remainingSecs;
 
-            // 3. Reset Form & Close Registration Modal after popup finishes
-            if (form) form.reset();
-            if (teamNameGroup) teamNameGroup.style.display = 'none';
-            if (additionalMembers) additionalMembers.style.display = 'none';
-            if (member1Title) member1Title.textContent = 'Participant / Team Leader';
-            if (formStatus) formStatus.style.display = 'none';
+        if (successPopupInterval) clearInterval(successPopupInterval);
+        successPopupInterval = setInterval(() => {
+            remainingSecs--;
+            if (countdownSecsEl) countdownSecsEl.textContent = remainingSecs;
+            if (remainingSecs <= 0) {
+                clearInterval(successPopupInterval);
+            }
+        }, 1000);
 
-            closeModal();
-            document.body.style.overflow = 'auto'; // Restore normal scrolling
-            if (typeof lenis !== 'undefined') lenis.start();
-        }, 3200);
+        // 3. Hold popup visible for 15 seconds (or until user clicks Done / Close / Backdrop)
+        if (successPopupTimeout) clearTimeout(successPopupTimeout);
+        successPopupTimeout = setTimeout(() => {
+            closeRegistrationSuccessPopup();
+        }, 15000);
     }
 }
 
@@ -341,15 +374,169 @@ function closeAutoEventNotice() {
     }
 }
 
-// DOMContentLoaded: Start Preloader & Fetch Live Data
+// DOMContentLoaded: Start Preloader, Timers, Interactive Features & Fetch Live Data
 document.addEventListener('DOMContentLoaded', () => {
     // Start the preloader animation sequence (only on fresh reload/session)
     startPreloader();
+
+    // ⏱️ Initialize Live Hero Countdown Timer
+    initCountdownTimer();
+
+    // 💡 Initialize Interactive Concept Inspiration Tags
+    initInteractiveTags();
+
+    // 📋 Initialize One-Click Copy Token ID Handler
+    initCopyTokenHandler();
 
     // Fetch Dynamic Notice & Live Leaderboard from Google Apps Script
     fetchLiveEventNotice();
     fetchLiveParticipants();
 });
+
+// ⏱️ Real-Time Countdown Timer to 31 August 2026 (11:59 PM IST)
+function initCountdownTimer() {
+    const daysEl = document.getElementById('cdDays');
+    const hoursEl = document.getElementById('cdHours');
+    const minsEl = document.getElementById('cdMins');
+    const secsEl = document.getElementById('cdSecs');
+
+    const daysMobEl = document.getElementById('cdDaysMob');
+    const hoursMobEl = document.getElementById('cdHoursMob');
+    const minsMobEl = document.getElementById('cdMinsMob');
+
+    if (!daysEl && !daysMobEl) return;
+
+    // Target Date: August 31, 2026 23:59:59 IST (+05:30)
+    const targetDate = new Date('2026-08-31T23:59:59+05:30').getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            if (daysEl) daysEl.textContent = '00';
+            if (hoursEl) hoursEl.textContent = '00';
+            if (minsEl) minsEl.textContent = '00';
+            if (secsEl) secsEl.textContent = '00';
+
+            if (daysMobEl) daysMobEl.textContent = '00';
+            if (hoursMobEl) hoursMobEl.textContent = '00';
+            if (minsMobEl) minsMobEl.textContent = '00';
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+        if (minsEl) minsEl.textContent = String(minutes).padStart(2, '0');
+        if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
+
+        if (daysMobEl) daysMobEl.textContent = String(days).padStart(2, '0');
+        if (hoursMobEl) hoursMobEl.textContent = String(hours).padStart(2, '0');
+        if (minsMobEl) minsMobEl.textContent = String(minutes).padStart(2, '0');
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
+
+// 💡 Interactive Concept Tags & Inspiration Prompt Sparks
+function initInteractiveTags() {
+    const tagsContainer = document.getElementById('interactiveTagsCloud');
+    const sparkBadge = document.getElementById('sparkCategoryBadge');
+    const sparkPrompt = document.getElementById('sparkPromptText');
+
+    if (!tagsContainer || !sparkBadge || !sparkPrompt) return;
+
+    const tagButtons = tagsContainer.querySelectorAll('.tag');
+
+    tagButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tagButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.getAttribute('data-category') || btn.textContent.trim();
+            const promptText = btn.getAttribute('data-prompt') || '';
+
+            // Fade transition for smooth spark display
+            sparkPrompt.style.opacity = '0';
+            setTimeout(() => {
+                sparkBadge.textContent = category.toUpperCase();
+                sparkPrompt.textContent = `"${promptText}"`;
+                sparkPrompt.style.opacity = '1';
+            }, 150);
+        });
+    });
+}
+
+// 📋 One-Click Copy Token ID Handler
+function initCopyTokenHandler() {
+    const copyBtn = document.getElementById('copyTokenBtn');
+    const tokenBadge = document.getElementById('successPopupToken');
+    const copyBtnLabel = document.getElementById('copyBtnLabel');
+
+    if (!copyBtn || !tokenBadge) return;
+
+    copyBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const tokenText = tokenBadge.textContent.trim();
+        if (!tokenText) return;
+
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(tokenText);
+            } else {
+                // Fallback for older browsers
+                const tempInput = document.createElement('textarea');
+                tempInput.value = tokenText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+            }
+
+            copyBtn.classList.add('copied');
+            if (copyBtnLabel) copyBtnLabel.textContent = 'Copied!';
+
+            setTimeout(() => {
+                copyBtn.classList.remove('copied');
+                if (copyBtnLabel) copyBtnLabel.textContent = 'Copy';
+            }, 2500);
+        } catch (err) {
+            console.error('Failed to copy token:', err);
+        }
+    });
+
+    const closeSuccessBtn = document.getElementById('closeSuccessPopupBtn');
+    const doneSuccessBtn = document.getElementById('doneSuccessPopupBtn');
+    const successPopup = document.getElementById('successPopup');
+
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeRegistrationSuccessPopup();
+        });
+    }
+
+    if (doneSuccessBtn) {
+        doneSuccessBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeRegistrationSuccessPopup();
+        });
+    }
+
+    if (successPopup) {
+        successPopup.addEventListener('click', (e) => {
+            if (e.target === successPopup) {
+                closeRegistrationSuccessPopup();
+            }
+        });
+    }
+}
 
 async function fetchLiveEventNotice() {
     try {
