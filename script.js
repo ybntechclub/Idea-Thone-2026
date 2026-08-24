@@ -85,7 +85,7 @@ const additionalMembers = document.getElementById('additionalMembers');
 const member1Title = document.getElementById('member1Title');
 const formStatus = document.getElementById('formStatus');
 
-// Open Modal (Registration Open & Active)
+// Open Modal
 openModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -153,15 +153,8 @@ function validateEmail(email) {
     return re.test(String(email).trim().toLowerCase());
 }
 
-// 📱 STRICT 10-DIGIT MOBILE NUMBER VALIDATION HELPER
-function validatePhone(phone) {
-    if (!phone) return false;
-    const digits = String(phone).replace(/\D/g, ''); // Extract digits only
-    return digits.length === 10;
-}
-
 // Clear red border/error highlights on typing
-document.querySelectorAll('input[type="email"], input[type="tel"]').forEach(input => {
+document.querySelectorAll('input[type="email"]').forEach(input => {
     input.addEventListener('input', () => {
         input.style.borderColor = '';
         input.style.boxShadow = '';
@@ -191,18 +184,6 @@ if (form) {
             dataObj[key] = typeof value === 'string' ? value.trim() : value;
         });
 
-        // 📱 STRICT 10-DIGIT LEADER MOBILE NUMBER CHECK
-        const leaderContactInput = form.querySelector('input[name="leaderContact"]');
-        if (!validatePhone(dataObj.leaderContact)) {
-            if (leaderContactInput) {
-                leaderContactInput.style.borderColor = '#ff5050';
-                leaderContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
-                leaderContactInput.focus();
-            }
-            showStatus('❌ Invalid Mobile Number! Contact number must be exactly 10 numeric digits (e.g. 9876543210).', 'error');
-            return;
-        }
-
         // 🔍 EMAIL VALIDATION CHECKS
         const leaderEmailInput = form.querySelector('input[name="leaderEmail"]');
         if (!validateEmail(dataObj.leaderEmail)) {
@@ -230,17 +211,6 @@ if (form) {
                     m2Input.focus();
                 }
                 showStatus('⚠️ <strong>Team Validation Error:</strong> A Team registration requires at least 2 members! Please enter details for Team Member 2.', 'error');
-                return;
-            }
-
-            const m2ContactInput = form.querySelector('input[name="member2Contact"]');
-            if (!validatePhone(dataObj.member2Contact)) {
-                if (m2ContactInput) {
-                    m2ContactInput.style.borderColor = '#ff5050';
-                    m2ContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
-                    m2ContactInput.focus();
-                }
-                showStatus('❌ Invalid Team Member 2 Mobile Number! Must be exactly 10 numeric digits (e.g. 9876543210).', 'error');
                 return;
             }
 
@@ -288,8 +258,7 @@ if (form) {
                 // Show Animated Success Popup
                 triggerSuccessAnimation(tokenGenerated, dataObj.leaderEmail);
             } else {
-                showStatus(`❌ <strong>Registration Error:</strong> ${result.error || 'Registration is currently not open or failed.'}`, 'error');
-                return;
+                throw new Error(result.error || 'Unknown error occurred on Google Apps Script server.');
             }
         } catch (error) {
             console.error('Registration Submission Error:', error);
@@ -801,17 +770,12 @@ const preloaderStatus = document.querySelector('.preloader-status-text');
 // Check if preloader has already run in this session
 const hasPreloaded = sessionStorage.getItem('ideathon_preloaded_session');
 
-// Set hero elements invisible initially ONLY if preloader will run
-if (!hasPreloaded && typeof gsap !== 'undefined') {
-    gsap.set('.hero-container > *', { opacity: 0, y: 30 });
-}
-
 function startPreloader() {
     if (!preloader || hasPreloaded || typeof gsap === 'undefined') {
         // Instant reveal if already visited in this session
         if (preloader) preloader.style.display = 'none';
         document.body.classList.remove('preloader-active');
-        document.querySelectorAll('.hero-container > *, .reveal, .reveal-stagger').forEach(el => {
+        document.querySelectorAll('.hero-container > *, .hero-stats-bento-grid, .stat-bento-card, .reveal, .reveal-stagger').forEach(el => {
             el.style.opacity = '1';
             el.style.transform = 'none';
         });
@@ -828,7 +792,7 @@ function startPreloader() {
 
     tl.to(counter, {
         val: 100,
-        duration: 1.1,
+        duration: 2.2,
         ease: "power2.inOut",
         onUpdate: () => {
             const v = Math.floor(counter.val);
@@ -844,12 +808,12 @@ function startPreloader() {
     .to('.preloader-content', {
         scale: 0.92,
         opacity: 0,
-        duration: 0.3,
+        duration: 0.35,
         ease: "power2.in",
-    }, "+=0.1")
+    }, "+=0.15")
     .to(preloader, {
         yPercent: -100,
-        duration: 0.6,
+        duration: 0.7,
         ease: "power4.inOut",
         onComplete: () => {
             preloader.style.display = 'none';
@@ -866,16 +830,22 @@ function startPreloader() {
 function initHeroAnimations() {
     if (typeof gsap === 'undefined') return;
 
+    // Ensure all hero elements are fully visible and active
+    document.querySelectorAll('.hero-container > *, .hero-stats-bento-grid, .stat-bento-card').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+    });
+
     const heroTl = gsap.timeline();
 
     heroTl
-        .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
-        .to('.hero-main-title', { opacity: 1, y: 0, duration: 0.85, ease: "power3.out" }, "-=0.45")
-        .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.45")
-        .to('.hero-meta-grid', { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, "-=0.4")
-        .to('.hero-lead-text', { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, "-=0.35")
-        .to('.hero-action-buttons', { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.3")
-        .to('.hero-stats-bento-grid .stat-bento-card', { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.3");
+        .from('.hero-eyebrow', { opacity: 0, y: 25, duration: 0.65, ease: "power3.out" })
+        .from('.hero-main-title', { opacity: 0, y: 25, duration: 0.75, ease: "power3.out" }, "-=0.4")
+        .from('.hero-subtitle', { opacity: 0, y: 25, duration: 0.65, ease: "power3.out" }, "-=0.4")
+        .from('.hero-meta-grid', { opacity: 0, y: 25, duration: 0.6, ease: "power3.out" }, "-=0.35")
+        .from('.hero-lead-text', { opacity: 0, y: 25, duration: 0.6, ease: "power3.out" }, "-=0.35")
+        .from('.hero-action-buttons', { opacity: 0, y: 25, duration: 0.55, ease: "power3.out" }, "-=0.3")
+        .from('.hero-stats-bento-grid', { opacity: 0, y: 25, duration: 0.6, ease: "power3.out" }, "-=0.3");
 }
 
 // ============================================
@@ -886,54 +856,49 @@ function initScrollAnimations() {
         // Fallback: make everything visible
         document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
             el.style.opacity = '1';
+            el.style.transform = 'none';
         });
         return;
     }
 
-    // Individual reveals
+    // Individual reveals - animate once and stay permanently visible
     gsap.utils.toArray('.reveal').forEach(el => {
         // Skip hero elements
         if (el.closest('.hero')) return;
 
-        gsap.fromTo(el,
-            { opacity: 0, y: 50 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                }
+        gsap.from(el, {
+            opacity: 0,
+            y: 35,
+            duration: 0.75,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: el,
+                start: "top 92%",
+                once: true,
             }
-        );
+        });
     });
 
-    // Staggered reveals - group by parent
+    // Staggered reveals - animate once per parent group and stay permanently visible
     const staggerParents = new Set();
     gsap.utils.toArray('.reveal-stagger').forEach(el => {
-        staggerParents.add(el.parentElement);
+        if (el.parentElement) staggerParents.add(el.parentElement);
     });
 
     staggerParents.forEach(parent => {
         const children = parent.querySelectorAll('.reveal-stagger');
-        gsap.fromTo(children,
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.12,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: parent,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                }
+        gsap.from(children, {
+            opacity: 0,
+            y: 25,
+            duration: 0.55,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: parent,
+                start: "top 92%",
+                once: true,
             }
-        );
+        });
     });
 }
 
