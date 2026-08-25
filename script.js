@@ -153,9 +153,25 @@ function validateEmail(email) {
     return re.test(String(email).trim().toLowerCase());
 }
 
-// Clear red border/error highlights on typing
+// Helper function for strict 10-digit phone validation (Indian Mobile Numbers)
+function validatePhone(phone) {
+    if (!phone) return false;
+    const clean = String(phone).replace(/\D/g, '');
+    return /^[6-9]\d{9}$/.test(clean);
+}
+
+// Clear red border/error highlights and enforce 10-digit numeric constraint on typing
 document.querySelectorAll('input[type="email"]').forEach(input => {
     input.addEventListener('input', () => {
+        input.style.borderColor = '';
+        input.style.boxShadow = '';
+    });
+});
+
+document.querySelectorAll('input[type="tel"], input[name*="Contact"]').forEach(input => {
+    input.addEventListener('input', () => {
+        // Strictly force digits only and max 10 digits
+        input.value = input.value.replace(/\D/g, '').slice(0, 10);
         input.style.borderColor = '';
         input.style.boxShadow = '';
     });
@@ -184,7 +200,19 @@ if (form) {
             dataObj[key] = typeof value === 'string' ? value.trim() : value;
         });
 
-        // 🔍 EMAIL VALIDATION CHECKS
+        // 🔍 LEADER PHONE VALIDATION (10 DIGITS)
+        const leaderContactInput = form.querySelector('input[name="leaderContact"]');
+        if (!validatePhone(dataObj.leaderContact)) {
+            if (leaderContactInput) {
+                leaderContactInput.style.borderColor = '#ff5050';
+                leaderContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                leaderContactInput.focus();
+            }
+            showStatus('❌ Invalid Leader Mobile Number! Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.', 'error');
+            return;
+        }
+
+        // 🔍 LEADER EMAIL VALIDATION
         const leaderEmailInput = form.querySelector('input[name="leaderEmail"]');
         if (!validateEmail(dataObj.leaderEmail)) {
             if (leaderEmailInput) {
@@ -198,33 +226,87 @@ if (form) {
 
         // Validate team member inputs if team option selected
         if (dataObj.participation === 'team') {
+            // 👥 TEAM NAME VALIDATION
+            const teamNameInput = form.querySelector('input[name="teamName"]');
+            if (!dataObj.teamName || dataObj.teamName.trim() === '') {
+                if (teamNameInput) {
+                    teamNameInput.style.borderColor = '#ff5050';
+                    teamNameInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                    teamNameInput.focus();
+                }
+                showStatus('⚠️ <strong>Team Validation Error:</strong> Please enter your Team Name.', 'error');
+                return;
+            }
+
             // 👥 MANDATORY 2-MEMBER TEAM VALIDATION
             const m2Name = dataObj.member2Name ? dataObj.member2Name.trim() : '';
             const m2Contact = dataObj.member2Contact ? dataObj.member2Contact.trim() : '';
             const m2Email = dataObj.member2Email ? dataObj.member2Email.trim() : '';
+            const m2Dept = dataObj.member2Dept ? dataObj.member2Dept.trim() : '';
 
-            if (!m2Name || !m2Contact || !m2Email) {
+            if (!m2Name || !m2Contact || !m2Email || !m2Dept) {
                 const m2Input = form.querySelector('input[name="member2Name"]');
                 if (m2Input) {
                     m2Input.style.borderColor = '#ff5050';
                     m2Input.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
                     m2Input.focus();
                 }
-                showStatus('⚠️ <strong>Team Validation Error:</strong> A Team registration requires at least 2 members! Please enter details for Team Member 2.', 'error');
+                showStatus('⚠️ <strong>Team Validation Error:</strong> A Team registration requires at least 2 members! Please enter complete details (Name, 10-digit Phone, Email, Dept) for Team Member 2.', 'error');
                 return;
             }
 
-            const memberEmails = ['member2Email', 'member3Email', 'member4Email'];
-            for (let field of memberEmails) {
-                if (dataObj[field] && dataObj[field] !== '') {
-                    if (!validateEmail(dataObj[field])) {
-                        const inputEl = form.querySelector(`input[name="${field}"]`);
+            // Member 2 Phone & Email checks
+            if (!validatePhone(m2Contact)) {
+                const m2ContactInput = form.querySelector('input[name="member2Contact"]');
+                if (m2ContactInput) {
+                    m2ContactInput.style.borderColor = '#ff5050';
+                    m2ContactInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                    m2ContactInput.focus();
+                }
+                showStatus('❌ Invalid Member 2 Mobile Number! Please enter a valid 10-digit mobile number.', 'error');
+                return;
+            }
+
+            if (!validateEmail(m2Email)) {
+                const m2EmailInput = form.querySelector('input[name="member2Email"]');
+                if (m2EmailInput) {
+                    m2EmailInput.style.borderColor = '#ff5050';
+                    m2EmailInput.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                    m2EmailInput.focus();
+                }
+                showStatus('❌ Invalid Member 2 Email Address! Please enter a valid email.', 'error');
+                return;
+            }
+
+            // Optional Member 3 & Member 4 Phone & Email checks
+            const optionalMembers = [
+                { name: 'member3Name', contact: 'member3Contact', email: 'member3Email', label: 'Member 3' },
+                { name: 'member4Name', contact: 'member4Contact', email: 'member4Email', label: 'Member 4' }
+            ];
+
+            for (let member of optionalMembers) {
+                if (dataObj[member.contact] && dataObj[member.contact].trim() !== '') {
+                    if (!validatePhone(dataObj[member.contact])) {
+                        const inputEl = form.querySelector(`input[name="${member.contact}"]`);
                         if (inputEl) {
                             inputEl.style.borderColor = '#ff5050';
                             inputEl.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
                             inputEl.focus();
                         }
-                        showStatus(`❌ Invalid email address for ${field.replace('Email', '')}! Please enter a valid email format.`, 'error');
+                        showStatus(`❌ Invalid mobile number for ${member.label}! Please enter a valid 10-digit mobile number.`, 'error');
+                        return;
+                    }
+                }
+
+                if (dataObj[member.email] && dataObj[member.email].trim() !== '') {
+                    if (!validateEmail(dataObj[member.email])) {
+                        const inputEl = form.querySelector(`input[name="${member.email}"]`);
+                        if (inputEl) {
+                            inputEl.style.borderColor = '#ff5050';
+                            inputEl.style.boxShadow = '0 0 10px rgba(255, 80, 80, 0.4)';
+                            inputEl.focus();
+                        }
+                        showStatus(`❌ Invalid email address for ${member.label}! Please enter a valid email format.`, 'error');
                         return;
                     }
                 }
@@ -234,7 +316,7 @@ if (form) {
         submitBtn.disabled = true;
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Registering & Generating Token...';
-        showStatus('Processing your registration and generating QR code...', 'info');
+        showStatus('Processing your registration and saving to database...', 'info');
 
         try {
             // Send payload to Google Apps Script Web App using text/plain content-type to avoid CORS preflight issues
@@ -247,23 +329,24 @@ if (form) {
             });
 
             const result = await response.json();
-            const tokenGenerated = result.token || 'IDH26-001';
 
             if (result.result === 'duplicate') {
                 showStatus(`⚠️ <strong>Email Already Registered!</strong><br>This email address is already registered under Token ID: <strong style="color: #00f2fe; font-family: monospace;">${result.token}</strong>.<br><small>(Check your email inbox for your registration pass)</small>`, 'error');
                 return;
             }
 
-            if (result.result === 'success' || result.token) {
-                // Show Animated Success Popup
-                triggerSuccessAnimation(tokenGenerated, dataObj.leaderEmail);
+            if (result.result === 'success' && result.token) {
+                // 1. Show Animated Success Popup with the REAL token generated by the database
+                triggerSuccessAnimation(result.token, dataObj.leaderEmail);
+                // 2. Immediately re-fetch live leaderboard and participants directory
+                fetchLiveParticipants();
             } else {
-                throw new Error(result.error || 'Unknown error occurred on Google Apps Script server.');
+                const errorMsg = result.error || result.message || 'Unknown error occurred on Google Apps Script server.';
+                showStatus(`❌ <strong>Registration Failed:</strong> ${errorMsg}`, 'error');
             }
         } catch (error) {
             console.error('Registration Submission Error:', error);
-            // Fallback success animation for CORS / redirect mode
-            triggerSuccessAnimation('IDH26-001', dataObj.leaderEmail);
+            showStatus(`❌ <strong>Connection Error:</strong> Could not connect to registration server. Please check your internet connection and try again. (${error.message || 'Network Error'})`, 'error');
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
@@ -663,6 +746,114 @@ if (participantSearchInput) {
     });
 }
 
+// ============================================
+// 🏆 Leaderboard Pagination & Live Fetch
+// ============================================
+const LEADERBOARD_PAGE_SIZE = 5;
+let currentLeaderboardPage = 1;
+let cachedParticipantsList = [];
+
+function renderLeaderboardTable(page = 1) {
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    const paginationContainer = document.getElementById('leaderboardPagination');
+    if (!leaderboardBody) return;
+
+    if (!cachedParticipantsList || cachedParticipantsList.length === 0) {
+        leaderboardBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 2rem; color: var(--text-muted);">No participant entries registered yet.</td></tr>`;
+        if (paginationContainer) paginationContainer.innerHTML = '';
+        return;
+    }
+
+    const totalItems = cachedParticipantsList.length;
+    const totalPages = Math.ceil(totalItems / LEADERBOARD_PAGE_SIZE) || 1;
+    
+    // Clamp requested page
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentLeaderboardPage = page;
+
+    const startIdx = (currentLeaderboardPage - 1) * LEADERBOARD_PAGE_SIZE;
+    const endIdx = Math.min(startIdx + LEADERBOARD_PAGE_SIZE, totalItems);
+    const currentPageItems = cachedParticipantsList.slice(startIdx, endIdx);
+
+    // Render Table Rows for Current Page (Max 5 items)
+    leaderboardBody.innerHTML = currentPageItems.map((p, idx) => {
+        const overallIndex = startIdx + idx;
+        const rankNum = (overallIndex + 1).toString().padStart(2, '0');
+        let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
+        if (overallIndex === 0) rankBadge = `<span class="rank-badge gold">${rankNum}</span>`;
+        else if (overallIndex === 1) rankBadge = `<span class="rank-badge silver">${rankNum}</span>`;
+        else if (overallIndex === 2) rankBadge = `<span class="rank-badge bronze">${rankNum}</span>`;
+
+        // Single evaluation score
+        const score = Number(p.score || p.totalScore || p.r1Score || (p.subStatus === 'SUBMITTED' ? 85 : 0));
+        const isScored = score > 0;
+        const scoreText = isScored ? `${score}/100 PTS` : `0/100 PTS`;
+        const scoreClass = isScored ? 'active-score' : 'zero-score';
+
+        let subBadge = p.subStatus === 'SUBMITTED'
+            ? `<span class="status-pill submitted">SUBMITTED</span>`
+            : `<span class="status-pill pending">PENDING</span>`;
+
+        const displayName = p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name;
+        const leaderText = p.participation && p.participation.toLowerCase() === 'team' ? `Leader: ${p.name}` : `Solo Architect`;
+
+        return `
+            <tr>
+                <td class="col-rank">${rankBadge}</td>
+                <td class="col-participant">
+                    <div class="participant-name-wrap">
+                        <strong class="p-name">${displayName}</strong>
+                        <span class="p-leader">${leaderText}</span>
+                    </div>
+                </td>
+                <td class="col-branch"><span class="branch-badge">${p.dept}</span></td>
+                <td class="col-score"><span class="total-score-pill ${scoreClass}">${scoreText}</span></td>
+                <td class="col-status">${subBadge}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // Render Pagination Controls Bar
+    if (paginationContainer) {
+        if (totalPages <= 1) {
+            paginationContainer.innerHTML = `
+                <div class="pagination-info">Showing <strong>1–${totalItems}</strong> of <strong>${totalItems}</strong> entries</div>
+                <div class="pagination-controls">
+                    <button type="button" class="page-btn page-nav-btn" disabled>Page 1 of 1</button>
+                </div>
+            `;
+        } else {
+            let pageButtonsHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                pageButtonsHTML += `
+                    <button type="button" class="page-btn ${i === currentLeaderboardPage ? 'active' : ''}" onclick="goToLeaderboardPage(${i})">${i}</button>
+                `;
+            }
+
+            paginationContainer.innerHTML = `
+                <div class="pagination-info">
+                    Showing <strong>${startIdx + 1}–${endIdx}</strong> of <strong>${totalItems}</strong> participants
+                </div>
+                <div class="pagination-controls">
+                    <button type="button" class="page-btn page-nav-btn" ${currentLeaderboardPage === 1 ? 'disabled' : ''} onclick="goToLeaderboardPage(${currentLeaderboardPage - 1})">
+                        &larr; Prev
+                    </button>
+                    ${pageButtonsHTML}
+                    <button type="button" class="page-btn page-nav-btn" ${currentLeaderboardPage === totalPages ? 'disabled' : ''} onclick="goToLeaderboardPage(${currentLeaderboardPage + 1})">
+                        Next &rarr;
+                    </button>
+                </div>
+            `;
+        }
+    }
+}
+
+// Global page jump handler
+window.goToLeaderboardPage = function(pageNum) {
+    renderLeaderboardTable(pageNum);
+};
+
 async function fetchLiveParticipants() {
     const container = document.getElementById('participantsContainer');
     const leaderboardBody = document.getElementById('leaderboardBody');
@@ -673,9 +864,11 @@ async function fetchLiveParticipants() {
         const data = await res.json();
 
         if (data.result === 'success' && data.participants && data.participants.length > 0) {
-            // 1. Populate All Participants Cards Grid (WITHOUT Token ID for Security)
+            cachedParticipantsList = data.participants;
+
+            // 1. Populate All Participants Cards Grid
             if (container) {
-                container.innerHTML = data.participants.map(p => `
+                container.innerHTML = cachedParticipantsList.map(p => `
                     <div class="participant-card glass">
                         <div class="part-header">
                             <span class="part-type ${p.participation.toLowerCase() === 'team' ? 'team' : 'individual'}">${p.participation}</span>
@@ -688,46 +881,8 @@ async function fetchLiveParticipants() {
                 `).join('');
             }
 
-            // 2. Populate Real Live Leaderboard Table with All Round Scores (out of 20)
-            if (leaderboardBody) {
-                leaderboardBody.innerHTML = data.participants.map((p, index) => {
-                    const rankNum = (index + 1).toString().padStart(2, '0');
-                    let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
-                    if (index === 0) rankBadge = `<span class="rank-badge gold">${rankNum}</span>`;
-                    else if (index === 1) rankBadge = `<span class="rank-badge silver">${rankNum}</span>`;
-                    else if (index === 2) rankBadge = `<span class="rank-badge bronze">${rankNum}</span>`;
-
-                    const r1 = Math.min(20, Math.max(0, p.r1Score || (p.subStatus === 'SUBMITTED' ? 18 : 0)));
-                    const r2 = Math.min(20, Math.max(0, p.r2Score || (p.subStatus === 'SUBMITTED' ? 19 : 0)));
-                    const r3 = Math.min(20, Math.max(0, p.r3Score || (p.subStatus === 'SUBMITTED' ? 18 : 0)));
-                    const tot = p.totalScore || (r1 + r2 + r3);
-
-                    let subBadge = p.subStatus === 'SUBMITTED'
-                        ? `<span class="status-pill submitted">SUBMITTED</span>`
-                        : `<span class="status-pill pending">PENDING</span>`;
-
-                    const displayName = p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name;
-                    const leaderText = p.participation && p.participation.toLowerCase() === 'team' ? `Leader: ${p.name}` : `Solo Architect`;
-
-                    return `
-                        <tr>
-                            <td class="col-rank">${rankBadge}</td>
-                            <td class="col-participant">
-                                <div class="participant-name-wrap">
-                                    <strong class="p-name">${displayName}</strong>
-                                    <span class="p-leader">${leaderText}</span>
-                                </div>
-                            </td>
-                            <td class="col-branch"><span class="branch-badge">${p.dept}</span></td>
-                            <td class="col-score"><span class="round-score ${r1 > 0 ? 'scored' : 'zero'}">${r1}/20</span></td>
-                            <td class="col-score"><span class="round-score ${r2 > 0 ? 'scored' : 'zero'}">${r2}/20</span></td>
-                            <td class="col-score"><span class="round-score ${r3 > 0 ? 'scored' : 'zero'}">${r3}/20</span></td>
-                            <td class="col-total"><span class="total-score-pill ${tot > 0 ? 'active-score' : 'zero-score'}">${tot}/60 PTS</span></td>
-                            <td class="col-status">${subBadge}</td>
-                        </tr>
-                    `;
-                }).join('');
-            }
+            // 2. Render Paginated Leaderboard Table (Max 5 visible at once)
+            renderLeaderboardTable(currentLeaderboardPage);
         }
     } catch (e) {
         console.error("Fetch Live Leaderboard Error:", e);
@@ -852,53 +1007,46 @@ function initHeroAnimations() {
 // GSAP ScrollTrigger Section Reveals
 // ============================================
 function initScrollAnimations() {
+    // Ensure all elements are 100% visible in the DOM by default
+    document.querySelectorAll('.reveal, .req-card').forEach(el => {
+        el.style.opacity = '1';
+    });
+
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        // Fallback: make everything visible
-        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-        });
         return;
     }
 
-    // Individual reveals - animate once and stay permanently visible
+    // Refresh ScrollTrigger coordinate calculations
+    ScrollTrigger.refresh();
+
+    // Individual section reveals - animate once and stay permanently visible
     gsap.utils.toArray('.reveal').forEach(el => {
-        // Skip hero elements
+        // Skip hero elements (handled by hero timeline)
         if (el.closest('.hero')) return;
 
-        gsap.from(el, {
-            opacity: 0,
-            y: 35,
-            duration: 0.75,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: el,
-                start: "top 92%",
-                once: true,
+        gsap.fromTo(el,
+            { opacity: 0, y: 25 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power2.out",
+                clearProps: "transform,opacity",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 95%",
+                    once: true,
+                }
             }
-        });
-    });
-
-    // Staggered reveals - animate once per parent group and stay permanently visible
-    const staggerParents = new Set();
-    gsap.utils.toArray('.reveal-stagger').forEach(el => {
-        if (el.parentElement) staggerParents.add(el.parentElement);
-    });
-
-    staggerParents.forEach(parent => {
-        const children = parent.querySelectorAll('.reveal-stagger');
-        gsap.from(children, {
-            opacity: 0,
-            y: 25,
-            duration: 0.55,
-            stagger: 0.1,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: parent,
-                start: "top 92%",
-                once: true,
-            }
-        });
+        );
     });
 }
+
+// Recalibrate triggers on full window load and resize
+window.addEventListener('load', () => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+});
+window.addEventListener('resize', () => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+});
 
