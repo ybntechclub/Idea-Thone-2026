@@ -731,23 +731,110 @@ if (refreshParticipantsBtn) {
     });
 }
 
+// ============================================
+// 👥 Registered Participants Directory Pagination & Search (6 cards per page)
+// ============================================
+const PARTICIPANTS_PAGE_SIZE = 6;
+let currentParticipantsPage = 1;
+let currentSearchQuery = '';
+
+function renderParticipantsGrid(page = 1) {
+    const container = document.getElementById('participantsContainer');
+    const paginationContainer = document.getElementById('participantsPagination');
+    if (!container) return;
+
+    // Filter by active search query
+    const filtered = (cachedParticipantsList || []).filter(p => {
+        if (!currentSearchQuery) return true;
+        const targetText = `${p.name || ''} ${p.teamName || ''} ${p.dept || ''} ${p.osName || ''} ${p.participation || ''}`.toLowerCase();
+        return targetText.includes(currentSearchQuery);
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+                <p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #fff;">🔍 No matching participants found.</p>
+                <small>Try searching with another keyword (e.g. name, team, or department).</small>
+            </div>
+        `;
+        if (paginationContainer) paginationContainer.innerHTML = '';
+        return;
+    }
+
+    const totalItems = filtered.length;
+    const totalPages = Math.ceil(totalItems / PARTICIPANTS_PAGE_SIZE) || 1;
+
+    // Clamp requested page
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentParticipantsPage = page;
+
+    const startIdx = (currentParticipantsPage - 1) * PARTICIPANTS_PAGE_SIZE;
+    const endIdx = Math.min(startIdx + PARTICIPANTS_PAGE_SIZE, totalItems);
+    const currentPageItems = filtered.slice(startIdx, endIdx);
+
+    // Render Cards for Current Page (6 symmetric cards: 2 rows x 3 columns)
+    container.innerHTML = currentPageItems.map(p => `
+        <div class="participant-card glass">
+            <div class="part-header">
+                <span class="part-type ${p.participation && p.participation.toLowerCase() === 'team' ? 'team' : 'individual'}">${p.participation || 'INDIVIDUAL'}</span>
+                <span style="color:var(--accent-cyan); font-weight:600; font-size:0.85rem;">${p.dept || 'N/A'}</span>
+            </div>
+            <h4 class="part-name">${p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</h4>
+            <div class="part-meta">Leader / Member: ${p.name}</div>
+            <div class="part-os">OS Concept: <strong>${p.osName || 'To Be Decided'}</strong></div>
+        </div>
+    `).join('');
+
+    // Render Pagination Controls Bar for Directory
+    if (paginationContainer) {
+        if (totalPages <= 1) {
+            paginationContainer.innerHTML = `
+                <div class="pagination-info">Showing <strong>1–${totalItems}</strong> of <strong>${totalItems}</strong> participants</div>
+                <div class="pagination-controls">
+                    <button type="button" class="page-btn page-nav-btn" disabled>Page 1 of 1</button>
+                </div>
+            `;
+        } else {
+            let pageButtonsHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                pageButtonsHTML += `
+                    <button type="button" class="page-btn ${i === currentParticipantsPage ? 'active' : ''}" onclick="goToParticipantsPage(${i})">${i}</button>
+                `;
+            }
+
+            paginationContainer.innerHTML = `
+                <div class="pagination-info">
+                    Showing <strong>${startIdx + 1}–${endIdx}</strong> of <strong>${totalItems}</strong> registered participants
+                </div>
+                <div class="pagination-controls">
+                    <button type="button" class="page-btn page-nav-btn" ${currentParticipantsPage === 1 ? 'disabled' : ''} onclick="goToParticipantsPage(${currentParticipantsPage - 1})">
+                        &larr; Prev
+                    </button>
+                    ${pageButtonsHTML}
+                    <button type="button" class="page-btn page-nav-btn" ${currentParticipantsPage === totalPages ? 'disabled' : ''} onclick="goToParticipantsPage(${currentParticipantsPage + 1})">
+                        Next &rarr;
+                    </button>
+                </div>
+            `;
+        }
+    }
+}
+
+// Global page jump handler for participants
+window.goToParticipantsPage = function(pageNum) {
+    renderParticipantsGrid(pageNum);
+};
+
 if (participantSearchInput) {
     participantSearchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        const cards = document.querySelectorAll('.participant-card');
-        cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            if (text.includes(query)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+        currentSearchQuery = e.target.value.toLowerCase().trim();
+        renderParticipantsGrid(1); // Reset to page 1 on search
     });
 }
 
 // ============================================
-// 🏆 Leaderboard Pagination & Live Fetch
+// 🏆 Leaderboard Pagination & Live Fetch (5 entries per page)
 // ============================================
 const LEADERBOARD_PAGE_SIZE = 5;
 let currentLeaderboardPage = 1;
@@ -866,22 +953,10 @@ async function fetchLiveParticipants() {
         if (data.result === 'success' && data.participants && data.participants.length > 0) {
             cachedParticipantsList = data.participants;
 
-            // 1. Populate All Participants Cards Grid
-            if (container) {
-                container.innerHTML = cachedParticipantsList.map(p => `
-                    <div class="participant-card glass">
-                        <div class="part-header">
-                            <span class="part-type ${p.participation.toLowerCase() === 'team' ? 'team' : 'individual'}">${p.participation}</span>
-                            <span style="color:var(--accent-cyan); font-weight:600; font-size:0.85rem;">${p.dept}</span>
-                        </div>
-                        <h4 class="part-name">${p.participation.toLowerCase() === 'team' ? p.teamName : p.name}</h4>
-                        <div class="part-meta">Leader / Member: ${p.name}</div>
-                        <div class="part-os">OS Concept: <strong>${p.osName}</strong></div>
-                    </div>
-                `).join('');
-            }
+            // 1. Render Paginated Participants Cards Grid (Max 6 per page)
+            renderParticipantsGrid(currentParticipantsPage);
 
-            // 2. Render Paginated Leaderboard Table (Max 5 visible at once)
+            // 2. Render Paginated Leaderboard Table (Max 5 per page)
             renderLeaderboardTable(currentLeaderboardPage);
         }
     } catch (e) {
