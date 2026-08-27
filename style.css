@@ -461,23 +461,147 @@ body.cursor-hover .cursor-glow {
     font-weight: 800;
 }
 
-/* Grand Hero Heading */
+/* Grand Hero Heading — Holographic Animated Title */
 .hero-main-title {
     font-family: var(--font-heading);
     font-size: clamp(3.2rem, 8vw, 6.4rem);
-    font-weight: 800;
+    font-weight: 900;
     line-height: 1.05;
-    letter-spacing: -1px;
+    letter-spacing: 2px;
     margin-bottom: 1.2rem;
     color: #fff;
     word-break: break-word;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 0;
 }
 
+/* Individual Animated Letters */
+.hero-letter {
+    display: inline-block;
+    position: relative;
+    background: linear-gradient(
+        120deg,
+        #fff 0%,
+        #00f2fe 20%,
+        #f355da 40%,
+        #7000ff 60%,
+        #00f2fe 80%,
+        #fff 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation:
+        heroLetterIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 0.06s) both,
+        heroShimmer 6s linear calc(var(--i) * 0.06s + 0.7s) infinite;
+    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.25));
+    transition: filter 0.3s ease, transform 0.3s ease;
+    cursor: default;
+}
+
+.hero-letter:hover {
+    filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7)) drop-shadow(0 0 50px rgba(112, 0, 255, 0.4));
+    transform: translateY(-4px) scale(1.08);
+    animation-play-state: paused, paused;
+}
+
+/* Space between IDEA-THON and 2026 */
+.hero-spacer {
+    display: inline-block;
+    width: 0.35em;
+}
+
+/* Dash character special style */
+.hero-letter.hero-dash {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, #00f2fe 0%, #7000ff 100%);
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation:
+        heroLetterIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 0.06s) both,
+        heroDashPulse 2.5s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+/* Year digits — stronger neon glow */
+.hero-letter.hero-year {
+    background: linear-gradient(
+        120deg,
+        #00f2fe 0%,
+        #7000ff 25%,
+        #f355da 50%,
+        #00f2fe 75%,
+        #7000ff 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.4)) drop-shadow(0 0 40px rgba(112, 0, 255, 0.2));
+    animation:
+        heroLetterIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 0.06s) both,
+        heroShimmer 4s linear calc(var(--i) * 0.06s + 0.7s) infinite,
+        heroYearGlow 3s ease-in-out infinite;
+}
+
+.hero-letter.hero-year:hover {
+    filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.8)) drop-shadow(0 0 60px rgba(243, 85, 218, 0.5));
+}
+
+/* Horizontal Scan-Line (disabled — needs overflow:hidden container) */
+.hero-title-scanline {
+    display: none;
+}
+
+/* --- Keyframes --- */
+@keyframes heroLetterIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.7) rotateX(50deg);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.04) rotateX(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+        filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.25));
+    }
+}
+
+@keyframes heroShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: -100% 50%; }
+}
+
+@keyframes heroYearGlow {
+    0%, 100% { filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.4)) drop-shadow(0 0 40px rgba(112, 0, 255, 0.2)); }
+    50% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.6)) drop-shadow(0 0 55px rgba(243, 85, 218, 0.35)); }
+}
+
+@keyframes heroDashPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes heroScanline {
+    0% { left: -60%; }
+    100% { left: 120%; }
+}
+
+/* Keep old class as fallback (no-op) */
 .hero-gradient-text {
     background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 45px rgba(0, 242, 254, 0.4);
 }
 
 .hero-subtitle {
@@ -879,6 +1003,7 @@ body.cursor-hover .cursor-glow {
 
     .hero-main-title {
         font-size: 2.2rem;
+        letter-spacing: 0.5px;
     }
 
     .hero-eyebrow {
@@ -2298,7 +2423,7 @@ footer {
     .hero-main-title {
         font-size: clamp(2.4rem, 11vw, 3.6rem);
         line-height: 1.05;
-        letter-spacing: -0.5px;
+        letter-spacing: 0.5px;
         margin-bottom: 0.6rem;
     }
 
@@ -3820,5 +3945,23 @@ footer {
 
     .support-links a:hover {
         transform: none;
+    }
+}
+
+/* Hero Title — 3D perspective for entrance animation */
+.hero {
+    perspective: 800px;
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-letter {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .hero-title-scanline {
+        animation: none !important;
+        display: none;
     }
 }
