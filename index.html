@@ -197,42 +197,128 @@
 
     <!-- 📢 LIVE NOTICE BOARD PANEL & EVENT TIMELINE -->
     <section id="notice" class="notice-section container reveal">
-        <!-- Live Announcement Banner (Hidden For Now) -->
-        <div class="notice-banner glass" style="display: none;">
-            <div class="notice-header">
-                <div class="notice-badge"><span class="badge-dot"></span> LIVE ANNOUNCEMENT</div>
-                <span class="notice-date" id="liveNoticeHeaderMeta">EVENT DATE: 31 AUGUST 2026 | VENUE: BLOCK A, LAB 1 & 2, 2ND FLOOR</span>
+        <!-- 📢 LIVE UNLOCKED PROBLEM STATEMENT & 12 TRACKS NOTICE BANNER -->
+        <div class="notice-banner glass" style="display: block; border: 1.5px solid rgba(0, 242, 254, 0.35); box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 25px rgba(0, 242, 254, 0.15);">
+            <div class="notice-header" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1.2rem;">
+                <div class="notice-badge" style="background: rgba(37, 211, 102, 0.2); color: #25d366; border: 1px solid #25d366; font-weight: 700; padding: 0.35rem 1rem; border-radius: 50px; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span class="badge-dot" style="background: #25d366; box-shadow: 0 0 10px #25d366;"></span> PROBLEM STATEMENT UNLOCKED & LIVE NOW 🟢
+                </div>
+                <span class="notice-date" id="liveNoticeHeaderMeta" style="color: var(--accent-cyan); font-weight: 600; font-size: 0.88rem;">EVENT DATE: 31 AUGUST 2026 | VENUE: BLOCK A, LAB 1 & 2, 2ND FLOOR</span>
             </div>
+            
             <div class="notice-body" style="flex-direction: column; gap: 1.2rem;">
                 <div style="display: flex; gap: 1.2rem; align-items: flex-start; width: 100%;">
-                    <div class="notice-icon">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);">
+                    <div class="notice-icon" style="background: rgba(0, 242, 254, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem; border-radius: 12px; flex-shrink: 0;">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg>
                     </div>
                     <div class="notice-text">
-                        <h3 id="liveNoticeTitle">OS Challenge Problem Statement</h3>
-                        <p id="liveNoticeMessage">The official prompt for <strong>IDEA-THON 2026</strong> (Scheduled for
-                            <strong>31 August 2026</strong> at <strong>Block A, Lab 1 & 2, 2nd Floor</strong>) will unlock on
-                            <strong>29 August 2026, 3:00 PM</strong>!</p>
+                        <h3 id="liveNoticeTitle" style="font-family: var(--font-heading); font-size: 1.4rem; color: #ffffff; margin-bottom: 0.4rem;">
+                            Mobile OS Challenge Problem Statement Revealed! 🟢
+                        </h3>
+                        <p id="liveNoticeMessage" style="color: var(--text-muted); font-size: 0.98rem; line-height: 1.6;">
+                            The official prompt for <strong>IDEA-THON 2026</strong> (Scheduled for <strong>31 August 2026</strong> at <strong>Block A, Lab 1 & 2, 2nd Floor</strong>) is <strong style="color: #25d366;">UNLOCKED & LIVE NOW</strong>! Re-imagine the Mobile Operating System from scratch. Choose ONE track, analyze one important mobile problem, and propose a clear, innovative solution around it.
+                        </p>
                     </div>
                 </div>
 
-                <!-- 💡 DIRECT ON-PAGE PROBLEM STATEMENT PROMPT & DELIVERABLES -->
+                <!-- 💡 DIRECT ON-PAGE PROBLEM STATEMENT PROMPT -->
                 <div class="auto-modal-body" style="width: 100%; margin-top: 0.5rem;">
-                    <div class="prompt-box"
-                        style="background: rgba(0, 242, 254, 0.05); border-left: 4px solid var(--accent-cyan); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem;">
-                        <h4
-                            style="font-family: var(--font-heading); color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.5rem;">
-                            The Official OS Prompt Question:</h4>
-                        <p class="prompt-quote"
-                            style="font-size: 1.05rem; color: #fff; font-style: italic; font-weight: 500;">
+                    <div class="prompt-box" style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(112, 0, 255, 0.08)); border-left: 4px solid var(--accent-cyan); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                        <h4 style="font-family: var(--font-heading); color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.5rem;">
+                            The Official Mobile OS Prompt Question:
+                        </h4>
+                        <p class="prompt-quote" style="font-size: 1.1rem; color: #ffffff; font-style: italic; font-weight: 500; line-height: 1.5; margin: 0;">
                             "If you could forget Android and iOS — what Mobile Operating System would you design from complete zero today?"
                         </p>
                     </div>
 
-                    <div class="deliverables-grid">
+                    <!-- 🌟 SIMPLE PARTICIPATION GUIDE & 12 TRACKS PANEL -->
+                    <div class="participation-guide-container">
+                        <div class="guide-intro-card">
+                            <h3 class="guide-title">Simple Participation Guide</h3>
+                            <p class="guide-text">
+                                The challenge is simple: participants do <strong>not</strong> need to redesign an entire operating system. Choose <strong>one important problem</strong>, select <strong>one topic/track</strong>, analyze it, and propose a clear solution around it.
+                            </p>
+                            <div class="guide-callout-box">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                                <span><strong>Choose ONE Track</strong> — focus on one problem, one solution.</span>
+                            </div>
+                        </div>
+
+                        <!-- 12 TRACKS GRID -->
+                        <div class="tracks-grid">
+                            <div class="track-card">
+                                <span class="track-num">Track 1</span>
+                                <div class="track-name">AI-Powered Mobile OS</div>
+                                <div class="track-desc">AI-native kernel & smart agents</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 2</span>
+                                <div class="track-name">Mobile Privacy & Data</div>
+                                <div class="track-desc">Zero-trust privacy & local encryption</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 3</span>
+                                <div class="track-name">Cross-Device Mobile OS</div>
+                                <div class="track-desc">Mobile, Laptop & Tablet synergy</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 4</span>
+                                <div class="track-name">Mobile Battery & Performance</div>
+                                <div class="track-desc">Hyper-efficient resource scheduling</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 5</span>
+                                <div class="track-name">Mobile Security & Trust</div>
+                                <div class="track-desc">Immutable security & sandboxing</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 6</span>
+                                <div class="track-name">Future Mobile Interaction</div>
+                                <div class="track-desc">Spatial UI, AR/VR & gestures</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 7</span>
+                                <div class="track-name">Cloud & Edge Mobile OS</div>
+                                <div class="track-desc">Serverless edge & instant boot</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 8</span>
+                                <div class="track-name">Future Mobile Applications</div>
+                                <div class="track-desc">Next-gen instant app runtime</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 9</span>
+                                <div class="track-name">Mobile Developer Platform</div>
+                                <div class="track-desc">Modular kernel & developer APIs</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 10</span>
+                                <div class="track-name">Smart Personal Mobile Computing</div>
+                                <div class="track-desc">Context-aware distraction-free UI</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 11</span>
+                                <div class="track-name">Mobile Hardware + Software</div>
+                                <div class="track-desc">Co-designed hardware acceleration</div>
+                            </div>
+                            <div class="track-card">
+                                <span class="track-num">Track 12</span>
+                                <div class="track-name">Open Mobile Innovation</div>
+                                <div class="track-desc">Open source & accessibility</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="deliverables-grid" style="margin-top: 1.5rem;">
                         <div class="deliv-item">
                             <span class="deliv-icon">
                                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -240,8 +326,7 @@
                                     <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                                 </svg>
                             </span>
-                            <div><strong>01. Vision & Name</strong><br><small
-                                    style="color: var(--text-muted);">Memorable OS Name & Core Goal</small></div>
+                            <div><strong>01. Vision & Track Name</strong><br><small style="color: var(--text-muted);">Selected Track & Core Goal</small></div>
                         </div>
                         <div class="deliv-item">
                             <span class="deliv-icon">
@@ -251,8 +336,7 @@
                                     <line x1="12" y1="17" x2="12" y2="21"></line>
                                 </svg>
                             </span>
-                            <div><strong>02. Mobile & Laptop UI</strong><br><small
-                                    style="color: var(--text-muted);">Cross-Device Adaptation</small></div>
+                            <div><strong>02. Mobile & Laptop UI</strong><br><small style="color: var(--text-muted);">Cross-Device Adaptation</small></div>
                         </div>
                         <div class="deliv-item highlight">
                             <span class="deliv-icon">
@@ -260,8 +344,7 @@
                                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                                 </svg>
                             </span>
-                            <div><strong>03. "Wow" Feature</strong><br><small
-                                    style="color: var(--text-muted);">Game-Changing Innovation</small></div>
+                            <div><strong>03. "Wow" Feature</strong><br><small style="color: var(--text-muted);">Game-Changing Innovation</small></div>
                         </div>
                     </div>
 
@@ -270,12 +353,9 @@
                     </div>
                 </div>
 
-                <div
-                    style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; justify-content: flex-end; width: 100%;">
-                    <button type="button" class="btn btn-primary" id="revealProblemBtn">Open Full Notice</button>
-                    <a href="submit_report.html" class="btn btn-secondary"
-                        style="border-radius: 50px; display: inline-flex; align-items: center; gap: 0.5rem;">Submit
-                        Presentation &rarr;</a>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; justify-content: flex-end; width: 100%;">
+                    <button type="button" class="btn btn-primary" id="revealProblemBtn">Open Full Notice Modal</button>
+                    <a href="submit_report.html" class="btn btn-secondary" style="border-radius: 50px; display: inline-flex; align-items: center; gap: 0.5rem;">Submit Presentation &rarr;</a>
                 </div>
             </div>
         </div>
@@ -309,17 +389,17 @@
                         <span class="badge-live-pulse"></span> CLOSING SOON
                     </span>
                 </div>
-                <div class="timeline-item glass">
+                <div class="timeline-item glass active">
                     <div class="time-step">STAGE 02</div>
                     <div class="time-icon-wrapper stage-2-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
                         </svg>
                     </div>
                     <h4>Problem Statement Release</h4>
                     <p class="time-date">29 August 2026, 3:00 PM</p>
-                    <span class="time-badge locked">LOCKED</span>
+                    <span class="time-badge active" style="background: rgba(37, 211, 102, 0.2); border-color: #25d366; color: #25d366;">UNLOCKED & LIVE NOW 🟢</span>
                 </div>
                 <div class="timeline-item glass">
                     <div class="time-step">STAGE 03</div>
@@ -397,8 +477,6 @@
                         <p class="goal-text">"If we were building a mobile operating system from zero today, what would we build?"</p>
                     </div>
                 </div>
-            </div>
-        </div>
     </section>
 
     <section id="requirements" class="section">
@@ -635,7 +713,7 @@
                 <!-- Sachin Vishwakarma -->
                 <div class="team-card glass">
                     <div class="avatar-wrapper">
-                        <img src="assets/sachin_v.jpg"
+                        <img src="assets/sachin_vish.jpg"
                             onError="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Sachin+Vishwakarma&background=0f121d&color=00f2fe&bold=true&size=250';"
                             alt="Sachin Vishwakarma" class="avatar-img">
                         <span class="status-indicator"></span>
@@ -1222,11 +1300,11 @@
 
     <!-- 🚨 EVENT START & NOTICE POPUP MODAL -->
     <div id="autoEventModal" class="modal auto-event-modal" style="display: none;" data-lenis-prevent>
-        <div class="modal-content auto-modal-card glass" data-lenis-prevent>
+        <div class="modal-content auto-modal-card glass" data-lenis-prevent style="max-width: 960px;">
             <span class="close-modal" id="closeAutoModalBtn">&times;</span>
             <div class="auto-modal-header">
-                <div class="live-event-badge">
-                    <span class="badge-dot"></span> OFFICIAL EVENT NOTICE
+                <div class="live-event-badge" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366;">
+                    <span class="badge-dot" style="background: #25d366; box-shadow: 0 0 10px #25d366;"></span> PROBLEM STATEMENT UNLOCKED & LIVE 🟢
                 </div>
                 <div class="event-date-pill" id="modalNoticeMeta">
                     EVENT DATE: <strong>31 AUGUST 2026</strong> | VENUE: <strong>BLOCK A, LAB 1 & 2, 2ND FLOOR</strong>
@@ -1234,21 +1312,104 @@
             </div>
 
             <h2 class="auto-modal-title">
-                IDEA-THON 2026 • OFFICIAL NOTICE
+                IDEA-THON 2026 • OFFICIAL MOBILE OS CHALLENGE PROMPT
             </h2>
             <p class="auto-modal-subtitle">
-                Reimagining the Operating System for the Next Generation
+                Reimagining the Mobile Operating System for the Next Generation
             </p>
 
             <div class="auto-modal-body">
-                <div class="prompt-box">
-                    <h3>The Official OS Prompt:</h3>
-                    <p class="prompt-quote">
+                <div class="prompt-box" style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(112, 0, 255, 0.08)); border-left: 4px solid var(--accent-cyan); padding: 1.2rem; border-radius: 12px; margin-bottom: 1.2rem;">
+                    <h3 style="color: var(--accent-cyan); margin-top: 0; margin-bottom: 0.5rem; font-size: 1.15rem;">The Official Mobile OS Prompt Question:</h3>
+                    <p class="prompt-quote" style="font-size: 1.1rem; color: #ffffff; font-style: italic; margin: 0; line-height: 1.5;">
                         "If you could forget Android and iOS — what Mobile Operating System would you design from complete zero today?"
                     </p>
                 </div>
 
-                <div class="deliverables-grid">
+                <!-- 🌟 SIMPLE PARTICIPATION GUIDE & 12 TRACKS PANEL -->
+                <div class="participation-guide-container">
+                    <div class="guide-intro-card">
+                        <h3 class="guide-title">Simple Participation Guide</h3>
+                        <p class="guide-text">
+                            The challenge is simple: participants do <strong>not</strong> need to redesign an entire operating system. Choose <strong>one important problem</strong>, select <strong>one topic/track</strong>, analyze it, and propose a clear solution around it.
+                        </p>
+                        <div class="guide-callout-box">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                            <span><strong>Choose ONE Track</strong> — focus on one problem, one solution.</span>
+                        </div>
+                    </div>
+
+                    <!-- 12 TRACKS GRID -->
+                    <div class="tracks-grid">
+                        <div class="track-card">
+                            <span class="track-num">Track 1</span>
+                            <div class="track-name">AI-Powered Mobile OS</div>
+                            <div class="track-desc">AI-native kernel & smart agents</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 2</span>
+                            <div class="track-name">Mobile Privacy & Data</div>
+                            <div class="track-desc">Zero-trust privacy & local encryption</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 3</span>
+                            <div class="track-name">Cross-Device Mobile OS</div>
+                            <div class="track-desc">Mobile, Laptop & Tablet synergy</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 4</span>
+                            <div class="track-name">Mobile Battery & Performance</div>
+                            <div class="track-desc">Hyper-efficient resource scheduling</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 5</span>
+                            <div class="track-name">Mobile Security & Trust</div>
+                            <div class="track-desc">Immutable security & sandboxing</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 6</span>
+                            <div class="track-name">Future Mobile Interaction</div>
+                            <div class="track-desc">Spatial UI, AR/VR & gestures</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 7</span>
+                            <div class="track-name">Cloud & Edge Mobile OS</div>
+                            <div class="track-desc">Serverless edge & instant boot</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 8</span>
+                            <div class="track-name">Future Mobile Applications</div>
+                            <div class="track-desc">Next-gen instant app runtime</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 9</span>
+                            <div class="track-name">Mobile Developer Platform</div>
+                            <div class="track-desc">Modular kernel & developer APIs</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 10</span>
+                            <div class="track-name">Smart Personal Mobile Computing</div>
+                            <div class="track-desc">Context-aware distraction-free UI</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 11</span>
+                            <div class="track-name">Mobile Hardware + Software</div>
+                            <div class="track-desc">Co-designed hardware acceleration</div>
+                        </div>
+                        <div class="track-card">
+                            <span class="track-num">Track 12</span>
+                            <div class="track-name">Open Mobile Innovation</div>
+                            <div class="track-desc">Open source & accessibility</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deliverables-grid" style="margin-top: 1.2rem;">
                     <div class="deliv-item">
                         <span class="deliv-icon">
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1256,7 +1417,7 @@
                                 <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                             </svg>
                         </span>
-                        <div><strong>01. Vision & Name</strong><br><small>Memorable OS Name & Core Goal</small></div>
+                        <div><strong>01. Vision & Track Name</strong><br><small>Selected Track & Core Goal</small></div>
                     </div>
                     <div class="deliv-item">
                         <span class="deliv-icon">
@@ -1278,7 +1439,7 @@
                     </div>
                 </div>
 
-                <div class="no-code-notice">
+                <div class="no-code-notice" style="margin-top: 1rem;">
                     <strong>No Coding Required!</strong> Submit 1-2 pages concept deck or Drive link.
                 </div>
             </div>
