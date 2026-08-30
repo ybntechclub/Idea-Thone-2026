@@ -858,30 +858,57 @@ function renderLeaderboardTable(page = 1) {
     const endIdx = Math.min(startIdx + LEADERBOARD_PAGE_SIZE, totalItems);
     const currentPageItems = cachedParticipantsList.slice(startIdx, endIdx);
 
+    const sparkleStarSVG = `<svg class="sparkle-star" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>`;
+    const crownSVG = `<svg class="rank-icon gold-crown" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M2 19h20v2H2v-2zM2 5l5 3.5L12 2l5 6.5L22 5v12H2V5z"/></svg>`;
+    const silverMedalSVG = `<svg class="rank-icon silver-medal" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/></svg>`;
+    const bronzeStarSVG = `<svg class="rank-icon bronze-star" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+
     // Render Table Rows for Current Page (Max 5 items)
     leaderboardBody.innerHTML = currentPageItems.map((p, idx) => {
         const overallIndex = startIdx + idx;
         const rankNum = (overallIndex + 1).toString().padStart(2, '0');
-        let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
-        if (overallIndex === 0) rankBadge = `<span class="rank-badge gold">${rankNum}</span>`;
-        else if (overallIndex === 1) rankBadge = `<span class="rank-badge silver">${rankNum}</span>`;
-        else if (overallIndex === 2) rankBadge = `<span class="rank-badge bronze">${rankNum}</span>`;
-
-        // Single evaluation score
-        const score = Number(p.score || p.totalScore || p.r1Score || (p.subStatus === 'SUBMITTED' ? 85 : 0));
+        
+        // Single evaluation score (out of 100) from Google Sheet
+        const score = Number(p.score !== undefined ? p.score : (p.totalScore !== undefined ? p.totalScore : 0));
         const isScored = score > 0;
-        const scoreText = isScored ? `${score}/100 PTS` : `0/100 PTS`;
-        const scoreClass = isScored ? 'active-score' : 'zero-score';
+        
+        let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
+        let podiumRowClass = '';
+        let scorePillClass = isScored ? 'active-score' : 'zero-score';
+        let sparkleBefore = '';
+        let sparkleAfter = '';
+
+        if (overallIndex === 0) {
+            rankBadge = `<span class="rank-badge gold">${crownSVG} <span>${rankNum}</span></span>`;
+            podiumRowClass = 'podium-gold-row';
+            scorePillClass = isScored ? 'total-score-pill podium-gold-score' : 'total-score-pill gold-standby';
+            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
+            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
+        } else if (overallIndex === 1) {
+            rankBadge = `<span class="rank-badge silver">${silverMedalSVG} <span>${rankNum}</span></span>`;
+            podiumRowClass = 'podium-silver-row';
+            scorePillClass = isScored ? 'total-score-pill podium-silver-score' : 'total-score-pill silver-standby';
+            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
+            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
+        } else if (overallIndex === 2) {
+            rankBadge = `<span class="rank-badge bronze">${bronzeStarSVG} <span>${rankNum}</span></span>`;
+            podiumRowClass = 'podium-bronze-row';
+            scorePillClass = isScored ? 'total-score-pill podium-bronze-score' : 'total-score-pill bronze-standby';
+            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
+            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
+        } else {
+            scorePillClass = `total-score-pill ${scorePillClass}`;
+        }
 
         let subBadge = p.subStatus === 'SUBMITTED'
-            ? `<span class="status-pill submitted">SUBMITTED</span>`
+            ? `<span class="status-pill submitted"><span class="sub-beacon"></span>SUBMITTED</span>`
             : `<span class="status-pill pending">PENDING</span>`;
 
         const displayName = p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name;
         const leaderText = p.participation && p.participation.toLowerCase() === 'team' ? `Leader: ${p.name}` : `Solo Architect`;
 
         return `
-            <tr>
+            <tr class="${podiumRowClass}">
                 <td class="col-rank">${rankBadge}</td>
                 <td class="col-participant">
                     <div class="participant-name-wrap">
@@ -890,7 +917,16 @@ function renderLeaderboardTable(page = 1) {
                     </div>
                 </td>
                 <td class="col-branch"><span class="branch-badge">${p.dept}</span></td>
-                <td class="col-score"><span class="total-score-pill ${scoreClass}">${scoreText}</span></td>
+                <td class="col-score">
+                    <span class="${scorePillClass}">
+                        ${sparkleBefore}
+                        <span class="score-digits-box">
+                            <strong class="score-main-val">${score}</strong><span class="score-max-denom">/100</span>
+                            <span class="score-pts-lbl">PTS</span>
+                        </span>
+                        ${sparkleAfter}
+                    </span>
+                </td>
                 <td class="col-status">${subBadge}</td>
             </tr>
         `;
@@ -946,7 +982,15 @@ async function fetchLiveParticipants() {
         const data = await res.json();
 
         if (data.result === 'success' && data.participants && data.participants.length > 0) {
-            cachedParticipantsList = data.participants;
+            // Sort participants by score descending, then submission status, then token
+            cachedParticipantsList = data.participants.slice().sort((a, b) => {
+                const sA = Number(a.score !== undefined ? a.score : (a.totalScore !== undefined ? a.totalScore : 0));
+                const sB = Number(b.score !== undefined ? b.score : (b.totalScore !== undefined ? b.totalScore : 0));
+                if (sB !== sA) return sB - sA;
+                if (a.subStatus === 'SUBMITTED' && b.subStatus !== 'SUBMITTED') return -1;
+                if (b.subStatus === 'SUBMITTED' && a.subStatus !== 'SUBMITTED') return 1;
+                return (a.token || '').localeCompare(b.token || '');
+            });
 
             // 1. Render Paginated Participants Cards Grid (Max 6 per page)
             renderParticipantsGrid(currentParticipantsPage);

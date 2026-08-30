@@ -2656,6 +2656,12 @@ footer {
     .total-score-pill {
         padding: 0.28rem 0.55rem;
         font-size: 0.74rem;
+        gap: 0.25rem;
+    }
+
+    .sparkle-star {
+        width: 10px;
+        height: 10px;
     }
 
     .status-pill {
@@ -3196,20 +3202,27 @@ footer {
 }
 
 .total-score-pill {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.38rem 0.95rem;
     border-radius: 50px;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(8px);
 }
 
 .total-score-pill.active-score {
     background: rgba(0, 255, 128, 0.12);
     color: #00ff80;
     border: 1px solid rgba(0, 255, 128, 0.35);
-    box-shadow: 0 0 10px rgba(0, 255, 128, 0.2);
+    box-shadow: 0 0 12px rgba(0, 255, 128, 0.2);
 }
 
 .total-score-pill.zero-score {
@@ -3218,11 +3231,196 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Score Typography Hierarchy */
+.score-digits-box {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.1rem;
+    font-family: 'Space Grotesk', var(--font-heading), monospace, sans-serif;
+    line-height: 1;
+}
+
+.score-main-val {
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.score-max-denom {
+    font-size: 0.72rem;
+    opacity: 0.65;
+    font-weight: 600;
+}
+
+.score-pts-lbl {
+    font-size: 0.62rem;
+    font-weight: 800;
+    opacity: 0.85;
+    margin-left: 0.2rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   ✨ ANIMATED SPARKLE & PODIUM HIGHLIGHTS (1st, 2nd, 3rd)
+   ============================================= */
+.sparkle-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.sparkle-star {
+    display: inline-block;
+    animation: sparkleTwinkle 2.2s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.s-left .sparkle-star {
+    animation-delay: 0s;
+}
+
+.s-right .sparkle-star {
+    animation-delay: 1.1s;
+}
+
+@keyframes sparkleTwinkle {
+    0%, 100% {
+        transform: scale(0.65) rotate(0deg);
+        opacity: 0.35;
+        filter: drop-shadow(0 0 2px currentColor);
+    }
+    50% {
+        transform: scale(1.35) rotate(90deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 12px currentColor);
+    }
+}
+
+/* 🥇 1ST PLACE GOLD CHAMPION SCORE PILL */
+.podium-gold-score {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.22) 0%, rgba(255, 170, 0, 0.26) 100%);
+    color: #ffd700;
+    border: 1.5px solid #ffd700;
+    box-shadow: 0 0 22px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: goldPillPulse 2.8s ease-in-out infinite;
+}
+
+.podium-gold-score::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    transform: rotate(25deg);
+    animation: gleamSweep 3s infinite;
+}
+
+/* 🥈 2ND PLACE SILVER SCORE PILL */
+.podium-silver-score {
+    background: linear-gradient(135deg, rgba(220, 235, 255, 0.2) 0%, rgba(160, 195, 255, 0.24) 100%);
+    color: #e0f2fe;
+    border: 1.5px solid #bae6fd;
+    box-shadow: 0 0 18px rgba(186, 230, 253, 0.4), inset 0 0 12px rgba(186, 230, 253, 0.2);
+    text-shadow: 0 0 10px rgba(186, 230, 253, 0.5);
+}
+
+.podium-silver-score::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transform: rotate(25deg);
+    animation: gleamSweep 3.4s infinite 0.6s;
+}
+
+/* 🥉 3RD PLACE BRONZE SCORE PILL */
+.podium-bronze-score {
+    background: linear-gradient(135deg, rgba(255, 160, 80, 0.2) 0%, rgba(205, 127, 50, 0.24) 100%);
+    color: #ffbe8a;
+    border: 1.5px solid #f97316;
+    box-shadow: 0 0 16px rgba(249, 115, 22, 0.35), inset 0 0 10px rgba(249, 115, 22, 0.18);
+    text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+
+.podium-bronze-score::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transform: rotate(25deg);
+    animation: gleamSweep 3.8s infinite 1.2s;
+}
+
+/* Standby variants when score is 0 PTS */
+.gold-standby {
+    background: rgba(255, 215, 0, 0.08);
+    color: #ffd700;
+    border: 1px dashed rgba(255, 215, 0, 0.4);
+}
+
+.silver-standby {
+    background: rgba(186, 230, 253, 0.08);
+    color: #bae6fd;
+    border: 1px dashed rgba(186, 230, 253, 0.4);
+}
+
+.bronze-standby {
+    background: rgba(249, 115, 22, 0.08);
+    color: #ffbe8a;
+    border: 1px dashed rgba(249, 115, 22, 0.4);
+}
+
+/* 🏆 Premium Podium Row Highlights */
+.podium-gold-row {
+    border-left: 3.5px solid #ffd700 !important;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.07) 0%, rgba(255, 215, 0, 0.01) 60%, transparent 100%) !important;
+}
+
+.podium-silver-row {
+    border-left: 3.5px solid #38bdf8 !important;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.01) 60%, transparent 100%) !important;
+}
+
+.podium-bronze-row {
+    border-left: 3.5px solid #fb923c !important;
+    background: linear-gradient(90deg, rgba(251, 146, 60, 0.05) 0%, rgba(251, 146, 60, 0.01) 60%, transparent 100%) !important;
+}
+
+@keyframes gleamSweep {
+    0% {
+        left: -100%;
+    }
+    30%, 100% {
+        left: 200%;
+    }
+}
+
+@keyframes goldPillPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 16px rgba(255, 215, 0, 0.4);
+    }
+}
+
 .rank-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
+    gap: 0.35rem;
+    min-width: 46px;
     padding: 0.35rem 0.75rem;
     border-radius: 50px;
     font-weight: 800;
@@ -3234,25 +3432,45 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.rank-icon {
+    flex-shrink: 0;
+}
+
+.gold-crown {
+    color: #ffe600;
+    filter: drop-shadow(0 0 5px rgba(255, 230, 0, 0.8));
+    animation: goldPillPulse 2.8s ease-in-out infinite;
+}
+
+.silver-medal {
+    color: #e0f2fe;
+    filter: drop-shadow(0 0 4px rgba(224, 242, 254, 0.8));
+}
+
+.bronze-star {
+    color: #ffaa66;
+    filter: drop-shadow(0 0 4px rgba(255, 170, 102, 0.8));
+}
+
 .rank-badge.gold {
-    background: rgba(255, 215, 0, 0.15);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 170, 0, 0.25));
     color: #ffd700;
-    border: 1px solid #ffd700;
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+    border: 1.5px solid #ffd700;
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
 }
 
 .rank-badge.silver {
-    background: rgba(192, 192, 192, 0.15);
+    background: linear-gradient(135deg, rgba(220, 235, 255, 0.2), rgba(160, 195, 255, 0.22));
     color: #e2e8f0;
-    border: 1px solid #cbd5e1;
-    box-shadow: 0 0 10px rgba(192, 192, 192, 0.2);
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 0 14px rgba(192, 192, 192, 0.35);
 }
 
 .rank-badge.bronze {
-    background: rgba(205, 127, 50, 0.15);
+    background: linear-gradient(135deg, rgba(255, 160, 80, 0.2), rgba(205, 127, 50, 0.22));
     color: #ffaa66;
-    border: 1px solid #cd7f32;
-    box-shadow: 0 0 10px rgba(205, 127, 50, 0.2);
+    border: 1.5px solid #cd7f32;
+    box-shadow: 0 0 14px rgba(205, 127, 50, 0.35);
 }
 
 .status-pill {
@@ -3264,14 +3482,25 @@ footer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.4rem;
     letter-spacing: 0.3px;
+}
+
+.sub-beacon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #00ff80;
+    box-shadow: 0 0 8px #00ff80;
+    animation: blinkDot 1.5s ease-in-out infinite;
+    display: inline-block;
 }
 
 .status-pill.submitted {
     background: rgba(0, 255, 128, 0.12);
     color: #00ff80;
     border: 1px solid rgba(0, 255, 128, 0.35);
+    box-shadow: 0 0 10px rgba(0, 255, 128, 0.2);
 }
 
 .status-pill.pending {
