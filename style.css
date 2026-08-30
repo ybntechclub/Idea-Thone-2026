@@ -3502,6 +3502,425 @@ footer {
 }
 
 /* =============================================
+   📢 PROBLEM STATEMENT HUD & BANNER STYLES
+   ============================================= */
+
+/* Main Banner Glassmorphism Container */
+.ps-banner {
+    display: block;
+    background: linear-gradient(145deg, rgba(13, 17, 30, 0.95), rgba(18, 24, 42, 0.9));
+    border: 1.5px solid rgba(0, 242, 254, 0.35);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.12);
+    border-radius: 22px;
+    padding: 1.8rem 2.2rem 1.6rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* 🌟 Top HUD Status & Venue Bar */
+.ps-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Green Live Status Pill */
+.ps-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: rgba(37, 211, 102, 0.12);
+    border: 1px solid rgba(37, 211, 102, 0.45);
+    color: #25d366;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+}
+
+.ps-live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #25d366;
+    display: inline-block;
+    animation: psLivePulseDot 1.5s ease-in-out infinite;
+}
+
+@keyframes psLivePulseDot {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(37, 211, 102, 0);
+    }
+}
+
+/* Top Meta (Event Date & Venue) */
+.ps-meta-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    color: var(--accent-cyan);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.ps-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.ps-meta-svg {
+    color: var(--accent-cyan);
+    opacity: 0.9;
+    flex-shrink: 0;
+}
+
+.ps-meta-item strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.ps-meta-sep {
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: bold;
+}
+
+/* 🌟 Hero Announcement Block (Bell Tile + Main Heading + Subtext) */
+.ps-hero-body {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+/* Dedicated Glowing Bell Tile */
+.ps-bell-tile {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(112, 0, 255, 0.15));
+    border: 1.5px solid rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.25), inset 0 0 12px rgba(112, 0, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+}
+
+/* Physics-based swinging animated bell */
+.ps-bell-ring-anim {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: 50% 0%;
+    animation: psBellSwing 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+}
+
+@keyframes psBellSwing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    4% {
+        transform: rotate(18deg) scale(1.08);
+    }
+    8% {
+        transform: rotate(-16deg) scale(1.08);
+    }
+    12% {
+        transform: rotate(14deg);
+    }
+    16% {
+        transform: rotate(-10deg);
+    }
+    20% {
+        transform: rotate(6deg);
+    }
+    24% {
+        transform: rotate(-3deg);
+    }
+    28%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+.ps-title-content {
+    flex: 1;
+}
+
+.ps-main-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 3vw, 1.45rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin: 0 0 0.25rem 0;
+    letter-spacing: 0.3px;
+}
+
+.ps-main-subtext {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* 💡 Prompt Question Box */
+.ps-prompt-box {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.07) 0%, rgba(112, 0, 255, 0.08) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-left: 4px solid var(--accent-cyan);
+    border-radius: 14px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0 1.4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.08);
+}
+
+.ps-prompt-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+}
+
+.ps-prompt-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.45rem;
+}
+
+.ps-prompt-svg {
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.5));
+    flex-shrink: 0;
+}
+
+.ps-prompt-title {
+    font-family: var(--font-heading);
+    color: var(--accent-cyan);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.ps-prompt-quote {
+    font-size: clamp(0.98rem, 2.3vw, 1.12rem);
+    color: #ffffff;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.55;
+    margin: 0;
+    padding-left: 0.2rem;
+}
+
+/* Active Track Highlight */
+.track-card.active-track {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.3), inset 0 0 15px rgba(0, 242, 254, 0.12);
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(112, 0, 255, 0.12));
+}
+
+/* 🚀 Sleek High-Performance Submit CTA Button */
+.ps-footer-action-bar {
+    margin-top: 1.6rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.ps-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.8rem 2rem;
+    height: 48px;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    background: linear-gradient(135deg, #7000ff 0%, #00f2fe 50%, #f355da 100%);
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 25px rgba(112, 0, 255, 0.35), 0 0 20px rgba(0, 242, 254, 0.2);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ps-submit-btn:hover {
+    background-position: 100% 50%;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 242, 254, 0.45), 0 0 30px rgba(112, 0, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.ps-submit-btn:active {
+    transform: translateY(0);
+}
+
+.ps-upload-svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.ps-submit-btn:hover .ps-upload-svg {
+    transform: translateY(-2px);
+}
+
+.ps-arrow-svg {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.ps-submit-btn:hover .ps-arrow-svg {
+    transform: translateX(4px);
+}
+
+/* =============================================
+   📱 PROBLEM STATEMENT RESPONSIVENESS
+   ============================================= */
+@media (max-width: 900px) {
+    .ps-banner {
+        padding: 1.5rem 1.6rem 1.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ps-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .ps-meta-info {
+        font-size: 0.82rem;
+    }
+    .ps-hero-body {
+        gap: 1rem;
+    }
+    .ps-bell-tile {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 12px;
+    }
+    .ps-bell-tile svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .ps-banner {
+        padding: 1.2rem 1rem 1.2rem;
+        border-radius: 18px;
+    }
+    .ps-status-pill {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.85rem;
+    }
+    .ps-meta-info {
+        font-size: 0.78rem;
+        gap: 0.4rem;
+    }
+    .ps-meta-sep {
+        display: none;
+    }
+    .ps-meta-item {
+        width: 100%;
+    }
+    .ps-hero-body {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.85rem;
+    }
+    .ps-main-heading {
+        font-size: 1.15rem;
+        line-height: 1.3;
+    }
+    .ps-main-subtext {
+        font-size: 0.82rem;
+        line-height: 1.4;
+    }
+    .ps-prompt-box {
+        padding: 0.95rem 1.1rem;
+        margin: 1.1rem 0;
+    }
+    .ps-prompt-title {
+        font-size: 0.94rem;
+    }
+    .ps-prompt-quote {
+        font-size: 0.96rem;
+    }
+    .ps-footer-action-bar {
+        justify-content: center;
+        margin-top: 1.3rem;
+    }
+    .ps-submit-btn {
+        width: 100%;
+        height: 46px;
+        padding: 0.75rem 1.2rem;
+        font-size: 0.92rem;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .ps-banner {
+        padding: 1rem 0.85rem 1rem;
+    }
+    .ps-hero-body {
+        gap: 0.75rem;
+    }
+    .ps-bell-tile {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 10px;
+    }
+    .ps-bell-tile svg {
+        width: 20px;
+        height: 20px;
+    }
+    .ps-main-heading {
+        font-size: 1.05rem;
+    }
+}
+
+/* =============================================
    🗓️ PROFESSIONAL TIMELINE GRID
    ============================================= */
 .timeline-container {

@@ -445,15 +445,20 @@ const revealProblemBtn = document.getElementById('revealProblemBtn');
 
 function openAutoEventNotice() {
     if (autoEventModal) {
-        autoEventModal.style.display = 'flex';
-        document.body.style.overflow = 'auto'; // Keep page scrolling smooth and free at all times
+        autoEventModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        if (typeof lenis !== 'undefined') lenis.stop();
+        // Scroll modal content to top on open
+        const modalContent = autoEventModal.querySelector('.modal-content, .auto-modal-card');
+        if (modalContent) modalContent.scrollTop = 0;
     }
 }
 
 function closeAutoEventNotice() {
     if (autoEventModal) {
-        autoEventModal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore smooth page scrolling!
+        autoEventModal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        if (typeof lenis !== 'undefined') lenis.start();
     }
 }
 
@@ -629,39 +634,29 @@ async function fetchLiveEventNotice() {
         if (data.status === 'success' && data.notice) {
             const notice = data.notice;
 
-            // 1. Update Notice Board Banner
-            const liveNoticeHeaderMeta = document.getElementById('liveNoticeHeaderMeta');
-            const liveNoticeTitle = document.getElementById('liveNoticeTitle');
-            const liveNoticeMessage = document.getElementById('liveNoticeMessage');
+            // 1. Safely update dynamic Event Date & Venue text without breaking HUD markup or icons
+            const liveNoticeEventDate = document.getElementById('liveNoticeEventDate');
+            const liveNoticeVenue = document.getElementById('liveNoticeVenue');
 
-            if (liveNoticeHeaderMeta) {
-                liveNoticeHeaderMeta.textContent = `EVENT DATE: ${notice.eventDate.toUpperCase()} | VENUE: ${notice.venue.toUpperCase()}`;
+            if (liveNoticeEventDate && notice.eventDate) {
+                liveNoticeEventDate.textContent = notice.eventDate.toUpperCase();
             }
-            if (liveNoticeTitle) {
-                liveNoticeTitle.textContent = notice.title;
-            }
-            if (liveNoticeMessage) {
-                liveNoticeMessage.innerHTML = notice.message;
+            if (liveNoticeVenue && notice.venue) {
+                liveNoticeVenue.textContent = notice.venue.toUpperCase();
             }
 
-            // 2. Update Modal Notice & On-Page Quotes
+            // 2. Update Modal Notice Meta & On-Page Quotes
             const modalNoticeMeta = document.getElementById('modalNoticeMeta');
-            const modalNoticeTitle = document.querySelector('.auto-modal-title');
-            const modalNoticeSubtitle = document.querySelector('.auto-modal-subtitle');
             const modalPromptQuotes = document.querySelectorAll('.prompt-quote');
 
-            if (modalNoticeMeta) {
+            if (modalNoticeMeta && notice.eventDate && notice.venue) {
                 modalNoticeMeta.innerHTML = `EVENT DATE: <strong>${notice.eventDate.toUpperCase()}</strong> | VENUE: <strong>${notice.venue.toUpperCase()}</strong>`;
             }
-            if (modalNoticeTitle) {
-                modalNoticeTitle.textContent = `${notice.title.toUpperCase()}`;
+            if (notice.promptQuestion) {
+                modalPromptQuotes.forEach(el => {
+                    el.textContent = `"${notice.promptQuestion}"`;
+                });
             }
-            if (modalNoticeSubtitle) {
-                modalNoticeSubtitle.textContent = notice.message;
-            }
-            modalPromptQuotes.forEach(el => {
-                el.textContent = `"${notice.promptQuestion}"`;
-            });
         }
     } catch (e) {
         console.log("Live notice fetch fallback active:", e);
