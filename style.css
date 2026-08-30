@@ -3090,10 +3090,11 @@ footer {
     border-collapse: separate;
     border-spacing: 0;
     text-align: left;
+    table-layout: auto;
 }
 
 .leaderboard-table th {
-    padding: 1.1rem 1.2rem;
+    padding: 0.9rem 1rem;
     background: rgba(255, 255, 255, 0.03);
     color: var(--accent-cyan);
     font-family: var(--font-heading);
@@ -3103,15 +3104,17 @@ footer {
     letter-spacing: 1.2px;
     border-bottom: 2px solid rgba(0, 242, 254, 0.25);
     white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .leaderboard-table td {
-    padding: 1rem 1.2rem;
+    padding: 0.9rem 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     color: #e2e8f0;
     font-size: 0.92rem;
     vertical-align: middle;
     white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .leaderboard-table tbody tr {
@@ -3126,15 +3129,15 @@ footer {
     background: rgba(0, 242, 254, 0.04);
 }
 
-/* Explicit Column Alignments & Sizing */
+/* Explicit Column Alignments & Balanced Sizing */
 .leaderboard-table .col-rank {
     text-align: center;
-    width: 80px;
+    width: 75px;
 }
 
 .leaderboard-table .col-participant {
     text-align: left;
-    min-width: 190px;
+    min-width: 180px;
 }
 
 .leaderboard-table .col-branch {
@@ -3144,12 +3147,12 @@ footer {
 
 .leaderboard-table .col-score {
     text-align: center;
-    width: 150px;
+    width: 140px;
 }
 
 .leaderboard-table .col-status {
     text-align: center;
-    width: 140px;
+    width: 125px;
 }
 
 /* Cell Micro-Elements */
@@ -3214,8 +3217,7 @@ footer {
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
 }
 
 .total-score-pill.active-score {
@@ -3226,43 +3228,13 @@ footer {
 }
 
 .total-score-pill.zero-score {
-    background: rgba(255, 255, 255, 0.04);
-    color: #94a3b8;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Score Typography Hierarchy */
-.score-digits-box {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.1rem;
-    font-family: 'Space Grotesk', var(--font-heading), monospace, sans-serif;
-    line-height: 1;
-}
-
-.score-main-val {
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-}
-
-.score-max-denom {
-    font-size: 0.72rem;
-    opacity: 0.65;
-    font-weight: 600;
-}
-
-.score-pts-lbl {
-    font-size: 0.62rem;
-    font-weight: 800;
-    opacity: 0.85;
-    margin-left: 0.2rem;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.03);
+    color: #64748b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* =============================================
-   ✨ ANIMATED SPARKLE & PODIUM HIGHLIGHTS (1st, 2nd, 3rd)
+   ✨ ANIMATED GLOWING SPARKLE SCORE PILLS (Top 3)
    ============================================= */
 .sparkle-wrap {
     display: inline-flex;
@@ -3298,12 +3270,12 @@ footer {
     }
 }
 
-/* 🥇 1ST PLACE GOLD CHAMPION SCORE PILL */
+/* 🥇 1ST PLACE GOLD GLOWING PILL */
 .podium-gold-score {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.22) 0%, rgba(255, 170, 0, 0.26) 100%);
     color: #ffd700;
     border: 1.5px solid #ffd700;
-    box-shadow: 0 0 22px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     animation: goldPillPulse 2.8s ease-in-out infinite;
 }
@@ -3320,12 +3292,12 @@ footer {
     animation: gleamSweep 3s infinite;
 }
 
-/* 🥈 2ND PLACE SILVER SCORE PILL */
+/* 🥈 2ND PLACE SILVER GLOWING PILL */
 .podium-silver-score {
     background: linear-gradient(135deg, rgba(220, 235, 255, 0.2) 0%, rgba(160, 195, 255, 0.24) 100%);
     color: #e0f2fe;
     border: 1.5px solid #bae6fd;
-    box-shadow: 0 0 18px rgba(186, 230, 253, 0.4), inset 0 0 12px rgba(186, 230, 253, 0.2);
+    box-shadow: 0 0 16px rgba(186, 230, 253, 0.4), inset 0 0 12px rgba(186, 230, 253, 0.2);
     text-shadow: 0 0 10px rgba(186, 230, 253, 0.5);
 }
 
@@ -3341,12 +3313,12 @@ footer {
     animation: gleamSweep 3.4s infinite 0.6s;
 }
 
-/* 🥉 3RD PLACE BRONZE SCORE PILL */
+/* 🥉 3RD PLACE BRONZE GLOWING PILL */
 .podium-bronze-score {
     background: linear-gradient(135deg, rgba(255, 160, 80, 0.2) 0%, rgba(205, 127, 50, 0.24) 100%);
     color: #ffbe8a;
     border: 1.5px solid #f97316;
-    box-shadow: 0 0 16px rgba(249, 115, 22, 0.35), inset 0 0 10px rgba(249, 115, 22, 0.18);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.35), inset 0 0 10px rgba(249, 115, 22, 0.18);
     text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
 }
 
@@ -3362,41 +3334,6 @@ footer {
     animation: gleamSweep 3.8s infinite 1.2s;
 }
 
-/* Standby variants when score is 0 PTS */
-.gold-standby {
-    background: rgba(255, 215, 0, 0.08);
-    color: #ffd700;
-    border: 1px dashed rgba(255, 215, 0, 0.4);
-}
-
-.silver-standby {
-    background: rgba(186, 230, 253, 0.08);
-    color: #bae6fd;
-    border: 1px dashed rgba(186, 230, 253, 0.4);
-}
-
-.bronze-standby {
-    background: rgba(249, 115, 22, 0.08);
-    color: #ffbe8a;
-    border: 1px dashed rgba(249, 115, 22, 0.4);
-}
-
-/* 🏆 Premium Podium Row Highlights */
-.podium-gold-row {
-    border-left: 3.5px solid #ffd700 !important;
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.07) 0%, rgba(255, 215, 0, 0.01) 60%, transparent 100%) !important;
-}
-
-.podium-silver-row {
-    border-left: 3.5px solid #38bdf8 !important;
-    background: linear-gradient(90deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.01) 60%, transparent 100%) !important;
-}
-
-.podium-bronze-row {
-    border-left: 3.5px solid #fb923c !important;
-    background: linear-gradient(90deg, rgba(251, 146, 60, 0.05) 0%, rgba(251, 146, 60, 0.01) 60%, transparent 100%) !important;
-}
-
 @keyframes gleamSweep {
     0% {
         left: -100%;
@@ -3408,10 +3345,10 @@ footer {
 
 @keyframes goldPillPulse {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
+        box-shadow: 0 0 18px rgba(255, 215, 0, 0.4), inset 0 0 10px rgba(255, 215, 0, 0.2);
     }
     50% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 16px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 28px rgba(255, 215, 0, 0.65), inset 0 0 14px rgba(255, 215, 0, 0.35);
     }
 }
 
@@ -3420,14 +3357,15 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 0.35rem;
-    min-width: 46px;
-    padding: 0.35rem 0.75rem;
+    min-width: 44px;
+    height: 32px;
+    padding: 0 0.65rem;
     border-radius: 50px;
     font-weight: 800;
     font-size: 0.85rem;
     white-space: nowrap;
     line-height: 1;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     color: #94a3b8;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -3438,7 +3376,7 @@ footer {
 
 .gold-crown {
     color: #ffe600;
-    filter: drop-shadow(0 0 5px rgba(255, 230, 0, 0.8));
+    filter: drop-shadow(0 0 4px rgba(255, 230, 0, 0.8));
     animation: goldPillPulse 2.8s ease-in-out infinite;
 }
 
@@ -3453,58 +3391,46 @@ footer {
 }
 
 .rank-badge.gold {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 170, 0, 0.25));
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 170, 0, 0.22));
     color: #ffd700;
     border: 1.5px solid #ffd700;
-    box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.4);
 }
 
 .rank-badge.silver {
-    background: linear-gradient(135deg, rgba(220, 235, 255, 0.2), rgba(160, 195, 255, 0.22));
+    background: linear-gradient(135deg, rgba(220, 235, 255, 0.18), rgba(160, 195, 255, 0.2));
     color: #e2e8f0;
     border: 1.5px solid #cbd5e1;
-    box-shadow: 0 0 14px rgba(192, 192, 192, 0.35);
+    box-shadow: 0 0 12px rgba(192, 192, 192, 0.3);
 }
 
 .rank-badge.bronze {
-    background: linear-gradient(135deg, rgba(255, 160, 80, 0.2), rgba(205, 127, 50, 0.22));
+    background: linear-gradient(135deg, rgba(255, 160, 80, 0.18), rgba(205, 127, 50, 0.2));
     color: #ffaa66;
     border: 1.5px solid #cd7f32;
-    box-shadow: 0 0 14px rgba(205, 127, 50, 0.35);
+    box-shadow: 0 0 12px rgba(205, 127, 50, 0.3);
 }
 
 .status-pill {
     font-size: 0.78rem;
     font-weight: 700;
-    padding: 0.35rem 0.85rem;
+    padding: 0.32rem 0.8rem;
     border-radius: 50px;
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
     letter-spacing: 0.3px;
 }
 
-.sub-beacon {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #00ff80;
-    box-shadow: 0 0 8px #00ff80;
-    animation: blinkDot 1.5s ease-in-out infinite;
-    display: inline-block;
-}
-
 .status-pill.submitted {
-    background: rgba(0, 255, 128, 0.12);
+    background: rgba(0, 255, 128, 0.08);
     color: #00ff80;
-    border: 1px solid rgba(0, 255, 128, 0.35);
-    box-shadow: 0 0 10px rgba(0, 255, 128, 0.2);
+    border: 1px solid rgba(0, 255, 128, 0.3);
 }
 
 .status-pill.pending {
-    background: rgba(255, 180, 0, 0.1);
+    background: rgba(255, 180, 0, 0.08);
     color: #ffb400;
     border: 1px solid rgba(255, 180, 0, 0.3);
 }

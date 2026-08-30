@@ -871,44 +871,37 @@ function renderLeaderboardTable(page = 1) {
         // Single evaluation score (out of 100) from Google Sheet
         const score = Number(p.score !== undefined ? p.score : (p.totalScore !== undefined ? p.totalScore : 0));
         const isScored = score > 0;
+        const scoreText = `${score}/100 PTS`;
         
         let rankBadge = `<span class="rank-badge">${rankNum}</span>`;
-        let podiumRowClass = '';
-        let scorePillClass = isScored ? 'active-score' : 'zero-score';
-        let sparkleBefore = '';
-        let sparkleAfter = '';
+        let scorePillHTML = `<span class="total-score-pill ${isScored ? 'active-score' : 'zero-score'}">${scoreText}</span>`;
 
         if (overallIndex === 0) {
             rankBadge = `<span class="rank-badge gold">${crownSVG} <span>${rankNum}</span></span>`;
-            podiumRowClass = 'podium-gold-row';
-            scorePillClass = isScored ? 'total-score-pill podium-gold-score' : 'total-score-pill gold-standby';
-            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
-            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
+            if (isScored) {
+                scorePillHTML = `<span class="total-score-pill podium-gold-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
+            }
         } else if (overallIndex === 1) {
             rankBadge = `<span class="rank-badge silver">${silverMedalSVG} <span>${rankNum}</span></span>`;
-            podiumRowClass = 'podium-silver-row';
-            scorePillClass = isScored ? 'total-score-pill podium-silver-score' : 'total-score-pill silver-standby';
-            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
-            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
+            if (isScored) {
+                scorePillHTML = `<span class="total-score-pill podium-silver-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
+            }
         } else if (overallIndex === 2) {
             rankBadge = `<span class="rank-badge bronze">${bronzeStarSVG} <span>${rankNum}</span></span>`;
-            podiumRowClass = 'podium-bronze-row';
-            scorePillClass = isScored ? 'total-score-pill podium-bronze-score' : 'total-score-pill bronze-standby';
-            sparkleBefore = `<span class="sparkle-wrap s-left">${sparkleStarSVG}</span>`;
-            sparkleAfter = `<span class="sparkle-wrap s-right">${sparkleStarSVG}</span>`;
-        } else {
-            scorePillClass = `total-score-pill ${scorePillClass}`;
+            if (isScored) {
+                scorePillHTML = `<span class="total-score-pill podium-bronze-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
+            }
         }
 
         let subBadge = p.subStatus === 'SUBMITTED'
-            ? `<span class="status-pill submitted"><span class="sub-beacon"></span>SUBMITTED</span>`
+            ? `<span class="status-pill submitted">SUBMITTED</span>`
             : `<span class="status-pill pending">PENDING</span>`;
 
         const displayName = p.participation && p.participation.toLowerCase() === 'team' ? p.teamName : p.name;
         const leaderText = p.participation && p.participation.toLowerCase() === 'team' ? `Leader: ${p.name}` : `Solo Architect`;
 
         return `
-            <tr class="${podiumRowClass}">
+            <tr>
                 <td class="col-rank">${rankBadge}</td>
                 <td class="col-participant">
                     <div class="participant-name-wrap">
@@ -917,16 +910,7 @@ function renderLeaderboardTable(page = 1) {
                     </div>
                 </td>
                 <td class="col-branch"><span class="branch-badge">${p.dept}</span></td>
-                <td class="col-score">
-                    <span class="${scorePillClass}">
-                        ${sparkleBefore}
-                        <span class="score-digits-box">
-                            <strong class="score-main-val">${score}</strong><span class="score-max-denom">/100</span>
-                            <span class="score-pts-lbl">PTS</span>
-                        </span>
-                        ${sparkleAfter}
-                    </span>
-                </td>
+                <td class="col-score">${scorePillHTML}</td>
                 <td class="col-status">${subBadge}</td>
             </tr>
         `;
