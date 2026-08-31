@@ -2627,15 +2627,15 @@ footer {
         min-width: 100px;
     }
 
-    .leaderboard-table .col-score {
-        width: 110px;
-        min-width: 110px;
-        text-align: center;
-    }
-
     .leaderboard-table .col-status {
         width: 105px;
         min-width: 105px;
+        text-align: center;
+    }
+
+    .leaderboard-table .col-qual {
+        width: 155px;
+        min-width: 155px;
         text-align: center;
     }
 
@@ -2653,10 +2653,10 @@ footer {
         font-size: 0.76rem;
     }
 
-    .total-score-pill {
-        padding: 0.28rem 0.55rem;
-        font-size: 0.74rem;
-        gap: 0.25rem;
+    .qual-badge {
+        padding: 0.28rem 0.65rem;
+        font-size: 0.72rem;
+        gap: 0.3rem;
     }
 
     .sparkle-star {
@@ -3145,92 +3145,77 @@ footer {
     min-width: 130px;
 }
 
-.leaderboard-table .col-score {
-    text-align: center;
-    width: 140px;
-}
-
 .leaderboard-table .col-status {
     text-align: center;
-    width: 125px;
+    width: 120px;
 }
 
-/* Cell Micro-Elements */
-.participant-name-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+.leaderboard-table .col-qual {
+    text-align: center;
+    width: 195px;
 }
 
-.p-name {
-    font-size: 0.98rem;
-    color: #ffffff;
-    font-weight: 700;
-}
-
-.p-leader {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-}
-
-.branch-badge {
-    color: var(--accent-cyan);
-    font-weight: 600;
-    font-size: 0.88rem;
-}
-
-.os-name-badge {
-    color: var(--accent-magenta);
-    background: rgba(243, 85, 218, 0.08);
-    padding: 0.32rem 0.85rem;
-    border-radius: 8px;
-    border: 1px solid rgba(243, 85, 218, 0.25);
-    font-weight: 600;
-    font-size: 0.84rem;
-    display: inline-block;
-}
-
-.round-score {
-    font-family: monospace;
-    font-size: 0.94rem;
-    font-weight: 700;
-}
-
-.round-score.scored {
-    color: var(--accent-cyan);
-}
-
-.round-score.zero {
-    color: #64748b;
-}
-
-.total-score-pill {
+/* 🟢 Round 2 Qualification Badges */
+.qual-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    padding: 0.38rem 0.95rem;
+    gap: 0.45rem;
+    padding: 0.4rem 1rem;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.5px;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.total-score-pill.active-score {
+.qual-badge.qualified {
     background: rgba(0, 255, 128, 0.12);
     color: #00ff80;
-    border: 1px solid rgba(0, 255, 128, 0.35);
-    box-shadow: 0 0 12px rgba(0, 255, 128, 0.2);
+    border: 1px solid rgba(0, 255, 128, 0.45);
+    box-shadow: 0 0 16px rgba(0, 255, 128, 0.25);
 }
 
-.total-score-pill.zero-score {
-    background: rgba(255, 255, 255, 0.03);
-    color: #64748b;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+.qual-badge.qualified.gold-qual {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.18), rgba(255, 170, 0, 0.22));
+    color: #ffd700;
+    border: 1.5px solid #ffd700;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+}
+
+.qual-badge.qualified.silver-qual {
+    background: linear-gradient(135deg, rgba(220, 235, 255, 0.18), rgba(160, 195, 255, 0.2));
+    color: #e0f2fe;
+    border: 1.5px solid #bae6fd;
+    box-shadow: 0 0 16px rgba(186, 230, 253, 0.35);
+}
+
+.qual-badge.qualified.bronze-qual {
+    background: linear-gradient(135deg, rgba(255, 160, 80, 0.18), rgba(205, 127, 50, 0.2));
+    color: #ffbe8a;
+    border: 1.5px solid #f97316;
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);
+}
+
+.qual-badge.completed {
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.35rem 0.85rem;
+}
+
+.qual-badge.pending-eval {
+    background: rgba(255, 180, 0, 0.08);
+    color: #ffb400;
+    border: 1px dashed rgba(255, 180, 0, 0.35);
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.35rem 0.85rem;
 }
 
 /* =============================================
