@@ -2627,9 +2627,9 @@ footer {
         min-width: 100px;
     }
 
-    .leaderboard-table .col-status {
-        width: 105px;
-        min-width: 105px;
+    .leaderboard-table .col-score {
+        width: 110px;
+        min-width: 110px;
         text-align: center;
     }
 
@@ -3145,9 +3145,9 @@ footer {
     min-width: 130px;
 }
 
-.leaderboard-table .col-status {
+.leaderboard-table .col-score {
     text-align: center;
-    width: 120px;
+    width: 140px;
 }
 
 .leaderboard-table .col-qual {
@@ -3219,8 +3219,37 @@ footer {
 }
 
 /* =============================================
-   ✨ ANIMATED GLOWING SPARKLE SCORE PILLS (Top 3)
+   📊 TOTAL SCORE PILLS & PODIUM GLOWS (Top 3)
    ============================================= */
+.total-score-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.38rem 0.95rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.total-score-pill.active-score {
+    background: rgba(0, 255, 128, 0.12);
+    color: #00ff80;
+    border: 1px solid rgba(0, 255, 128, 0.35);
+    box-shadow: 0 0 12px rgba(0, 255, 128, 0.2);
+}
+
+.total-score-pill.zero-score {
+    background: rgba(255, 255, 255, 0.03);
+    color: #64748b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .sparkle-wrap {
     display: inline-flex;
     align-items: center;
@@ -3244,12 +3273,12 @@ footer {
 
 @keyframes sparkleTwinkle {
     0%, 100% {
-        transform: scale(0.65) rotate(0deg);
-        opacity: 0.35;
+        transform: scale(0.7) rotate(0deg);
+        opacity: 0.45;
         filter: drop-shadow(0 0 2px currentColor);
     }
     50% {
-        transform: scale(1.35) rotate(90deg);
+        transform: scale(1.3) rotate(90deg);
         opacity: 1;
         filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 12px currentColor);
     }
@@ -3260,21 +3289,9 @@ footer {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.22) 0%, rgba(255, 170, 0, 0.26) 100%);
     color: #ffd700;
     border: 1.5px solid #ffd700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.25);
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.4), inset 0 0 10px rgba(255, 215, 0, 0.2);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
     animation: goldPillPulse 2.8s ease-in-out infinite;
-}
-
-.podium-gold-score::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -100%;
-    width: 60%;
-    height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-    transform: rotate(25deg);
-    animation: gleamSweep 3s infinite;
 }
 
 /* 🥈 2ND PLACE SILVER GLOWING PILL */
@@ -3282,20 +3299,8 @@ footer {
     background: linear-gradient(135deg, rgba(220, 235, 255, 0.2) 0%, rgba(160, 195, 255, 0.24) 100%);
     color: #e0f2fe;
     border: 1.5px solid #bae6fd;
-    box-shadow: 0 0 16px rgba(186, 230, 253, 0.4), inset 0 0 12px rgba(186, 230, 253, 0.2);
-    text-shadow: 0 0 10px rgba(186, 230, 253, 0.5);
-}
-
-.podium-silver-score::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -100%;
-    width: 60%;
-    height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    transform: rotate(25deg);
-    animation: gleamSweep 3.4s infinite 0.6s;
+    box-shadow: 0 0 16px rgba(186, 230, 253, 0.35), inset 0 0 10px rgba(186, 230, 253, 0.18);
+    text-shadow: 0 0 8px rgba(186, 230, 253, 0.5);
 }
 
 /* 🥉 3RD PLACE BRONZE GLOWING PILL */
@@ -3304,28 +3309,7 @@ footer {
     color: #ffbe8a;
     border: 1.5px solid #f97316;
     box-shadow: 0 0 15px rgba(249, 115, 22, 0.35), inset 0 0 10px rgba(249, 115, 22, 0.18);
-    text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-}
-
-.podium-bronze-score::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -100%;
-    width: 60%;
-    height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    transform: rotate(25deg);
-    animation: gleamSweep 3.8s infinite 1.2s;
-}
-
-@keyframes gleamSweep {
-    0% {
-        left: -100%;
-    }
-    30%, 100% {
-        left: 200%;
-    }
+    text-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
 }
 
 @keyframes goldPillPulse {
