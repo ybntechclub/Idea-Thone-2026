@@ -860,8 +860,6 @@ function renderLeaderboardTable(page = 1) {
 
     const sparkleStarSVG = `<svg class="sparkle-star" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>`;
     const crownSVG = `<svg class="rank-icon gold-crown" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M2 19h20v2H2v-2zM2 5l5 3.5L12 2l5 6.5L22 5v12H2V5z"/></svg>`;
-    const silverMedalSVG = `<svg class="rank-icon silver-medal" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/></svg>`;
-    const bronzeStarSVG = `<svg class="rank-icon bronze-star" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
 
     // Render Table Rows for Current Page (Max 5 items)
     leaderboardBody.innerHTML = currentPageItems.map((p, idx) => {
@@ -879,6 +877,7 @@ function renderLeaderboardTable(page = 1) {
         let qualBadgeHTML = '';
 
         if (overallIndex === 0) {
+            // 👑 Sole Winner / Rank 1
             rankBadge = `<span class="rank-badge gold">${crownSVG} <span>${rankNum}</span></span>`;
             if (isEvaluated) {
                 scorePillHTML = `<span class="total-score-pill podium-gold-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
@@ -890,31 +889,8 @@ function renderLeaderboardTable(page = 1) {
             } else {
                 qualBadgeHTML = `<span class="qual-badge pending-eval">PENDING EVALUATION</span>`;
             }
-        } else if (overallIndex === 1) {
-            rankBadge = `<span class="rank-badge silver">${silverMedalSVG} <span>${rankNum}</span></span>`;
-            if (isEvaluated) {
-                scorePillHTML = `<span class="total-score-pill podium-silver-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
-            }
-            if (isQualified) {
-                qualBadgeHTML = `<span class="qual-badge qualified silver-qual"><span class="badge-dot" style="background:#bae6fd; box-shadow:0 0 8px #bae6fd;"></span> QUALIFIED (ROUND 2)</span>`;
-            } else if (isEvaluated) {
-                qualBadgeHTML = `<span class="qual-badge completed">ROUND 1 COMPLETED</span>`;
-            } else {
-                qualBadgeHTML = `<span class="qual-badge pending-eval">PENDING EVALUATION</span>`;
-            }
-        } else if (overallIndex === 2) {
-            rankBadge = `<span class="rank-badge bronze">${bronzeStarSVG} <span>${rankNum}</span></span>`;
-            if (isEvaluated) {
-                scorePillHTML = `<span class="total-score-pill podium-bronze-score"><span class="sparkle-wrap s-left">${sparkleStarSVG}</span><span>${scoreText}</span><span class="sparkle-wrap s-right">${sparkleStarSVG}</span></span>`;
-            }
-            if (isQualified) {
-                qualBadgeHTML = `<span class="qual-badge qualified bronze-qual"><span class="badge-dot" style="background:#ffbe8a; box-shadow:0 0 8px #ffbe8a;"></span> QUALIFIED (ROUND 2)</span>`;
-            } else if (isEvaluated) {
-                qualBadgeHTML = `<span class="qual-badge completed">ROUND 1 COMPLETED</span>`;
-            } else {
-                qualBadgeHTML = `<span class="qual-badge pending-eval">PENDING EVALUATION</span>`;
-            }
         } else {
+            // Ranks 02+
             if (isQualified) {
                 qualBadgeHTML = `<span class="qual-badge qualified"><span class="badge-dot" style="background:#00ff80; box-shadow:0 0 8px #00ff80;"></span> QUALIFIED (ROUND 2)</span>`;
             } else if (isEvaluated) {
